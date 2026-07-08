@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "dotenv -e .env -- tsx src/index.ts",
-    "build": "tsc",
+    "build": "tsc --outDir dist",
     "start": "node dist/index.js",
     "start:prod": "node dist/index.js",
     "lint": "eslint src --ext .ts"
