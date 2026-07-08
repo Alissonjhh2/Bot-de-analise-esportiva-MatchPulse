@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -e .env -- tsx src/index.ts",
-    "build": "echo 'No build needed for tsx'",
+    "build": "prisma generate",
     "start": "tsx src/index.ts",
     "start:prod": "tsx src/index.ts",
     "lint": "eslint src --ext .ts"
