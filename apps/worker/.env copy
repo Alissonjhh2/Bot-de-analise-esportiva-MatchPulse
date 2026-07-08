@@ -1,0 +1,24 @@
+# Database (PostgreSQL required - schema uses enums and Json types)
+# Options:
+# 1. Local PostgreSQL: postgresql://postgres:postgres@localhost:5432/matchpulse?schema=public
+# 2. Docker: docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=matchpulse postgres:15
+# 3. Cloud: Supabase, Neon, Railway, etc.
+DATABASE_URL="postgresql://postgres:ycxHxotXUiersiDaEKTBGKFSkvKovnXj@hayabusa.proxy.rlwy.net:32505/railway"
+
+# Firebase
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyCsXmPZjE8r-3G33jeElhlZx5M8tkXJUyQ
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=matchpulse-8b255.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=matchpulse-8b255
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=matchpulse-8b255.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=217163672106
+NEXT_PUBLIC_FIREBASE_APP_ID=1:217163672106:web:8ebc5d28847441bd40b153
+
+# API
+NEXT_PUBLIC_API_URL=http://localhost:4000
+API_BASE_URL=http://localhost:4000
+
+# Telegram
+TELEGRAM_BOT_TOKEN=8933526393:AAE8m_SVhEmpfMxfOxjTw8xWZs7SdVMsJ00
+
+# Authentication (set to false to disable in development)
+AUTH_ENABLED=false

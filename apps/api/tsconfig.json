@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022"],
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@matchpulse/types": ["../../packages/types/src"],
+      "@matchpulse/utils": ["../../packages/utils/src"],
+      "@matchpulse/config": ["../../packages/config/src"],
+      "@matchpulse/constants": ["../../packages/constants/src"],
+      "@matchpulse/validators": ["../../packages/validators/src"],
+      "@matchpulse/logger": ["../../packages/logger/src"],
+      "@matchpulse/services": ["../../packages/services/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

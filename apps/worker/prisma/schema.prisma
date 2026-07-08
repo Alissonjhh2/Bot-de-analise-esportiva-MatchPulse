@@ -1,0 +1,205 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Plan {
+  FREE
+  PREMIUM
+}
+
+enum StrategyStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum Visibility {
+  PRIVATE
+  PUBLIC
+}
+
+enum LogLevel {
+  ERROR
+  WARN
+  INFO
+  DEBUG
+}
+
+enum Indicator {
+  GOALS
+  CORNERS
+  DANGEROUS_ATTACKS
+  SHOTS_ON_GOAL
+  CARDS
+  FOULS
+  OFFSIDES
+  BALL_POSSESSION
+}
+
+enum Team {
+  HOME
+  AWAY
+  MATCH
+}
+
+enum ConditionOperator {
+  ANY
+  MORE
+  LESS
+}
+
+// Models
+model User {
+  id          String   @id @default(uuid())
+  firebaseUid String   @unique
+  name        String
+  email       String   @unique
+  avatar      String?
+  role        Role     @default(USER)
+  plan        Plan     @default(FREE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  strategies              Strategy[]
+  telegramConnection      TelegramConnection?
+  telegramLinkCodes       TelegramLinkCode[]
+  notificationHistories    NotificationHistory[]
+
+  @@index([firebaseUid])
+  @@index([email])
+}
+
+model TelegramConnection {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  chatId      String   @unique
+  username    String?
+  firstName   String?
+  connectedAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([chatId])
+}
+
+model TelegramLinkCode {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  userId    String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([code])
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Strategy {
+  id          String             @id @default(uuid())
+  userId      String
+  name        String
+  description String?
+  startMinute Int                @default(1)
+  endMinute   Int                @default(90)
+  status      StrategyStatus     @default(ACTIVE)
+  visibility  Visibility         @default(PRIVATE)
+  leagues     String[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  // Relations
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conditions        StrategyCondition[]
+  notificationHistories NotificationHistory[]
+  matchHits         MatchHit[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([visibility])
+}
+
+model StrategyCondition {
+  id         String             @id @default(uuid())
+  strategyId String
+  indicator  Indicator
+  team       Team
+  quantity   Int
+  operator   ConditionOperator
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  // Relations
+  strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+
+  @@index([strategyId])
+  @@index([indicator])
+}
+
+model NotificationHistory {
+  id           String   @id @default(uuid())
+  userId       String
+  strategyId   String
+  matchName    String
+  championship String
+  message      String
+  sentAt       DateTime @default(now())
+
+  // Relations
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([strategyId])
+  @@index([sentAt])
+}
+
+model MatchHit {
+  id          String   @id @default(uuid())
+  matchId     String
+  strategyId  String
+  minute      Int
+  result      Boolean  @default(true)
+  snapshot    Json
+  createdAt   DateTime @default(now())
+
+  // Relations
+  strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+
+  @@index([matchId])
+  @@index([strategyId])
+  @@index([minute])
+  @@index([createdAt])
+}
+
+model Log {
+  id        String   @id @default(uuid())
+  level     LogLevel
+  source    String
+  message   String
+  details   Json?
+  createdAt DateTime @default(now())
+
+  @@index([level])
+  @@index([source])
+  @@index([createdAt])
+}

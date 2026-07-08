@@ -1,0 +1,28 @@
+{
+  "name": "matchpulse",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "turbo": "^2.0.14"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "npm@10.0.0",
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "jsonwebtoken": "^9.0.3"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "buildCommand": "cd ../.. && turbo run build --filter=web",
+  "outputDirectory": "apps/web/.next",
+  "installCommand": "cd ../.. && npm install",
+  "framework": "nextjs",
+  "env": {
+    "NEXT_PUBLIC_API_URL": {
+      "description": "API URL for the backend",
+      "value": "https://your-api.railway.app"
+    },
+    "NEXT_PUBLIC_FIREBASE_API_KEY": {
+      "description": "Firebase API Key"
+    },
+    "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": {
+      "description": "Firebase Auth Domain"
+    },
+    "NEXT_PUBLIC_FIREBASE_PROJECT_ID": {
+      "description": "Firebase Project ID"
+    },
+    "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": {
+      "description": "Firebase Storage Bucket"
+    },
+    "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": {
+      "description": "Firebase Messaging Sender ID"
+    },
+    "NEXT_PUBLIC_FIREBASE_APP_ID": {
+      "description": "Firebase App ID"
+    }
+  }
+}
