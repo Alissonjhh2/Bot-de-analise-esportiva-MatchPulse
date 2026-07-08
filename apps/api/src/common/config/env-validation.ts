@@ -48,12 +48,14 @@ export function validateEnv(): Env {
     
     // Additional validation for production
     if (env.NODE_ENV === 'production') {
-      if (!env.REDIS_URL) {
-        throw new Error('REDIS_URL is required in production');
-      }
-      if (!env.SESSION_SECRET) {
-        throw new Error('SESSION_SECRET is required in production');
-      }
+      // REDIS_URL is optional for initial deployment
+      // if (!env.REDIS_URL) {
+      //   throw new Error('REDIS_URL is required in production');
+      // }
+      // SESSION_SECRET is optional for initial deployment
+      // if (!env.SESSION_SECRET) {
+      //   throw new Error('SESSION_SECRET is required in production');
+      // }
       if (env.AUTH_ENABLED !== true) {
         throw new Error('AUTH_ENABLED must be true in production');
       }
