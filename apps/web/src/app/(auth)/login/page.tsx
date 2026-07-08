@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@matchpulse/ui';
-import { Input } from '@matchpulse/ui';
 import { Card, CardContent, CardHeader } from '@matchpulse/ui';
 import { Mail, Lock, ArrowRight, Sparkles, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@matchpulse/ui';
 import { Badge } from '@matchpulse/ui';
-import { AlertTriangle, Power, PowerOff, Plus, Edit2, Trash2, Sparkles, Target, Zap, MoreVertical } from 'lucide-react';
+import { AlertTriangle, Power, PowerOff, Plus, Edit2, Trash2, Sparkles, Target, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@matchpulse/ui';
 import { apiClient } from '@/lib/api';
@@ -17,7 +17,7 @@ interface Strategy {
   startMinute: number;
   endMinute: number;
   status: 'ACTIVE' | 'INACTIVE';
-  conditions: any[];
+  conditions: unknown[];
 }
 
 export default function MyStrategiesPage() {
@@ -35,7 +35,7 @@ export default function MyStrategiesPage() {
   const fetchStrategies = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get<{success: boolean, data: {data: Strategy[], pagination: any}}>('/strategies');
+      const response = await apiClient.get<{success: boolean, data: {data: Strategy[], pagination: {page: number, pageSize: number, total: number, totalPages: number}}}>('/strategies');
       console.log('[MyStrategies] Response:', response);
       console.log('[MyStrategies] Response.data:', response.data);
       console.log('[MyStrategies] Response.data.data:', response.data.data);
@@ -207,7 +207,7 @@ export default function MyStrategiesPage() {
                           <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                             <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg">
                               <Zap className="w-4 h-4 text-[#2D69B3]" />
-                              <span className="font-medium">{strategy.startMinute}' - {strategy.endMinute}'</span>
+                              <span className="font-medium">{strategy.startMinute}&apos; - {strategy.endMinute}&apos;</span>
                             </div>
                             <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg">
                               <AlertTriangle className="w-4 h-4 text-[#2D69B3]" />

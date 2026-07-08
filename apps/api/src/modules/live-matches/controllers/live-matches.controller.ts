@@ -9,22 +9,19 @@ export const getLiveMatches = async (req: Request, res: Response) => {
     const { league } = req.query;
 
     // If league is specified, fetch matches for that league
-    // Otherwise, fetch matches for all leagues (default to Brazilian league)
-    const leagueSlug = (league as string) || 'bra.1';
+    // Otherwise, fetch matches for all leagues
+    const leagueSlug = league as string;
 
-    logger.info(`Fetching live matches for league: ${leagueSlug}`);
+    logger.info(`Fetching live matches for league: ${leagueSlug || 'all leagues'}`);
 
     const liveMatches = await espnProvider.getLiveMatches(leagueSlug);
 
-    // Filter only in-progress matches
-    const inProgressMatches = liveMatches.filter(
-      match => match.status === 'in_progress' || match.status === 'halftime'
-    );
-
+    // Return all matches (scheduled, in_progress, halftime, final)
+    // This allows users to see upcoming and recent matches
     res.json({
       success: true,
-      data: inProgressMatches,
-      count: inProgressMatches.length,
+      data: liveMatches,
+      count: liveMatches.length,
     });
   } catch (error) {
     logger.error('Error fetching live matches', error as Error);

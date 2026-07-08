@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { authController } from '../controller/auth.controller';
 import { authenticateFirebase } from '../../../common/middlewares/auth';
 
@@ -8,7 +8,7 @@ const router = Router();
 router.post('/firebase', authController.handleFirebaseAuth.bind(authController));
 
 // Protected route to get current user info
-router.get('/me', authenticateFirebase, async (req: any, res: any) => {
+router.get('/me', authenticateFirebase, async (req: Request, res: Response) => {
   const response = {
     success: true,
     data: {

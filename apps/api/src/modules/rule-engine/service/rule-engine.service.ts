@@ -77,7 +77,7 @@ export class RuleEngineService {
 
   private createOutput(
     matchId: string,
-    strategy: any,
+    strategy: { strategyId: string; name: string; userId: string },
     minute: number,
     result: boolean,
     matchedConditions: ConditionEvaluationResult[],

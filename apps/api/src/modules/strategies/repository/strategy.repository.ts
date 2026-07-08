@@ -93,7 +93,7 @@ export class StrategyRepository {
     const { conditions, ...strategyData } = data;
     
     // Update strategy basic data
-    const strategy = await prisma.strategy.update({
+    await prisma.strategy.update({
       where: { id },
       data: strategyData,
       include: {

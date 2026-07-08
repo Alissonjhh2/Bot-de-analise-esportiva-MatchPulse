@@ -1,4 +1,4 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -53,8 +53,8 @@ const isFirebaseConfigValid = () => {
 };
 
 // Initialize Firebase only if config is valid
-let app: any = null;
-let auth: any = null;
+let app: ReturnType<typeof initializeApp> | null = null;
+let auth: ReturnType<typeof getAuth> | null = null;
 
 if (isFirebaseConfigValid()) {
   try {

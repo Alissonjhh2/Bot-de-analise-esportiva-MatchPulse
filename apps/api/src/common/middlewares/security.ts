@@ -1,27 +1,58 @@
-import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-import cors from 'cors';
+import { Express } from 'express';
 
-export const rateLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 60, // 60 requests per minute
-  message: 'Too many requests from this IP, please try again later.',
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+export const setupSecurity = (app: Express) => {
+  // Content Security Policy
+  app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https:"],
+        connectSrc: ["'self'", "https://*.firebaseio.com", "https://*.googleapis.com"],
+        fontSrc: ["'self'", "https:"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'none'"],
+      },
+    })
+  );
 
-export const setupSecurity = (app: any) => {
-  // Commented out for development - CORS is handled in index.ts
-  // app.use(helmet());
+  // Hide Express header
+  app.use(helmet.hidePoweredBy());
 
-  // CORS configuration - handled in index.ts to avoid conflicts
-  // app.use(
-  //   cors({
-  //     origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
-  //     credentials: true,
-  //   })
-  // );
+  // HSTS (HTTP Strict Transport Security)
+  app.use(
+    helmet.hsts({
+      maxAge: 31536000, // 1 year
+      includeSubDomains: true,
+      preload: true,
+    })
+  );
 
-  // Rate limiting - disabled for development
-  // app.use(rateLimiter);
+  // X-Content-Type-Options
+  app.use(helmet.noSniff());
+
+  // X-Frame-Options
+  app.use(helmet.frameguard({ action: 'deny' }));
+
+  // X-XSS-Protection
+  app.use(helmet.xssFilter());
+
+  // Referrer Policy
+  app.use(
+    helmet.referrerPolicy({
+      policy: 'strict-origin-when-cross-origin',
+    })
+  );
+
+  // DNS Prefetch Control
+  app.use(helmet.dnsPrefetchControl({ allow: false }));
+
+  // IE No Open
+  app.use(helmet.ieNoOpen());
+
+  // Origin Agent Cluster
+  app.use(helmet.originAgentCluster());
 };

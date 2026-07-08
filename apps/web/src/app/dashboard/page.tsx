@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader } from '@matchpulse/ui';
 import { Badge } from '@matchpulse/ui';
-import { TrendingUp, TrendingDown, Minus, AlertCircle, Send, Bot, Activity, Clock, Target, Zap, CheckCircle, XCircle, Sparkles, ArrowRight, Plus } from 'lucide-react';
+import { AlertCircle, Bot, Activity, Clock, Target, Zap, CheckCircle, Plus } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
@@ -30,6 +30,7 @@ interface LiveMatch {
   };
   clock: string;
   status: string;
+  startTime: string;
 }
 
 interface MatchHit {
@@ -38,7 +39,7 @@ interface MatchHit {
   strategyId: string;
   minute: number;
   result: boolean;
-  snapshot: any;
+  snapshot: { homeTeam?: string; awayTeam?: string } | null;
   createdAt: string;
   strategy: {
     id: string;
@@ -50,7 +51,7 @@ interface Strategy {
   id: string;
   name: string;
   status: string;
-  conditions: any[];
+  conditions: unknown[];
   _count?: {
     matchHits: number;
   };
@@ -78,7 +79,7 @@ export default function DashboardPage() {
       setError('');
 
       // Fetch strategies
-      const strategiesResponse = await apiClient.get<{success: boolean, data: {data: Strategy[], pagination: any}}>('/strategies');
+      const strategiesResponse = await apiClient.get<{success: boolean, data: {data: Strategy[], pagination: {page: number, pageSize: number, total: number, totalPages: number}}}>('/strategies');
       const strategiesData = strategiesResponse.data.data;
       setStrategies(strategiesData);
 
@@ -87,7 +88,7 @@ export default function DashboardPage() {
       const matchHitsData = matchHitsResponse.data || [];
       
       // Fetch Telegram connection status
-      const telegramResponse = await apiClient.get<{success: boolean, data: any}>('/telegram');
+      const telegramResponse = await apiClient.get<{success: boolean, data: {connected: boolean} | null}>('/telegram');
       const telegramConnected = telegramResponse.data !== null;
 
       // Fetch live matches from ESPN API
@@ -95,7 +96,7 @@ export default function DashboardPage() {
       try {
         const liveMatchesResponse = await apiClient.get<{success: boolean, data: LiveMatch[]}>('/live-matches');
         liveMatchesData = liveMatchesResponse.data || [];
-      } catch (e) {
+      } catch {
         // If endpoint doesn't exist yet, set to 0
         liveMatchesData = [];
       }
@@ -165,7 +166,6 @@ export default function DashboardPage() {
   // Calculate monthly data from match hits
   const calculateMonthlyData = () => {
     const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-    const currentMonth = new Date().getMonth();
     const monthData = months.map((month, index) => {
       const monthHits = matchHits.filter((hit) => {
         const hitDate = new Date(hit.createdAt);
@@ -343,17 +343,41 @@ export default function DashboardPage() {
               </div>
             {showLiveMatches && liveMatches.length > 0 && (
               <div className="mt-4 pt-4 border-t border-white/20 space-y-2">
-                {liveMatches.map((match) => (
-                  <div key={match.eventId} className="text-sm text-white/90">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-white">
-                        {match.homeTeam.name} {match.homeTeam.score} - {match.awayTeam.score} {match.awayTeam.name}
-                      </span>
-                      <span className="text-white/80">{match.clock}</span>
+                {liveMatches.map((match) => {
+                  const isLive = match.status === 'in_progress' || match.status === 'halftime';
+                  const startTime = new Date(match.startTime);
+                  const formattedTime = startTime.toLocaleTimeString('pt-BR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    timeZone: 'America/Sao_Paulo'
+                  });
+                  
+                  return (
+                    <div key={match.eventId} className="text-sm text-white/90">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium text-white">
+                          {match.homeTeam.name} {match.homeTeam.score} - {match.awayTeam.score} {match.awayTeam.name}
+                        </span>
+                        {isLive ? (
+                          <span className="flex items-center gap-1 text-red-300 font-medium">
+                            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                            {match.clock}
+                          </span>
+                        ) : (
+                          <span className="text-white/80">{formattedTime}</span>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-white/70">
+                        <span>{match.leagueName}</span>
+                        {isLive ? (
+                          <span className="text-red-300 font-medium">AO VIVO</span>
+                        ) : (
+                          <span>Vai começar</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-xs text-white/70">{match.leagueName}</div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </CardContent>

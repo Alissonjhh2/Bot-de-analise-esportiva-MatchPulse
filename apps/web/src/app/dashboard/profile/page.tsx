@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader } from '@matchpulse/ui';
 import { Button } from '@matchpulse/ui';
 import { Input } from '@matchpulse/ui';
-import { User, Mail, Calendar, AlertTriangle } from 'lucide-react';
+import { User, Mail, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -29,6 +29,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProfile = async () => {
@@ -70,9 +71,10 @@ export default function ProfilePage() {
       setDeleting(true);
       try {
         await apiClient.delete('/users/profile');
-      } catch (apiError: any) {
+      } catch (apiError: unknown) {
         // If user doesn't exist in database (404), just proceed with Firebase logout
-        if (apiError.message?.includes('404') || apiError.message?.includes('User not found')) {
+        const error = apiError as { message?: string };
+        if (error.message?.includes('404') || error.message?.includes('User not found')) {
           console.log('User not found in database, proceeding with Firebase account deletion');
         } else {
           throw apiError;

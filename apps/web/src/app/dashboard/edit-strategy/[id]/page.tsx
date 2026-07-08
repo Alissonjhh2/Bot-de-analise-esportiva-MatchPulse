@@ -7,8 +7,45 @@ import { Card, CardContent, CardHeader } from '@matchpulse/ui';
 import { Button } from '@matchpulse/ui';
 import { Input } from '@matchpulse/ui';
 import { Label } from '@matchpulse/ui';
-import { Plus, Trash2, ArrowRight, ArrowLeft, Check, Target, Zap, Sparkles } from 'lucide-react';
+import { Plus, Trash2, ArrowRight, ArrowLeft, Check, Target, Zap, Sparkles, Globe, Search, X } from 'lucide-react';
 import { apiClient } from '@/lib/api';
+
+const LEAGUE_MAPPINGS = [
+  { name: 'Campeonato Brasileiro', slug: 'bra.1' },
+  { name: 'Campeonato Brasileiro Série B', slug: 'bra.2' },
+  { name: 'Série C do Brasil', slug: 'bra.3' },
+  { name: 'Copa do Brasil', slug: 'bra.4' },
+  { name: 'Liga dos Campeões da UEFA', slug: 'uefa.champions' },
+  { name: 'Liga Europa da UEFA', slug: 'uefa.europa' },
+  { name: 'Premier League', slug: 'eng.1' },
+  { name: 'LALIGA', slug: 'esp.1' },
+  { name: 'Ligue 1', slug: 'fra.1' },
+  { name: 'Bundesliga', slug: 'ger.1' },
+  { name: 'Série A', slug: 'ita.1' },
+  { name: 'Campeonato Português', slug: 'por.1' },
+  { name: 'CONMEBOL Libertadores', slug: 'conmebol.libertadores' },
+  { name: 'CONMEBOL Sul-Americana', slug: 'conmebol.sudamericana' },
+  { name: 'Copa América', slug: 'conmebol.america' },
+  { name: 'Copa das Nações da África', slug: 'caf.champions' },
+  { name: 'Campeonato Chinês', slug: 'chn.1' },
+  { name: 'Liga Argentina', slug: 'arg.1' },
+  { name: 'Liga Mexicana', slug: 'mex.1' },
+  { name: 'Liga Colombiana', slug: 'col.1' },
+  { name: 'Liga Uruguaia', slug: 'uru.1' },
+  { name: 'Liga Paraguaia', slug: 'par.1' },
+  { name: 'Liga Chilena', slug: 'chi.1' },
+  { name: 'Liga Equatoriana', slug: 'ecu.1' },
+  { name: 'Liga Turca', slug: 'tur.1' },
+  { name: 'MLS (EUA)', slug: 'usa.1' },
+  { name: 'Liga Japonesa', slug: 'jpn.1' },
+  { name: 'Eredivisie (Holanda)', slug: 'ned.1' },
+  { name: 'Liga Belga', slug: 'bel.1' },
+  { name: 'Liga Russa', slug: 'rus.1' },
+  { name: 'Liga Austríaca', slug: 'aut.1' },
+  { name: 'Liga Escocesa', slug: 'sco.1' },
+];
+
+const DEFAULT_LEAGUE = 'bra.1';
 
 interface StrategyCondition {
   indicator: string;
@@ -50,18 +87,21 @@ export default function EditStrategyPage() {
   const [startMinute, setStartMinute] = useState(1);
   const [endMinute, setEndMinute] = useState(90);
   const [conditions, setConditions] = useState<StrategyCondition[]>([]);
+  const [selectedLeagues, setSelectedLeagues] = useState<string[]>([DEFAULT_LEAGUE]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStrategy();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategyId]);
 
   const fetchStrategy = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get<{success: boolean, data: any}>(`/strategies/${strategyId}`);
+      const response = await apiClient.get<{success: boolean, data: {name: string, startMinute: number, endMinute: number, conditions: StrategyCondition[]}}>(`/strategies/${strategyId}`);
       const strategy = response.data;
       
       setName(strategy.name);
@@ -98,6 +138,26 @@ export default function EditStrategyPage() {
     setConditions(updated);
   };
 
+  const toggleLeague = (slug: string) => {
+    setSelectedLeagues(prev =>
+      prev.includes(slug)
+        ? prev.filter(l => l !== slug)
+        : [...prev, slug]
+    );
+  };
+
+  const selectAllLeagues = () => {
+    setSelectedLeagues(LEAGUE_MAPPINGS.map(l => l.slug));
+  };
+
+  const clearAllLeagues = () => {
+    setSelectedLeagues([]);
+  };
+
+  const filteredLeagues = LEAGUE_MAPPINGS.filter(league =>
+    league.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -113,12 +173,13 @@ export default function EditStrategyPage() {
 
       // Success - redirect to my strategies
       router.push('/dashboard/my-strategies');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error updating strategy:', err);
       
+      const error = err as { message?: string };
       // Check if it's a strategy limit error
-      if (err.message && err.message.includes('Limite de estratégias atingido')) {
-        setError(err.message);
+      if (error.message && error.message.includes('Limite de estratégias atingido')) {
+        setError(error.message);
       } else {
         setError('Erro ao atualizar estratégia. Verifique sua conexão e tente novamente.');
       }
@@ -134,6 +195,10 @@ export default function EditStrategyPage() {
     }
     if (step === 1 && (startMinute < 1 || endMinute > 90 || startMinute >= endMinute)) {
       setError('Por favor, insira um intervalo de minutos válido (1-90)');
+      return;
+    }
+    if (step === 2 && selectedLeagues.length === 0) {
+      setError('Por favor, selecione pelo menos um campeonato');
       return;
     }
     setError('');
@@ -178,7 +243,7 @@ export default function EditStrategyPage() {
         </div>
         <div>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Editar Estratégia</h1>
-          <p className="text-gray-600 dark:text-gray-400">Modifique sua estratégia personalizada em 3 passos</p>
+          <p className="text-gray-600 dark:text-gray-400">Modifique sua estratégia personalizada em 4 passos</p>
         </div>
       </motion.div>
 
@@ -187,29 +252,53 @@ export default function EditStrategyPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="flex items-center justify-center gap-4"
+        className="relative"
       >
-        {[1, 2, 3].map((s) => (
-          <div key={s} className="flex items-center">
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold transition-all duration-300 shadow-lg ${
-                step >= s
-                  ? 'bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              {step > s ? <Check className="w-6 h-6" /> : s}
-            </motion.div>
-            {s < 3 && (
-              <div
-                className={`w-20 h-1 mx-2 rounded-full transition-all duration-300 ${
-                  step > s ? 'bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3]' : 'bg-gray-200 dark:bg-gray-700'
-                }`}
-              />
-            )}
-          </div>
-        ))}
+        <div className="flex items-center justify-center gap-2 md:gap-4">
+          {[
+            { step: 1, label: 'Básico', icon: Target },
+            { step: 2, label: 'Ligas', icon: Globe },
+            { step: 3, label: 'Condições', icon: Zap },
+            { step: 4, label: 'Revisão', icon: Check },
+          ].map((item, index) => (
+            <div key={item.step} className="flex items-center flex-1">
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="relative group"
+              >
+                <div
+                  className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center font-bold transition-all duration-300 ${
+                    step >= item.step
+                      ? 'bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] text-white shadow-lg shadow-[#2D69B3]/30'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                  }`}
+                >
+                  {step > item.step ? (
+                    <Check className="w-6 h-6" />
+                  ) : (
+                    <item.icon className="w-6 h-6" />
+                  )}
+                </div>
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-gray-600 dark:text-gray-400">
+                  {item.label}
+                </div>
+              </motion.div>
+              {index < 3 && (
+                <div className="flex-1 h-1 mx-2 md:mx-4 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: step > item.step ? '100%' : '0%' }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className={`h-full ${step > item.step ? 'bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3]' : 'bg-gray-200 dark:bg-gray-700'}`}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="h-8" /> {/* Spacer for labels */}
       </motion.div>
 
       {error && (
@@ -309,10 +398,117 @@ export default function EditStrategyPage() {
             </motion.div>
           )}
 
-        {/* Step 2: Conditions */}
+        {/* Step 2: Leagues */}
         {step === 2 && (
           <motion.div
             key="step2"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center">
+                      <Globe className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                        Passo 2: Campeonatos Monitorados
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Selecione em quais campeonatos esta estratégia será aplicada
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      onClick={selectAllLeagues}
+                      variant="outline"
+                      size="sm"
+                      disabled={isSubmitting}
+                      className="border-[#2D69B3] text-[#2D69B3] hover:bg-[#2D69B3] hover:text-white rounded-xl"
+                    >
+                      Selecionar Todos
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={clearAllLeagues}
+                      variant="outline"
+                      size="sm"
+                      disabled={isSubmitting}
+                      className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
+                    >
+                      Limpar
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-8 space-y-6">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Input
+                    placeholder="Pesquisar campeonato..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    disabled={isSubmitting}
+                    className="pl-12 border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                    >
+                      <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {filteredLeagues.map((league) => (
+                    <motion.button
+                      key={league.slug}
+                      type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => toggleLeague(league.slug)}
+                      disabled={isSubmitting}
+                      className={`p-4 rounded-xl border-2 transition-all duration-300 text-sm font-medium text-center ${
+                        selectedLeagues.includes(league.slug)
+                          ? 'border-[#2D69B3] bg-gradient-to-br from-[#3DB8F5]/10 to-[#2D69B3]/10 text-[#2D69B3] dark:bg-[#2D69B3]/20 dark:text-[#60a5fa] shadow-md'
+                          : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                      }`}
+                    >
+                      {league.name}
+                    </motion.button>
+                  ))}
+                </div>
+
+                {selectedLeagues.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="pt-4 border-t border-gray-200 dark:border-gray-700"
+                  >
+                    <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                      <Globe className="w-4 h-4 text-[#2D69B3]" />
+                      {selectedLeagues.length} campeonato{selectedLeagues.length !== 1 ? 's' : ''} selecionado{selectedLeagues.length !== 1 ? 's' : ''}
+                    </p>
+                  </motion.div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Step 3: Conditions */}
+        {step === 3 && (
+          <motion.div
+            key="step3"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
@@ -327,7 +523,7 @@ export default function EditStrategyPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                        Passo 2: Condições
+                        Passo 3: Condições
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                         Defina as regras que acionarão a estratégia
@@ -472,10 +668,10 @@ export default function EditStrategyPage() {
             </motion.div>
           )}
 
-        {/* Step 3: Review */}
-        {step === 3 && (
+        {/* Step 4: Review */}
+        {step === 4 && (
           <motion.div
-            key="step3"
+            key="step4"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
@@ -489,7 +685,7 @@ export default function EditStrategyPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                      Passo 3: Revisão
+                      Passo 4: Revisão
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                       Revise sua estratégia antes de salvar
@@ -511,9 +707,26 @@ export default function EditStrategyPage() {
                   <div>
                     <p className="text-gray-600 dark:text-gray-400 mb-1">Intervalo</p>
                     <p className="font-bold text-gray-900 dark:text-white">
-                      {startMinute}' - {endMinute}'
+                      {startMinute}&apos; - {endMinute}&apos;
                     </p>
                   </div>
+                </div>
+              </div>
+
+              <div className="p-6 bg-gradient-to-br from-purple-50 to-white dark:from-purple-900/10 dark:to-gray-800 rounded-xl border border-purple-100 dark:border-purple-900/30">
+                <h4 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-purple-600" />
+                  Campeonatos ({selectedLeagues.length})
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  {selectedLeagues.map(slug => {
+                    const league = LEAGUE_MAPPINGS.find(l => l.slug === slug);
+                    return league ? (
+                      <div key={slug} className="text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 px-3 py-2 rounded-lg">
+                        {league.name}
+                      </div>
+                    ) : null;
+                  })}
                 </div>
               </div>
 
@@ -569,12 +782,12 @@ export default function EditStrategyPage() {
           </Button>
         </motion.div>
 
-        {step === 3 ? (
+        {step === 4 ? (
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button
               type="button"
               onClick={handleSubmit}
-              disabled={conditions.length === 0 || isSubmitting}
+              disabled={conditions.length === 0 || selectedLeagues.length === 0 || isSubmitting}
               className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30"
             >
               {isSubmitting ? 'Salvando...' : 'Salvar Alterações'}

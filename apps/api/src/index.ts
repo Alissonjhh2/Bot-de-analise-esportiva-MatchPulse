@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import admin from 'firebase-admin';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './common/config/swagger';
@@ -8,6 +7,8 @@ import { errorHandler, notFoundHandler } from './common/middlewares/error-handle
 import { setupSecurity } from './common/middlewares/security';
 import { logger } from '@matchpulse/logger';
 import getPort from 'get-port';
+import { env } from './common/config/env-validation';
+import { healthCheck, readinessCheck, livenessCheck } from './common/utils/health-check';
 
 // Import routes
 import authRoutes from './modules/auth/routes/auth.routes';
@@ -18,44 +19,57 @@ import notificationRoutes from './modules/notifications/routes/notification.rout
 import matchHitRoutes from './modules/match-hits/routes/match-hit.routes';
 import liveMatchesRoutes from './modules/live-matches/routes/live-matches.routes';
 
-dotenv.config();
-
-// Initialize Firebase Admin
-if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
-  try {
+// Initialize Firebase Admin - Optional in development, required in production
+try {
+  if (env.FIREBASE_PROJECT_ID && env.FIREBASE_CLIENT_EMAIL && env.FIREBASE_PRIVATE_KEY) {
     admin.initializeApp({
       credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        projectId: env.FIREBASE_PROJECT_ID,
+        clientEmail: env.FIREBASE_CLIENT_EMAIL,
+        privateKey: env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
       }),
     });
-    logger.info('Firebase Admin initialized');
-  } catch (error) {
-    logger.error('Failed to initialize Firebase Admin', error as Error);
+    logger.info('Firebase Admin initialized successfully');
+  } else {
+    logger.warn('Firebase credentials not provided. Firebase features will be disabled.');
   }
-} else {
-  logger.warn('Firebase Admin credentials not provided, Firebase features will be limited');
+} catch (error) {
+  logger.error('Failed to initialize Firebase Admin', error as Error);
+  if (env.NODE_ENV === 'production') {
+    throw new Error('Firebase Admin initialization failed. Check credentials.');
+  }
+  logger.warn('Continuing without Firebase in development mode');
 }
 
 const app = express();
-const DEFAULT_PORT = 4000;
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : DEFAULT_PORT;
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = env.NODE_ENV !== 'production';
 
-// CORS configuration - FIRST middleware
+// CORS configuration - Whitelist based
+const allowedOrigins = env.ALLOWED_ORIGINS;
 app.use(cors({
-  origin: true, // Allow all origins in development
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
 
-logger.info('CORS enabled for all origins in development');
+logger.info(`CORS configured for origins: ${allowedOrigins.join(', ')}`);
 
-// Body parsing middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Body parsing middleware with size limits
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+
+// Security headers
+setupSecurity(app);
 
 // Request logging
 app.use((req, res, next) => {
@@ -68,11 +82,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check
-app.get('/health', (req, res) => {
-  console.log('[API] Health check requested');
-  res.json({ status: 'ok', message: 'MatchPulse API is running' });
-});
+// Health check endpoints
+app.get('/health', healthCheck);
+app.get('/ready', readinessCheck);
+app.get('/alive', livenessCheck);
 
 // API Routes
 logger.info('Registering API routes...');
@@ -102,8 +115,8 @@ async function startServer(port: number): Promise<void> {
   return new Promise((resolve, reject) => {
     const server = app.listen(port, () => {
       logger.info(`🚀 MatchPulse API rodando em http://localhost:${port}`);
-      logger.info(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
-      if (process.env.NODE_ENV === 'development') {
+      logger.info(`🌍 Ambiente: ${env.NODE_ENV}`);
+      if (env.NODE_ENV === 'development') {
         logger.info(`📚 Swagger documentation: http://localhost:${port}/api-docs`);
       }
       resolve();
@@ -139,7 +152,7 @@ async function startServer(port: number): Promise<void> {
 }
 
 // Start the server
-startServer(PORT).catch((error) => {
+startServer(env.PORT).catch((error) => {
   logger.error('❌ Falha ao iniciar servidor', error);
   process.exit(1);
 });

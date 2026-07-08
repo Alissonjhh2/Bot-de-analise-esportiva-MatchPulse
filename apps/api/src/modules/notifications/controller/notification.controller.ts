@@ -3,7 +3,6 @@ import { notificationService } from '../service/notification.service';
 import { ApiResponse } from '../../../common/types/api-response';
 import { AppError } from '../../../common/middlewares/error-handler';
 import { ErrorCode } from '../../../common/types/api-response';
-import { logger } from '@matchpulse/logger';
 
 export class NotificationController {
   async findByUserId(req: Request, res: Response, next: NextFunction) {

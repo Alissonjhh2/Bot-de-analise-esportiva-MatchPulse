@@ -3,7 +3,6 @@ import { CreateStrategyDto, UpdateStrategyDto, StrategyResponseDto } from '../dt
 import { AppError } from '../../../common/middlewares/error-handler';
 import { ErrorCode } from '../../../common/types/api-response';
 import { logger } from '@matchpulse/logger';
-import { Plan } from '@prisma/client';
 import { prisma } from '../../../common/config/prisma';
 
 // TODO: Fix import from @matchpulse/constants when path resolution is fixed

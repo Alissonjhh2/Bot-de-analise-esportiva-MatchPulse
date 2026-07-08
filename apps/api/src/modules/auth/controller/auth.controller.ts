@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { authService } from '../service/auth.service';
 import { ApiResponse } from '../../../common/types/api-response';
-import { logger } from '@matchpulse/logger';
 
 export class AuthController {
   async handleFirebaseAuth(req: Request, res: Response, next: NextFunction) {

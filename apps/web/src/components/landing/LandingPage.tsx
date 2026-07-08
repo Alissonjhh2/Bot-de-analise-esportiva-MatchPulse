@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@matchpulse/ui';
 import { ArrowRight, Zap, Shield, BarChart3, MessageSquare, CheckCircle, ChevronDown, TrendingUp, Globe, Clock, Sparkles, Play } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { mockFaqs } from '@matchpulse/constants';
 
 export const LandingPage = () => {

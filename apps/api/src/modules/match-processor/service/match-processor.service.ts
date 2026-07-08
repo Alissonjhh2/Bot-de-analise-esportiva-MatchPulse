@@ -55,7 +55,7 @@ export class MatchProcessorService {
             startMinute: strategy.startMinute,
             endMinute: strategy.endMinute,
             status: strategy.status,
-            conditions: strategy.conditions.map((c: any) => ({
+            conditions: strategy.conditions.map((c: { indicator: string; team: string; quantity: number; operator: string }) => ({
               indicator: c.indicator,
               team: c.team,
               quantity: c.quantity,
@@ -82,7 +82,7 @@ export class MatchProcessorService {
     }
   }
 
-  private async saveMatchHit(result: any, matchId: string): Promise<void> {
+  private async saveMatchHit(result: { strategyId: string }, matchId: string): Promise<void> {
     // TODO: Implement match hit storage
     // This should save to a MatchHit table or NotificationHistory
     if (this.config.enableLogging) {

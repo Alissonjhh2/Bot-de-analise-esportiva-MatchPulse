@@ -1,8 +1,6 @@
 import { userRepository } from '../../users/repository/user.repository';
 import { userService } from '../../users/service/user.service';
 import { CreateUserDto } from '../../users/dto/user.dto';
-import { AppError } from '../../../common/middlewares/error-handler';
-import { ErrorCode } from '../../../common/types/api-response';
 import { logger } from '@matchpulse/logger';
 
 export class AuthService {

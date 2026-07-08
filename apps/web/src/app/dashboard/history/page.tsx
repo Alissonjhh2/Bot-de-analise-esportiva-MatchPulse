@@ -13,7 +13,7 @@ interface MatchHit {
   minute: number;
   result: boolean;
   createdAt: string;
-  snapshot?: any;
+  snapshot?: { homeTeam?: string; awayTeam?: string } | null;
   strategy?: {
     name: string;
   };
@@ -119,7 +119,7 @@ export default function HistoryPage() {
                       {matchHit.result ? 'Match' : 'Falhou'}
                     </Badge>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Minuto {matchHit.minute}'
+                      Minuto {matchHit.minute}&apos;
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                       {new Date(matchHit.createdAt).toLocaleString('pt-BR')}

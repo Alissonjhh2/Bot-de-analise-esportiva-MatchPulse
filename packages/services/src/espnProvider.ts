@@ -332,15 +332,61 @@ export class ESPNProvider implements FootballProvider {
     const cached = this.getFromCache<LiveMatch[]>(cacheKey);
     if (cached) return cached;
 
-    const url = league
-      ? `${this.baseUrl}/${league}/scoreboard?lang=pt`
-      : `${this.baseUrl}/bra.1/scoreboard?lang=pt`;
-
     try {
-      const data = await this.fetchWithRetry<{ events: ESPNEvent[]; leagues: any[] }>(url);
-      const matches = this.normalizeLiveMatches(data);
-      this.setCache(cacheKey, matches, CACHE_TTL.scoreboard);
-      return matches;
+      let allMatches: LiveMatch[] = [];
+      
+      if (league) {
+        // Fetch specific league
+        const url = `${this.baseUrl}/${league}/scoreboard?lang=pt`;
+        logger.info(`Fetching ESPN data from: ${url}`);
+        const data = await this.fetchWithRetry<{ events: ESPNEvent[]; leagues: any[] }>(url);
+        logger.info(`ESPN API returned ${data.events?.length || 0} events`);
+        allMatches = this.normalizeLiveMatches(data);
+      } else {
+        // Fetch from multiple working leagues
+        logger.info(`Fetching matches from multiple leagues`);
+        const workingLeagues = [
+          'bra.1', 'bra.2', 'bra.3', 'bra.4',
+          'uefa.champions', 'uefa.europa',
+          'eng.1', 'esp.1', 'fra.1', 'ger.1', 'ita.1', 'por.1',
+          'conmebol.libertadores', 'conmebol.sudamericana', 'conmebol.america',
+          'caf.champions', 'chn.1',
+          // South American leagues for friendlies
+          'arg.1', 'mex.1', 'col.1', 'uru.1', 'par.1', 'chi.1', 'ecu.1',
+          // Additional leagues for friendlies coverage
+          'tur.1', 'usa.1', 'jpn.1', 'ned.1', 'bel.1', 'rus.1', 'aut.1', 'sco.1'
+        ];
+        
+        for (const leagueSlug of workingLeagues) {
+          try {
+            const url = `${this.baseUrl}/${leagueSlug}/scoreboard?lang=pt`;
+            const data = await this.fetchWithRetry<{ events: ESPNEvent[]; leagues: any[] }>(url);
+            const matches = this.normalizeLiveMatches(data);
+            allMatches = [...allMatches, ...matches];
+            logger.info(`Fetched ${matches.length} matches from ${leagueSlug}`);
+          } catch (error) {
+            logger.warn(`Failed to fetch from ${leagueSlug}: ${error instanceof Error ? error.message : String(error)}`);
+            // Continue with other leagues even if one fails
+          }
+        }
+      }
+      
+      // Filter matches for current date
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      
+      const todayMatches = allMatches.filter(match => {
+        const matchDate = new Date(match.startTime);
+        return matchDate >= today && matchDate < tomorrow;
+      });
+      
+      logger.info(`Total matches: ${allMatches.length}, Today's matches: ${todayMatches.length}`);
+      logger.info(`Normalized ${todayMatches.length} live matches for today`);
+      
+      this.setCache(cacheKey, todayMatches, CACHE_TTL.scoreboard);
+      return todayMatches;
     } catch (error) {
       logger.error('Failed to fetch live matches', error instanceof Error ? error : new Error(String(error)));
       return [];

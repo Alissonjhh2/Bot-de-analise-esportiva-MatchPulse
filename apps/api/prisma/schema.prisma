@@ -14,11 +14,13 @@ datasource db {
 enum Role {
   USER
   ADMIN
+  SUPER_ADMIN
 }
 
 enum Plan {
   FREE
   PREMIUM
+  ENTERPRISE
 }
 
 enum StrategyStatus {
@@ -202,4 +204,83 @@ model Log {
   @@index([level])
   @@index([source])
   @@index([createdAt])
+}
+
+// Cost Weights for Event Cost Engine
+model CostWeights {
+  id                 String  @id @default(uuid())
+  leagueWeight       Float   @default(1.0)
+  conditionWeight    Float   @default(1.0)
+  indicatorWeight    Float   @default(1.0)
+  apiWeight          Float   @default(1.0)
+  eventWeight        Float   @default(1.0)
+  notificationWeight Float   @default(1.0)
+  frequencyWeight    Float   @default(1.0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+// User Budget for Resource Budget System
+model UserBudget {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  totalBudget  Int      // Total computational budget
+  usedBudget   Int      @default(0)
+  plan         Plan
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@index([plan])
+}
+
+// Strategy Complexity Score
+model StrategyComplexity {
+  id           String   @id @default(uuid())
+  strategyId   String   @unique
+  complexityScore Int
+  leagueCost   Int
+  conditionCost Int
+  indicatorCost Int
+  apiCost      Int
+  eventCost    Int
+  notificationCost Int
+  frequencyCost Int
+  calculatedAt DateTime @default(now())
+
+  @@index([strategyId])
+  @@index([complexityScore])
+}
+
+// Strategy Fingerprint for Fingerprint Engine
+model StrategyFingerprint {
+  id          String   @id @default(uuid())
+  strategyId  String   @unique
+  fingerprint String
+  similarityGroup String? // Group ID for similar strategies
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([fingerprint])
+  @@index([similarityGroup])
+}
+
+// Audit Log for security events
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String?
+  action      String
+  resource    String
+  resourceId  String?
+  ipAddress   String?
+  userAgent   String?
+  details     Json?
+  success     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([resource])
+  @@index([createdAt])
+  @@index([ipAddress])
 }

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@matchpulse/ui';
-import { Input } from '@matchpulse/ui';
 import { Card, CardContent, CardHeader } from '@matchpulse/ui';
 import { Mail, Lock, User, ArrowRight, Sparkles, Eye, EyeOff, Check } from 'lucide-react';
 import Link from 'next/link';
@@ -46,10 +45,11 @@ export default function SignupPage() {
     try {
       await signUp(email, password, name);
       router.push('/dashboard');
-    } catch (err: any) {
-      if (err.code === 'auth/email-already-in-use') {
+    } catch (err: unknown) {
+      const error = err as { code?: string };
+      if (error.code === 'auth/email-already-in-use') {
         setError('Este email já está em uso');
-      } else if (err.code === 'auth/weak-password') {
+      } else if (error.code === 'auth/weak-password') {
         setError('A senha é muito fraca');
       } else {
         setError('Erro ao criar conta. Tente novamente.');

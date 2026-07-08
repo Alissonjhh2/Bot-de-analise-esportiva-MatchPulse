@@ -15,7 +15,7 @@ interface Strategy {
   endMinute: number;
   status: string;
   matchHits?: number;
-  conditions?: any[];
+  conditions?: unknown[];
 }
 
 export default function StrategyLibraryPage() {
@@ -28,7 +28,7 @@ export default function StrategyLibraryPage() {
 
   const fetchViralStrategies = async () => {
     try {
-      const response = await apiClient.get<{success: boolean, data: {data: Strategy[], pagination: any}}>('/strategies');
+      const response = await apiClient.get<{success: boolean, data: {data: Strategy[], pagination: {page: number, pageSize: number, total: number, totalPages: number}}}>('/strategies');
       const data = response.data.data;
       // Filter strategies with high match hit count (viral strategies)
       const viralStrategies = data

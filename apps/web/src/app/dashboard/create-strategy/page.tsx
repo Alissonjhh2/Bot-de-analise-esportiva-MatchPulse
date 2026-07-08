@@ -14,35 +14,35 @@ const LEAGUE_MAPPINGS = [
   { name: 'Campeonato Brasileiro', slug: 'bra.1' },
   { name: 'Campeonato Brasileiro Série B', slug: 'bra.2' },
   { name: 'Série C do Brasil', slug: 'bra.3' },
-  { name: 'Copa do Brasil', slug: 'bra.cup' },
+  { name: 'Copa do Brasil', slug: 'bra.4' },
   { name: 'Liga dos Campeões da UEFA', slug: 'uefa.champions' },
   { name: 'Liga Europa da UEFA', slug: 'uefa.europa' },
-  { name: 'Copa do Mundo', slug: 'fifa.world' },
-  { name: 'CONMEBOL Libertadores', slug: 'conmebol.libertadores' },
-  { name: 'CONMEBOL Sul-Americana', slug: 'conmebol.sudamericana' },
   { name: 'Premier League', slug: 'eng.1' },
   { name: 'LALIGA', slug: 'esp.1' },
   { name: 'Ligue 1', slug: 'fra.1' },
   { name: 'Bundesliga', slug: 'ger.1' },
   { name: 'Série A', slug: 'ita.1' },
+  { name: 'Campeonato Português', slug: 'por.1' },
+  { name: 'CONMEBOL Libertadores', slug: 'conmebol.libertadores' },
+  { name: 'CONMEBOL Sul-Americana', slug: 'conmebol.sudamericana' },
+  { name: 'Copa América', slug: 'conmebol.america' },
   { name: 'Copa das Nações da África', slug: 'caf.champions' },
   { name: 'Campeonato Chinês', slug: 'chn.1' },
-  { name: 'Campeonato Português', slug: 'por.1' },
-  { name: 'Mundial Feminino', slug: 'fifa.womens_world' },
-  { name: 'Campeonato Paulista', slug: 'bra.paulista' },
-  { name: 'Campeonato Carioca', slug: 'bra.carioca' },
-  { name: 'Campeonato Gaúcho', slug: 'bra.gaucha' },
-  { name: 'Campeonato Mineiro', slug: 'bra.mineiro' },
-  { name: 'Copa do Nordeste', slug: 'bra.nordeste' },
-  { name: 'Supercopa do Brasil', slug: 'bra.supercopa' },
-  { name: 'Eliminatórias Eurocopa', slug: 'uefa.euro_qual' },
-  { name: 'Copa São Paulo', slug: 'bra.copasp' },
-  { name: 'Copa América', slug: 'conmebol.america' },
-  { name: 'Amistoso', slug: 'friendly' },
-  { name: 'Brasileiro - S20', slug: 'bra.s20' },
-  { name: 'Copa do Brasil - S17', slug: 'bra.cup.s17' },
-  { name: 'Copa do Brasil - S20', slug: 'bra.cup.s20' },
-  { name: 'Pan-Americano - Futebol Feminino', slug: 'pan_american_womens' },
+  { name: 'Liga Argentina', slug: 'arg.1' },
+  { name: 'Liga Mexicana', slug: 'mex.1' },
+  { name: 'Liga Colombiana', slug: 'col.1' },
+  { name: 'Liga Uruguaia', slug: 'uru.1' },
+  { name: 'Liga Paraguaia', slug: 'par.1' },
+  { name: 'Liga Chilena', slug: 'chi.1' },
+  { name: 'Liga Equatoriana', slug: 'ecu.1' },
+  { name: 'Liga Turca', slug: 'tur.1' },
+  { name: 'MLS (EUA)', slug: 'usa.1' },
+  { name: 'Liga Japonesa', slug: 'jpn.1' },
+  { name: 'Eredivisie (Holanda)', slug: 'ned.1' },
+  { name: 'Liga Belga', slug: 'bel.1' },
+  { name: 'Liga Russa', slug: 'rus.1' },
+  { name: 'Liga Austríaca', slug: 'aut.1' },
+  { name: 'Liga Escocesa', slug: 'sco.1' },
 ];
 
 const DEFAULT_LEAGUE = 'bra.1';
@@ -160,12 +160,13 @@ export default function CreateStrategyPage() {
 
       // Success - redirect to my strategies
       router.push('/dashboard/my-strategies');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error creating strategy:', err);
       
+      const error = err as { message?: string };
       // Check if it's a strategy limit error
-      if (err.message && err.message.includes('Limite de estratégias atingido')) {
-        setError(err.message);
+      if (error.message && error.message.includes('Limite de estratégias atingido')) {
+        setError(error.message);
       } else {
         setError('Erro ao criar estratégia. Verifique sua conexão e tente novamente.');
       }
@@ -683,7 +684,7 @@ export default function CreateStrategyPage() {
                     <div>
                       <p className="text-gray-600 dark:text-gray-400 mb-1">Intervalo</p>
                       <p className="font-bold text-gray-900 dark:text-white">
-                        {startMinute}' - {endMinute}'
+                        {startMinute}&apos; - {endMinute}&apos;
                       </p>
                     </div>
                   </div>

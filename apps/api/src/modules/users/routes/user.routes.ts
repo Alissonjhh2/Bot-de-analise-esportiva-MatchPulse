@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { userController } from '../controller/user.controller';
-import { authenticateFirebase } from '../../../common/middlewares/auth';
+import { authenticateFirebase, requireAdmin } from '../../../common/middlewares/auth';
 
 const router = Router();
 
@@ -14,6 +14,6 @@ router.put('/profile', authenticateFirebase, userController.updateProfile.bind(u
 router.delete('/profile', authenticateFirebase, userController.deleteAccount.bind(userController));
 
 // Admin routes
-router.get('/', authenticateFirebase, userController.findAll.bind(userController));
+router.get('/', authenticateFirebase, requireAdmin, userController.findAll.bind(userController));
 
 export default router;

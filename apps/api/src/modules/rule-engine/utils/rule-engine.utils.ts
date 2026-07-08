@@ -1,5 +1,4 @@
 import { MatchStats } from '../../match-simulator/types/match-simulator.types';
-import { StrategyCondition, ConditionOperator } from '@prisma/client';
 
 export function getStatValue(stats: MatchStats, indicator: string, team: string): number {
   const indicatorLower = indicator.toLowerCase();

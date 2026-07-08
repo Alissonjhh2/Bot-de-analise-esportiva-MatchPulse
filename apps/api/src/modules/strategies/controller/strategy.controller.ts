@@ -4,7 +4,6 @@ import { ApiResponse } from '../../../common/types/api-response';
 import { createStrategyDto, updateStrategyDto, updateStrategyStatusDto } from '../dto/strategy.dto';
 import { AppError } from '../../../common/middlewares/error-handler';
 import { ErrorCode } from '../../../common/types/api-response';
-import { logger } from '@matchpulse/logger';
 
 export class StrategyController {
   async findById(req: Request, res: Response, next: NextFunction) {

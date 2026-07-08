@@ -1,15 +1,15 @@
 import { prisma } from '../config/prisma';
-import { LogLevel } from '@prisma/client';
+import { LogLevel, Prisma } from '@prisma/client';
 
 export class LogService {
-  async log(level: LogLevel, source: string, message: string, details?: any) {
+  async log(level: LogLevel, source: string, message: string, details?: unknown) {
     try {
       await prisma.log.create({
         data: {
           level,
           source,
           message,
-          details: details || null,
+          details: (details as Prisma.InputJsonValue) || Prisma.JsonNull,
         },
       });
     } catch (error) {
@@ -18,19 +18,19 @@ export class LogService {
     }
   }
 
-  async error(source: string, message: string, details?: any) {
+  async error(source: string, message: string, details?: unknown) {
     return this.log(LogLevel.ERROR, source, message, details);
   }
 
-  async warn(source: string, message: string, details?: any) {
+  async warn(source: string, message: string, details?: unknown) {
     return this.log(LogLevel.WARN, source, message, details);
   }
 
-  async info(source: string, message: string, details?: any) {
+  async info(source: string, message: string, details?: unknown) {
     return this.log(LogLevel.INFO, source, message, details);
   }
 
-  async debug(source: string, message: string, details?: any) {
+  async debug(source: string, message: string, details?: unknown) {
     return this.log(LogLevel.DEBUG, source, message, details);
   }
 

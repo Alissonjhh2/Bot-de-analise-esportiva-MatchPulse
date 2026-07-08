@@ -4,7 +4,6 @@ import { ApiResponse } from '../../../common/types/api-response';
 import { createTelegramConnectionDto } from '../dto/telegram.dto';
 import { AppError } from '../../../common/middlewares/error-handler';
 import { ErrorCode } from '../../../common/types/api-response';
-import { logger } from '@matchpulse/logger';
 
 export class TelegramController {
   async getConnection(req: Request, res: Response, next: NextFunction) {
