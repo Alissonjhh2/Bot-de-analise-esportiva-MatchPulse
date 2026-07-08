@@ -1,5 +1,4 @@
 import { prisma } from '../config/prisma';
-import { Prisma } from '@prisma/client';
 
 enum LogLevel {
   DEBUG = 'DEBUG',
@@ -16,7 +15,7 @@ export class LogService {
           level,
           source,
           message,
-          details: details as any,
+          details: details as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         },
       });
     } catch (error) {

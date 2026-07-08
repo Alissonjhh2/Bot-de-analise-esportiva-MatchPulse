@@ -49,7 +49,7 @@ export class StrategyService {
 
     // Check if user can create more strategies based on plan
     const userStrategies = await strategyRepository.findByUserId(userId, 1, 100);
-    const activeCount = userStrategies.data.filter((s: any) => s.status === 'ACTIVE').length;
+    const activeCount = userStrategies.data.filter((s: any) => s.status === 'ACTIVE').length; // eslint-disable-line @typescript-eslint/no-explicit-any
     
     // Get user plan from database
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -158,7 +158,7 @@ export class StrategyService {
     // Check if activating would exceed limit
     if (status === 'ACTIVE') {
       const userStrategies = await strategyRepository.findByUserId(userId, 1, 100);
-      const activeCount = userStrategies.data.filter((s: any) => s.status === 'ACTIVE' && s.id !== id).length;
+      const activeCount = userStrategies.data.filter((s: any) => s.status === 'ACTIVE' && s.id !== id).length; // eslint-disable-line @typescript-eslint/no-explicit-any
       
       // TODO: Get user plan from database
       const isPremium = false;

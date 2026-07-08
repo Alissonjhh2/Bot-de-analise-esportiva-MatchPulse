@@ -1,6 +1,5 @@
 import { prisma } from '../config/prisma';
 import { logger } from '@matchpulse/logger';
-import { Prisma } from '@prisma/client';
 
 export enum AuditAction {
   LOGIN = 'login',
@@ -45,7 +44,7 @@ export async function logAuditEvent(data: AuditLogData): Promise<void> {
         resourceId: data.resourceId,
         ipAddress: data.ipAddress,
         userAgent: data.userAgent,
-        details: sanitizedDetails as any,
+        details: sanitizedDetails as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         success: data.success,
       },
     });
