@@ -1,4 +1,6 @@
-import { Plan } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+
+export type Plan = 'FREE' | 'PREMIUM' | 'ENTERPRISE';
 
 export interface BudgetConfig {
   totalBudget: number;

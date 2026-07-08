@@ -1,6 +1,7 @@
 import { prisma } from '../../common/config/prisma';
 import { logger } from '@matchpulse/logger';
-import { Plan } from '@prisma/client';
+
+export type Plan = 'FREE' | 'PREMIUM' | 'ENTERPRISE';
 
 export interface UserBudgetInfo {
   userId: string;

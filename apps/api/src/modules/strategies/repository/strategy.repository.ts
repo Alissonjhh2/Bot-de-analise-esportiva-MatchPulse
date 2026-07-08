@@ -163,7 +163,7 @@ export class StrategyRepository {
     // Copy conditions
     if (original.conditions && original.conditions.length > 0) {
       await prisma.strategyCondition.createMany({
-        data: original.conditions.map(c => ({
+        data: original.conditions.map((c: any) => ({
           strategyId: newStrategy.id,
           indicator: c.indicator,
           team: c.team,

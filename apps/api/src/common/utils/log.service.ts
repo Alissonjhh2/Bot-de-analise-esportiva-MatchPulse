@@ -1,5 +1,12 @@
 import { prisma } from '../config/prisma';
-import { LogLevel, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+
+enum LogLevel {
+  DEBUG = 'DEBUG',
+  INFO = 'INFO',
+  WARN = 'WARN',
+  ERROR = 'ERROR'
+}
 
 export class LogService {
   async log(level: LogLevel, source: string, message: string, details?: unknown) {
@@ -9,7 +16,7 @@ export class LogService {
           level,
           source,
           message,
-          details: (details as Prisma.InputJsonValue) || Prisma.JsonNull,
+          details: details as any,
         },
       });
     } catch (error) {

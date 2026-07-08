@@ -45,7 +45,7 @@ export async function logAuditEvent(data: AuditLogData): Promise<void> {
         resourceId: data.resourceId,
         ipAddress: data.ipAddress,
         userAgent: data.userAgent,
-        details: sanitizedDetails as Prisma.InputJsonValue,
+        details: sanitizedDetails as any,
         success: data.success,
       },
     });
