@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "dotenv -e .env -- tsx src/index.ts",
     "build": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate deploy",
     "start": "tsx src/index.ts",
     "start:prod": "tsx src/index.ts",
     "lint": "eslint src --ext .ts"
