@@ -23,7 +23,12 @@
       "@matchpulse/ui": ["../../packages/ui/src"],
       "@matchpulse/types": ["../../packages/types/src"],
       "@matchpulse/utils": ["../../packages/utils/src"],
-      "@matchpulse/config": ["../../packages/config/src"]
+      "@matchpulse/config": ["../../packages/config/src"],
+      "@matchpulse/constants": ["../../packages/constants/src"],
+      "@matchpulse/hooks": ["../../packages/hooks/src"],
+      "@matchpulse/services": ["../../packages/services/src"],
+      "@matchpulse/i18n": ["../../packages/i18n/src"],
+      "@matchpulse/logger": ["../../packages/logger/src"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
