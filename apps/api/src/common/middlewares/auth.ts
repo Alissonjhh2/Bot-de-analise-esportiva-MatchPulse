@@ -115,11 +115,32 @@ export const authenticateFirebase = async (
     const user = await getUserFromFirebaseUid(decodedToken.uid);
     
     if (!user) {
-      throw new AppError(
-        ErrorCode.NOT_FOUND,
-        'User not found in database',
-        404
-      );
+      // Create user if not exists
+      const newUser = await prisma.user.create({
+        data: {
+          firebaseUid: decodedToken.uid,
+          email: decodedToken.email || '',
+          name: decodedToken.name || '',
+          role: 'USER',
+          plan: 'FREE',
+        },
+      });
+      
+      req.user = {
+        uid: newUser.id,
+        email: newUser.email,
+        firebaseUid: newUser.firebaseUid,
+        role: newUser.role,
+        plan: newUser.plan,
+      };
+      
+      // Cache the decoded token
+      tokenCache.set(token, {
+        decoded: decodedToken,
+        expiresAt: Date.now() + TOKEN_CACHE_TTL,
+      });
+      
+      return next();
     }
 
     // Cache the decoded token
