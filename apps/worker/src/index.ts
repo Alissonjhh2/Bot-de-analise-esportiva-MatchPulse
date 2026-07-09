@@ -3,6 +3,7 @@ import { scheduler } from './scheduler';
 import { MatchProcessorService, ESPNProvider } from '@matchpulse/services';
 import { prisma } from './lib/prisma';
 import { telegramBotService } from './services/telegram-bot.service';
+import express from 'express';
 
 // Cooldown tracking to prevent spam - 1 notification per match per strategy
 const notifiedMatches = new Map<string, Set<string>>(); // strategyId -> Set of matchIds
@@ -13,6 +14,14 @@ const notifiedMatches = new Map<string, Set<string>>(); // strategyId -> Set of 
 // - Processing match updates with Match Processor
 // - Saving match hits to database
 // - Sending Telegram notifications
+
+// Health check server for Render
+const healthCheckApp = express();
+const PORT = process.env.PORT || 10000;
+
+healthCheckApp.get('/health', (_req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 class MatchPulseWorker {
   private isRunning = false;
@@ -409,6 +418,11 @@ class MatchPulseWorker {
 
     this.isRunning = true;
     logger.info('MatchPulse Worker started');
+
+    // Start health check server for Render
+    healthCheckApp.listen(PORT, () => {
+      logger.info(`Health check server listening on port ${PORT}`);
+    });
 
     // Start Telegram bot polling
     await telegramBotService.startPolling();
