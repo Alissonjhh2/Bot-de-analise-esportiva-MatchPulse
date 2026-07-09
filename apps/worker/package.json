@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "cross-env DATABASE_URL=postgresql://postgres:ycxHxotXUiersiDaEKTBGKFSkvKovnXj@hayabusa.proxy.rlwy.net:32505/railway tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate deploy",
+    "start": "tsx src/index.ts"
   },
   "dependencies": {
     "@matchpulse/config": "*",
@@ -17,7 +19,8 @@
     "@prisma/client": "^5.8.0",
     "cross-env": "^7.0.3",
     "node-cron": "^3.0.3",
-    "node-telegram-bot-api": "^1.1.2"
+    "node-telegram-bot-api": "^1.1.2",
+    "tsx": "^4.7.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
