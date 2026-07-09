@@ -21,6 +21,7 @@ export const createStrategyDto = z.object({
   endMinute: z.number().int().min(1, 'End minute must be at least 1').max(90, 'End minute must be at most 90').default(90),
   status: z.enum(['ACTIVE', 'INACTIVE']).default('ACTIVE'),
   visibility: z.enum(['PRIVATE', 'PUBLIC']).default('PRIVATE'),
+  leagues: z.array(z.string()).optional(),
   conditions: z.array(createStrategyConditionDto).optional(),
 });
 
@@ -31,6 +32,7 @@ export const updateStrategyDto = z.object({
   endMinute: z.number().int().min(1, 'End minute must be at least 1').max(90, 'End minute must be at most 90').optional(),
   status: z.enum(['ACTIVE', 'INACTIVE']).optional(),
   visibility: z.enum(['PRIVATE', 'PUBLIC']).optional(),
+  leagues: z.array(z.string()).optional(),
   conditions: z.array(createStrategyConditionDto).optional(),
 });
 
@@ -47,6 +49,7 @@ export const strategyResponseDto = z.object({
   endMinute: z.number(),
   status: z.enum(['ACTIVE', 'INACTIVE']),
   visibility: z.enum(['PRIVATE', 'PUBLIC']),
+  leagues: z.array(z.string()),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
