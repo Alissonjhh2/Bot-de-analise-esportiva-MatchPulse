@@ -256,14 +256,14 @@ export default function DashboardPage() {
         >
           <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white overflow-hidden relative">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <CardContent className="p-6 relative">
+            <CardContent className="p-4 relative">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-white/80 mb-1">Estratégias Ativas</p>
-                  <p className="text-4xl font-bold tracking-tight">{stats.activeStrategies}</p>
+                  <p className="text-2xl font-bold tracking-tight">{stats.activeStrategies}</p>
                 </div>
-                <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                  <AlertCircle className="w-7 h-7 text-white" />
+                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                  <AlertCircle className="w-5 h-5 text-white" />
                 </div>
               </div>
             </CardContent>
@@ -276,14 +276,14 @@ export default function DashboardPage() {
         >
           <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-green-500 via-green-600 to-green-700 text-white overflow-hidden relative">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <CardContent className="p-6 relative">
+            <CardContent className="p-4 relative">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-white/80 mb-1">Match Hits Hoje</p>
-                  <p className="text-4xl font-bold tracking-tight">{stats.notificationsSentToday}</p>
+                  <p className="text-2xl font-bold tracking-tight">{stats.notificationsSentToday}</p>
                 </div>
-                <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                  <Zap className="w-7 h-7 text-white" />
+                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-white" />
                 </div>
               </div>
             </CardContent>
@@ -296,19 +296,19 @@ export default function DashboardPage() {
         >
           <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 text-white overflow-hidden relative">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <CardContent className="p-6 relative">
+            <CardContent className="p-4 relative">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-white/80 mb-1">Bot Conectado</p>
                   <div className="flex items-center gap-2">
-                    <p className="text-4xl font-bold tracking-tight">
+                    <p className="text-2xl font-bold tracking-tight">
                       {stats.botConnected ? 'Sim' : 'Não'}
                     </p>
-                    {stats.botConnected && <CheckCircle className="w-6 h-6 text-white" />}
+                    {stats.botConnected && <CheckCircle className="w-5 h-5 text-white" />}
                   </div>
                 </div>
-                <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                  <Bot className="w-7 h-7 text-white" />
+                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-white" />
                 </div>
               </div>
             </CardContent>
@@ -321,12 +321,12 @@ export default function DashboardPage() {
         >
           <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white overflow-hidden relative">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <CardContent className="p-6 relative">
+            <CardContent className="p-4 relative">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-white/80 mb-1">Jogos Monitorados</p>
                   <div className="flex items-center gap-2">
-                    <p className="text-4xl font-bold tracking-tight">{stats.gamesMonitored}</p>
+                    <p className="text-2xl font-bold tracking-tight">{stats.gamesMonitored}</p>
                     {stats.gamesMonitored > 0 && (
                       <button
                         onClick={() => setShowLiveMatches(!showLiveMatches)}
@@ -337,8 +337,8 @@ export default function DashboardPage() {
                     )}
                   </div>
                 </div>
-                <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                  <Activity className="w-7 h-7 text-white" />
+                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                  <Activity className="w-5 h-5 text-white" />
                 </div>
               </div>
             {showLiveMatches && liveMatches.length > 0 && (
