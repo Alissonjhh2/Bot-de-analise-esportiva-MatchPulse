@@ -18,16 +18,10 @@ export const PERMISSIONS = {
   // User permissions
   UPDATE_PROFILE: 'user:update',
   DELETE_ACCOUNT: 'user:delete',
-  
-  // Admin permissions
-  MANAGE_USERS: 'admin:manage_users',
-  MANAGE_ROLES: 'admin:manage_roles',
-  VIEW_ANALYTICS: 'admin:view_analytics',
 } as const;
 
 export const ROLES = {
   USER: ['alert:read', 'alert:create', 'alert:update', 'alert:delete', 'strategy:read', 'telegram:connect', 'telegram:disconnect', 'user:update'],
-  ADMIN: ['alert:read', 'alert:create', 'alert:update', 'alert:delete', 'strategy:create', 'strategy:read', 'strategy:update', 'strategy:delete', 'telegram:connect', 'telegram:disconnect', 'user:update', 'manage_users', 'manage_roles', 'view_analytics'],
 } as const;
 
 export type Permission = typeof PERMISSIONS[keyof typeof PERMISSIONS];

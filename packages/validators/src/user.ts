@@ -7,7 +7,7 @@ export const createUserSchema = z.object({
   email: emailSchema,
   name: nameSchema,
   avatar: z.string().url().optional(),
-  role: z.enum(['USER', 'ADMIN']).default('USER'),
+  role: z.enum(['USER']).default('USER'),
   plan: z.enum(['FREE', 'PREMIUM']).default('FREE'),
 });
 

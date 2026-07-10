@@ -37,7 +37,7 @@ export const authenticateFirebase = async (
         firebaseUid: 'dev-user',
         name: 'Dev User',
         email: 'dev@example.com',
-        role: 'ADMIN',
+        role: 'USER',
         plan: 'PREMIUM',
       },
     });
@@ -243,9 +243,7 @@ export const requireRole = (...allowedRoles: string[]) => {
   };
 };
 
-export const requireAdmin = requireRole('ADMIN', 'SUPER_ADMIN');
-export const requirePremium = requireRole('PREMIUM', 'ADMIN', 'SUPER_ADMIN');
-export const requireSuperAdmin = requireRole('SUPER_ADMIN');
+export const requirePremium = requireRole('PREMIUM');
 
 // Ownership validation middleware
 export const requireOwnership = (resourceType: 'strategy' | 'notification' | 'telegram') => {

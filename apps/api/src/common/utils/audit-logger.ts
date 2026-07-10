@@ -9,7 +9,6 @@ export enum AuditAction {
   STRATEGY_DELETE = 'strategy_delete',
   USER_UPDATE = 'user_update',
   PLAN_CHANGE = 'plan_change',
-  ADMIN_ACTION = 'admin_action',
   TELEGRAM_LINK = 'telegram_link',
   TELEGRAM_UNLINK = 'telegram_unlink',
   RATE_LIMIT_EXCEEDED = 'rate_limit_exceeded',
@@ -132,30 +131,6 @@ export async function logStrategyEvent(
     ipAddress,
     userAgent,
     details,
-    success: true,
-  });
-}
-
-/**
- * Log admin action
- */
-export async function logAdminAction(
-  userId: string,
-  action: string,
-  resource: string,
-  resourceId?: string,
-  ipAddress?: string,
-  userAgent?: string,
-  details?: unknown
-): Promise<void> {
-  await logAuditEvent({
-    userId,
-    action: AuditAction.ADMIN_ACTION,
-    resource,
-    resourceId,
-    ipAddress,
-    userAgent,
-    details: { adminAction: action, ...(details as Record<string, unknown> | undefined) },
     success: true,
   });
 }

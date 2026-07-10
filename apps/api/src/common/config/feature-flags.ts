@@ -115,7 +115,7 @@ export async function isFeatureEnabled(flagName: string, userId?: string): Promi
 }
 
 /**
- * Set a feature flag (admin only)
+ * Set a feature flag
  */
 export async function setFeatureFlag(flagName: string, enabled: boolean, rolloutPercentage?: number): Promise<void> {
   try {
@@ -137,7 +137,7 @@ export async function setFeatureFlag(flagName: string, enabled: boolean, rollout
 }
 
 /**
- * Get all feature flags (admin only)
+ * Get all feature flags
  */
 export async function getAllFeatureFlags(): Promise<Record<string, FeatureFlag>> {
   try {

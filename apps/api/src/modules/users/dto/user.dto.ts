@@ -21,7 +21,7 @@ export const userResponseDto = z.object({
   name: z.string(),
   email: z.string(),
   avatar: z.string().nullable(),
-  role: z.enum(['USER', 'ADMIN']),
+  role: z.enum(['USER']),
   plan: z.enum(['FREE', 'PREMIUM']),
   createdAt: z.date(),
   updatedAt: z.date(),

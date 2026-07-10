@@ -38,9 +38,6 @@ const RATE_LIMIT_CONFIGS: Record<string, RateLimitConfig> = {
   'general': { windowMs: 60 * 1000, maxRequests: 60 }, // 60 requests per minute
   'read-heavy': { windowMs: 60 * 1000, maxRequests: 120 }, // 120 requests per minute
   
-  // Admin endpoints
-  'admin': { windowMs: 60 * 1000, maxRequests: 30 }, // 30 requests per minute
-  
   // Public endpoints
   'public': { windowMs: 60 * 1000, maxRequests: 30 }, // 30 requests per minute
 };
@@ -108,7 +105,6 @@ function getRouteType(req: Request): string {
   if (path.includes('/strategies') && req.method === 'POST') return 'strategy-create';
   if (path.includes('/strategies') && (req.method === 'PUT' || req.method === 'PATCH')) return 'strategy-update';
   if (path.includes('/strategies') && req.method === 'DELETE') return 'strategy-delete';
-  if (path.includes('/admin')) return 'admin';
   if (path.includes('/live-matches') || path.includes('/health')) return 'public';
   
   // Default to general
@@ -174,7 +170,6 @@ export const telegramLinkRateLimiter = createRateLimiter('telegram-link');
 export const strategyCreateRateLimiter = createRateLimiter('strategy-create');
 export const strategyUpdateRateLimiter = createRateLimiter('strategy-update');
 export const strategyDeleteRateLimiter = createRateLimiter('strategy-delete');
-export const adminRateLimiter = createRateLimiter('admin');
 export const publicRateLimiter = createRateLimiter('public');
 export const generalRateLimiter = createRateLimiter('general');
 
