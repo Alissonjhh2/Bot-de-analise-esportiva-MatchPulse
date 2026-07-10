@@ -354,10 +354,12 @@ class MatchPulseWorker {
           }
         } catch (error) {
           logger.error(`Error fetching matches for league ${league}`, error as Error);
+          // Continue with other leagues even if one fails
         }
       }
     } catch (error) {
       logger.error('Error checking live matches', error as Error);
+      // Don't crash the worker, just log the error
     }
   }
 

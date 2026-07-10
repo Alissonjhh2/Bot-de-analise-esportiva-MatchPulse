@@ -359,7 +359,7 @@ export class ESPNProvider implements FootballProvider {
           'eng.1', 'esp.1', 'fra.1', 'ger.1', 'ita.1', 'por.1',
           'conmebol.libertadores', 'conmebol.sudamericana', 'conmebol.america',
           'caf.champions', 'chn.1',
-          'fifa.world', 'fifa.womens_world',
+          'fifa.world',
           // South American leagues for friendlies
           'arg.1', 'mex.1', 'col.1', 'uru.1', 'par.1', 'chi.1', 'ecu.1',
           // Additional leagues for friendlies coverage
