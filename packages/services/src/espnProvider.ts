@@ -434,41 +434,18 @@ export class ESPNProvider implements FootballProvider {
         'STATUS_SUSPENDED': 'in_progress',
         'STATUS_ABANDONED': 'postponed',
         'STATUS_FORFEIT': 'final',
+        'STATUS_FIRST_HALF': 'in_progress',
+        'STATUS_SECOND_HALF': 'in_progress',
       };
 
       const originalStatus = competition.status.type.name;
       const mappedStatus = statusMap[originalStatus] || 'scheduled';
-      
-      // Infer status based on clock if status is scheduled but clock shows progress
-      const clockValue = competition.status.displayClock || "0'";
-      const clockMinutes = parseInt(clockValue.replace(/[^0-9]/g, '')) || 0;
-      
-      let finalStatus = mappedStatus;
-      // Only infer as in_progress if:
-      // - Status is scheduled (not already final or other statuses)
-      // - Clock shows progress (> 0)
-      // - Clock doesn't indicate finished game (not 90'+)
-      // - Status is not already mapped to final
-      if (mappedStatus === 'scheduled' && clockMinutes > 0 && clockMinutes < 90 && finalStatus !== 'final') {
-        finalStatus = 'in_progress';
-        logger.info(`Match ${event.id}: Status inferred as 'in_progress' because clock is ${clockValue}`);
-      } else if (mappedStatus === 'scheduled' && clockMinutes >= 90) {
-        // If clock shows 90+ but status is scheduled, it's likely finished
-        finalStatus = 'final';
-        logger.info(`Match ${event.id}: Status inferred as 'final' because clock is ${clockValue} (90+)`);
-      }
-      
-      // Log complete status structure for Chinese matches and unmapped statuses
-      if (data.leagues[0]?.slug === 'chn.1' || !statusMap[originalStatus] || finalStatus !== mappedStatus) {
-        logger.info(`Match ${event.id} (${data.leagues[0]?.name}): Original status = ${originalStatus}, Mapped status = ${mappedStatus}, Final status = ${finalStatus}, Clock = ${clockValue}`);
-        logger.info(`Complete status structure: ${JSON.stringify(competition.status)}`);
-      }
 
       return {
         eventId: event.id,
         league: data.leagues[0]?.slug || 'unknown',
         leagueName: data.leagues[0]?.name || 'Unknown',
-        status: finalStatus,
+        status: mappedStatus,
         clock: competition.status.displayClock || "0'",
         period: this.getPeriod(competition.status.type.id),
         homeTeam: {
