@@ -45,6 +45,19 @@ const LEAGUE_MAPPINGS = [
   { name: 'Liga Russa', slug: 'rus.1' },
   { name: 'Liga Austríaca', slug: 'aut.1' },
   { name: 'Liga Escocesa', slug: 'sco.1' },
+  { name: 'Campeonato Paulista', slug: 'bra.paulista' },
+  { name: 'Campeonato Carioca', slug: 'bra.carioca' },
+  { name: 'Campeonato Gaúcho', slug: 'bra.gaucha' },
+  { name: 'Campeonato Mineiro', slug: 'bra.mineiro' },
+  { name: 'Copa do Nordeste', slug: 'bra.nordeste' },
+  { name: 'Supercopa do Brasil', slug: 'bra.supercopa' },
+  { name: 'Eliminatórias Eurocopa', slug: 'uefa.euro_qual' },
+  { name: 'Copa São Paulo', slug: 'bra.copasp' },
+  { name: 'Amistoso', slug: 'friendly' },
+  { name: 'Brasileiro - S20', slug: 'bra.s20' },
+  { name: 'Copa do Brasil - S17', slug: 'bra.cup.s17' },
+  { name: 'Copa do Brasil - S20', slug: 'bra.cup.s20' },
+  { name: 'Pan-Americano - Futebol Feminino', slug: 'pan_american_womens' },
 ];
 
 const DEFAULT_LEAGUE = 'bra.1';
