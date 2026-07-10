@@ -239,8 +239,8 @@ interface ESPNSchedule {
 
 // Cache configuration
 const CACHE_TTL = {
-  scoreboard: 30 * 1000, // 30 seconds
-  summary: 25 * 1000, // 25 seconds
+  scoreboard: 10 * 1000, // 10 seconds (reduced for better live updates)
+  summary: 15 * 1000, // 15 seconds
   standings: 10 * 60 * 1000, // 10 minutes
   teams: 24 * 60 * 60 * 1000, // 24 hours
   roster: 6 * 60 * 60 * 1000, // 6 hours
@@ -327,10 +327,10 @@ export class ESPNProvider implements FootballProvider {
     throw lastError || new Error('Max retries exceeded');
   }
 
-  async getLiveMatches(league?: string): Promise<LiveMatch[]> {
+  async getLiveMatches(league?: string, forceRefresh = false): Promise<LiveMatch[]> {
     const cacheKey = this.getCacheKey('scoreboard', league || 'all');
     const cached = this.getFromCache<LiveMatch[]>(cacheKey);
-    if (cached) return cached;
+    if (cached && !forceRefresh) return cached;
 
     try {
       let allMatches: LiveMatch[] = [];
@@ -416,6 +416,10 @@ export class ESPNProvider implements FootballProvider {
         'STATUS_FULL_TIME': 'final',
         'STATUS_POSTPONED': 'postponed',
         'STATUS_CANCELLED': 'cancelled',
+        'STATUS_DELAYED': 'in_progress',
+        'STATUS_SUSPENDED': 'in_progress',
+        'STATUS_ABANDONED': 'postponed',
+        'STATUS_FORFEIT': 'final',
       };
 
       const originalStatus = competition.status.type.name;
