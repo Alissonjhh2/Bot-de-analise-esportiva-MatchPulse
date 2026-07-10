@@ -371,17 +371,22 @@ export class ESPNProvider implements FootballProvider {
         }
       }
       
-      // Filter matches for current date
+      // Filter matches for current date (with timezone buffer for international leagues)
       const today = new Date();
       today.setHours(0, 0, 0, 0);
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
       
       const todayMatches = allMatches.filter(match => {
         const matchDate = new Date(match.startTime);
-        return matchDate >= today && matchDate < tomorrow;
+        // Include matches from yesterday to tomorrow to handle timezone differences
+        return matchDate >= yesterday && matchDate < tomorrow;
       });
       
+      const todayFormatted = today.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
+      logger.info(`Filtrando jogos para: ${todayFormatted}`);
       logger.info(`Total matches: ${allMatches.length}, Today's matches: ${todayMatches.length}`);
       logger.info(`Normalized ${todayMatches.length} live matches for today`);
       
