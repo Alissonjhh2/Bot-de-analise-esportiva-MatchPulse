@@ -441,6 +441,11 @@ export class ESPNProvider implements FootballProvider {
       const originalStatus = competition.status.type.name;
       const mappedStatus = statusMap[originalStatus] || 'scheduled';
 
+      // Log status mapping for debugging
+      if (mappedStatus === 'scheduled' && originalStatus !== 'STATUS_SCHEDULED') {
+        logger.warn(`Unknown status mapped to scheduled: ${originalStatus} for match ${event.id}`);
+      }
+
       return {
         eventId: event.id,
         league: data.leagues[0]?.slug || 'unknown',
