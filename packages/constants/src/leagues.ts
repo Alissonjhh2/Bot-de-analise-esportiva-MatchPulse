@@ -34,20 +34,7 @@ export const LEAGUE_MAPPINGS: LeagueMapping[] = [
   { name: 'Liga Russa', slug: 'rus.1', region: 'EUR' },
   { name: 'Liga Austríaca', slug: 'aut.1', region: 'EUR' },
   { name: 'Liga Escocesa', slug: 'sco.1', region: 'EUR' },
-  { name: 'Campeonato Paulista', slug: 'bra.paulista', region: 'BRA' },
-  { name: 'Campeonato Carioca', slug: 'bra.carioca', region: 'BRA' },
-  { name: 'Campeonato Gaúcho', slug: 'bra.gaucha', region: 'BRA' },
-  { name: 'Campeonato Mineiro', slug: 'bra.mineiro', region: 'BRA' },
-  { name: 'Copa do Nordeste', slug: 'bra.nordeste', region: 'BRA' },
-  { name: 'Supercopa do Brasil', slug: 'bra.supercopa', region: 'BRA' },
-  { name: 'Eliminatórias Eurocopa', slug: 'uefa.euro_qual', region: 'EUR' },
-  { name: 'Copa São Paulo', slug: 'bra.copasp', region: 'BRA' },
   { name: 'Copa América', slug: 'conmebol.america', region: 'SA' },
-  { name: 'Amistoso', slug: 'friendly', region: 'INT' },
-  { name: 'Brasileiro - S20', slug: 'bra.s20', region: 'BRA' },
-  { name: 'Copa do Brasil - S17', slug: 'bra.cup.s17', region: 'BRA' },
-  { name: 'Copa do Brasil - S20', slug: 'bra.cup.s20', region: 'BRA' },
-  { name: 'Pan-Americano - Futebol Feminino', slug: 'pan_american_womens', region: 'INT' },
 ];
 
 export const DEFAULT_LEAGUE = 'bra.1';
