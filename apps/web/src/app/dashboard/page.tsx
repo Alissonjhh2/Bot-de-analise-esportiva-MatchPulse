@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader } from '@matchpulse/ui';
 import { Badge } from '@matchpulse/ui';
-import { AlertCircle, Bot, Activity, Clock, Target, Zap, CheckCircle, Plus } from 'lucide-react';
+import { AlertCircle, Bot, Activity, Clock, Target, Zap, CheckCircle, Plus, X } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
@@ -353,52 +353,8 @@ export default function DashboardPage() {
                   <Activity className="w-5 h-5 text-white" />
                 </div>
               </div>
-            {showLiveMatches && liveMatches.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-white/20 space-y-2">
-                {liveMatches.map((match) => {
-                  const isLive = match.status === 'in_progress' || match.status === 'halftime';
-                  const isFinal = match.status === 'final';
-                  const startTime = new Date(match.startTime);
-                  const formattedTime = startTime.toLocaleTimeString('pt-BR', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    timeZone: 'America/Sao_Paulo'
-                  });
-                  
-                  return (
-                    <div key={match.eventId} className="text-sm text-white/90">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-medium text-white">
-                          {match.homeTeam.name} {match.homeTeam.score} - {match.awayTeam.score} {match.awayTeam.name}
-                        </span>
-                        {isLive ? (
-                          <span className="flex items-center gap-1 text-red-300 font-medium">
-                            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                            {match.clock}
-                          </span>
-                        ) : isFinal ? (
-                          <span className="text-green-300 font-medium">Finalizado</span>
-                        ) : (
-                          <span className="text-white/80">{formattedTime}</span>
-                        )}
-                      </div>
-                      <div className="flex items-center justify-between text-xs text-white/70">
-                        <span>{match.leagueName}</span>
-                        {isLive ? (
-                          <span className="text-red-300 font-medium">AO VIVO</span>
-                        ) : isFinal ? (
-                          <span className="text-green-300 font-medium">Finalizado</span>
-                        ) : (
-                          <span>Vai começar</span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
         </motion.div>
       </motion.div>
 
@@ -687,6 +643,87 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </motion.div>
+
+      {/* Live Matches Drawer */}
+      <AnimatePresence>
+        {showLiveMatches && liveMatches.length > 0 && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowLiveMatches(false)}
+              className="fixed inset-0 bg-black/50 z-50"
+            />
+            
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-800 shadow-2xl z-50 overflow-y-auto"
+            >
+              <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between sticky top-0 bg-white dark:bg-gray-800 z-10">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">Jogos Monitorados</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{liveMatches.length} jogos ao vivo</p>
+                </div>
+                <button
+                  onClick={() => setShowLiveMatches(false)}
+                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                </button>
+              </div>
+              
+              <div className="p-4 space-y-3">
+                {liveMatches.map((match) => {
+                  const isLive = match.status === 'in_progress' || match.status === 'halftime';
+                  const isFinal = match.status === 'final';
+                  const startTime = new Date(match.startTime);
+                  const formattedTime = startTime.toLocaleTimeString('pt-BR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    timeZone: 'America/Sao_Paulo'
+                  });
+                  
+                  return (
+                    <div key={match.eventId} className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-semibold text-gray-900 dark:text-white text-base">
+                          {match.homeTeam.name} {match.homeTeam.score} - {match.awayTeam.score} {match.awayTeam.name}
+                        </span>
+                        {isLive ? (
+                          <span className="flex items-center gap-1 text-red-500 font-medium text-sm">
+                            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                            {match.clock}
+                          </span>
+                        ) : isFinal ? (
+                          <span className="text-green-500 font-medium text-sm">Finalizado</span>
+                        ) : (
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">{formattedTime}</span>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+                        <span className="font-medium">{match.leagueName}</span>
+                        {isLive ? (
+                          <span className="text-red-500 font-medium text-xs bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded">AO VIVO</span>
+                        ) : isFinal ? (
+                          <span className="text-green-500 font-medium text-xs bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">Finalizado</span>
+                        ) : (
+                          <span className="text-gray-500 dark:text-gray-400 text-xs bg-gray-100 dark:bg-gray-600 px-2 py-0.5 rounded">Vai começar</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
