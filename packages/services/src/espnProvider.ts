@@ -436,6 +436,9 @@ export class ESPNProvider implements FootballProvider {
         'STATUS_FORFEIT': 'final',
         'STATUS_FIRST_HALF': 'in_progress',
         'STATUS_SECOND_HALF': 'in_progress',
+        'STATUS_FINAL_PEN': 'final',
+        'STATUS_AFTER_SHOOTOUT': 'final',
+        'STATUS_AFTER_EXTRA_TIME': 'final',
       };
 
       const originalStatus = competition.status.type.name;

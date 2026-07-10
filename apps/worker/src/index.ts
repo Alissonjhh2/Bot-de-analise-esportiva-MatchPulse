@@ -124,9 +124,9 @@ class MatchPulseWorker {
 
   async sendTelegramNotification(matchId: string, strategy: any, minute: number, snapshot: any, matchStatus: string = 'in_progress') {
     try {
-      // Block notifications during penalties
-      if (matchStatus === 'STATUS_AFTER_SHOOTOUT' || matchStatus === 'STATUS_FINAL_PEN') {
-        logger.info(`⏸️ Match ${matchId} is in penalties - blocking notifications`);
+      // Block notifications during penalties (using mapped status)
+      if (matchStatus === 'STATUS_AFTER_SHOOTOUT' || matchStatus === 'STATUS_FINAL_PEN' || matchStatus === 'STATUS_AFTER_EXTRA_TIME') {
+        logger.info(`⏸️ Match ${matchId} has penalty-related status (${matchStatus}) - blocking notifications`);
         return;
       }
 
@@ -407,8 +407,8 @@ class MatchPulseWorker {
         homeTeam: match.homeTeam.name,
         awayTeam: match.awayTeam.name,
         competition: match.leagueName,
-        goals_home: match.homeTeam.score,
-        goals_away: match.away.score,
+        goals_home: match.homeTeam?.score || 0,
+        goals_away: match.awayTeam?.score || 0,
         corners_home: matchStats.homeTeam.corners,
         corners_away: matchStats.awayTeam.corners,
         offensive_pressure_home: this.calculateOffensivePressure(
