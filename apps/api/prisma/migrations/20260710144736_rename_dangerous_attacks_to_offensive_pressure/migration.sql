@@ -5,10 +5,13 @@
 
 */
 -- AlterEnum
+-- Since OFFENSIVE_PRESSURE was already added manually, we just need to remove DANGEROUS_ATTACKS
+-- PostgreSQL doesn't support removing enum values directly, so we need to recreate the enum
 BEGIN;
-CREATE TYPE "Indicator_new" AS ENUM ('GOALS', 'CORNERS', 'OFFENSIVE_PRESSURE', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION');
-ALTER TABLE "StrategyCondition" ALTER COLUMN "indicator" TYPE "Indicator_new" USING ("indicator"::text::"Indicator_new");
+-- First, ensure no records use DANGEROUS_ATTACKS (should already be done)
+-- Then recreate the enum without DANGEROUS_ATTACKS
 ALTER TYPE "Indicator" RENAME TO "Indicator_old";
-ALTER TYPE "Indicator_new" RENAME TO "Indicator";
+CREATE TYPE "Indicator" AS ENUM ('GOALS', 'CORNERS', 'OFFENSIVE_PRESSURE', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION');
+ALTER TABLE "StrategyCondition" ALTER COLUMN "indicator" TYPE "Indicator" USING ("indicator"::text::"Indicator");
 DROP TYPE "Indicator_old";
 COMMIT;
