@@ -379,11 +379,13 @@ export class ESPNProvider implements FootballProvider {
       yesterday.setDate(yesterday.getDate() - 1);
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
+      const dayAfterTomorrow = new Date(today);
+      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
       
       const todayMatches = allMatches.filter(match => {
         const matchDate = new Date(match.startTime);
-        // Include matches from yesterday to tomorrow to handle timezone differences
-        return matchDate >= yesterday && matchDate < tomorrow;
+        // Include matches from yesterday to day after tomorrow to handle timezone differences
+        return matchDate >= yesterday && matchDate < dayAfterTomorrow;
       });
       
       const todayFormatted = today.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
