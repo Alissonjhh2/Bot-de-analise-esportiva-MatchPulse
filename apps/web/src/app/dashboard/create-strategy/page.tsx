@@ -18,7 +18,6 @@ const LEAGUE_MAPPINGS = [
   { name: 'Liga dos Campeões da UEFA', slug: 'uefa.champions' },
   { name: 'Liga Europa da UEFA', slug: 'uefa.europa' },
   { name: 'Copa do Mundo', slug: 'fifa.world' },
-  { name: 'Mundial Feminino', slug: 'fifa.womens_world' },
   { name: 'Premier League', slug: 'eng.1' },
   { name: 'LALIGA', slug: 'esp.1' },
   { name: 'Ligue 1', slug: 'fra.1' },
