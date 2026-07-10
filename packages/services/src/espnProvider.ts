@@ -413,11 +413,19 @@ export class ESPNProvider implements FootballProvider {
         'STATUS_CANCELLED': 'cancelled',
       };
 
+      const originalStatus = competition.status.type.name;
+      const mappedStatus = statusMap[originalStatus] || 'scheduled';
+      
+      // Log status mapping for Chinese matches and unmapped statuses
+      if (data.leagues[0]?.slug === 'chn.1' || !statusMap[originalStatus]) {
+        logger.info(`Match ${event.id} (${data.leagues[0]?.name}): Original status = ${originalStatus}, Mapped status = ${mappedStatus}, Score = ${homeCompetitor?.score}-${awayCompetitor?.score}`);
+      }
+
       return {
         eventId: event.id,
         league: data.leagues[0]?.slug || 'unknown',
         leagueName: data.leagues[0]?.name || 'Unknown',
-        status: statusMap[competition.status.type.name] || 'scheduled',
+        status: mappedStatus,
         clock: competition.status.displayClock || "0'",
         period: this.getPeriod(competition.status.type.id),
         homeTeam: {
