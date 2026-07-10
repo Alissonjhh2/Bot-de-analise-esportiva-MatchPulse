@@ -70,6 +70,7 @@ export default function DashboardPage() {
   const [liveMatches, setLiveMatches] = useState<LiveMatch[]>([]);
   const [showLiveMatches, setShowLiveMatches] = useState(false);
   const [error, setError] = useState('');
+  const [refreshCount, setRefreshCount] = useState(0);
 
   const fetchData = async (showLoading = false) => {
     try {
@@ -94,8 +95,16 @@ export default function DashboardPage() {
       // Fetch live matches from ESPN API
       let liveMatchesData: LiveMatch[] = [];
       try {
-        const liveMatchesResponse = await apiClient.get<{success: boolean, data: LiveMatch[]}>('/live-matches');
+        // Use forceRefresh on every 4th refresh to ensure fresh data
+        const shouldForceRefresh = refreshCount % 4 === 0;
+        const liveMatchesResponse = await apiClient.get<{success: boolean, data: LiveMatch[]}>(`/live-matches?forceRefresh=${shouldForceRefresh}`);
         liveMatchesData = liveMatchesResponse.data || [];
+        
+        // Log for debugging
+        console.log('[Dashboard] Live matches fetched:', liveMatchesData.length, 'matches');
+        liveMatchesData.forEach(match => {
+          console.log(`[Dashboard] Match: ${match.homeTeam.name} vs ${match.awayTeam.name}, Status: ${match.status}, Clock: ${match.clock}`);
+        });
       } catch {
         // If endpoint doesn't exist yet, set to 0
         liveMatchesData = [];
@@ -143,7 +152,10 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchData(true); // Initial load with loading state
     // Auto-refresh every 15 seconds without loading state
-    const interval = setInterval(() => fetchData(false), 15000);
+    const interval = setInterval(() => {
+      setRefreshCount(prev => prev + 1);
+      fetchData(false);
+    }, 15000);
     return () => clearInterval(interval);
   }, []);
 

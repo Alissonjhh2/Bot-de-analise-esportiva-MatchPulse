@@ -330,7 +330,15 @@ export class ESPNProvider implements FootballProvider {
   async getLiveMatches(league?: string, forceRefresh = false): Promise<LiveMatch[]> {
     const cacheKey = this.getCacheKey('scoreboard', league || 'all');
     const cached = this.getFromCache<LiveMatch[]>(cacheKey);
-    if (cached && !forceRefresh) return cached;
+    
+    if (cached && !forceRefresh) {
+      logger.info(`Returning cached live matches for ${league || 'all leagues'} (${cached.length} matches)`);
+      return cached;
+    }
+    
+    if (forceRefresh) {
+      logger.info(`Force refresh requested for live matches`);
+    }
 
     try {
       let allMatches: LiveMatch[] = [];
@@ -392,6 +400,12 @@ export class ESPNProvider implements FootballProvider {
       const todayFormatted = brazilTime.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
       logger.info(`Filtrando jogos para: ${todayFormatted}`);
       logger.info(`Total matches: ${allMatches.length}, Today's matches: ${todayMatches.length}`);
+      
+      // Log status of today's matches for debugging
+      todayMatches.forEach(match => {
+        logger.info(`Match: ${match.homeTeam.name} vs ${match.awayTeam.name}, Status: ${match.status}, Clock: ${match.clock}`);
+      });
+      
       logger.info(`Normalized ${todayMatches.length} live matches for today`);
       
       this.setCache(cacheKey, todayMatches, CACHE_TTL.scoreboard);
