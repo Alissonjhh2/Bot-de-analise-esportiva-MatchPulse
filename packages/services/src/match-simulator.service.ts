@@ -174,7 +174,6 @@ export class MatchSimulatorService {
 
   private updateStats(match: Match): void {
     const stats = match.stats;
-    const minute = match.minute;
 
     // Possibilities based on game progression
     const cornerProbability = 0.1;
