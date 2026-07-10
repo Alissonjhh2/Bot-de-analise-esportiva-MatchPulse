@@ -3,10 +3,18 @@ import { config } from '@matchpulse/config';
 class ApiClient {
   private baseUrl: string;
   private getToken: () => string | null;
+  private onTokenExpired?: () => void;
 
-  constructor(getToken?: () => string | null) {
+  constructor(getToken?: () => string | null, onTokenExpired?: () => void) {
     this.baseUrl = config.api.baseUrl;
     this.getToken = getToken || (() => null);
+    this.onTokenExpired = onTokenExpired;
+  }
+
+  private handleAuthError() {
+    if (this.onTokenExpired) {
+      this.onTokenExpired();
+    }
   }
 
   private getHeaders(options?: RequestInit): Record<string, string> {
@@ -32,6 +40,9 @@ class ApiClient {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          this.handleAuthError();
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -60,6 +71,9 @@ class ApiClient {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          this.handleAuthError();
+        }
         const errorJson = await response.json().catch(() => null) as { message?: string; error?: { message?: string } } | null;
         const errorMessage = errorJson?.message || errorJson?.error?.message || `HTTP error! status: ${response.status}`;
         throw new Error(errorMessage);
@@ -88,6 +102,9 @@ class ApiClient {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          this.handleAuthError();
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -113,6 +130,9 @@ class ApiClient {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          this.handleAuthError();
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -137,6 +157,9 @@ class ApiClient {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          this.handleAuthError();
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
