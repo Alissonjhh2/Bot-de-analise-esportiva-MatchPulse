@@ -416,9 +416,10 @@ export class ESPNProvider implements FootballProvider {
       const originalStatus = competition.status.type.name;
       const mappedStatus = statusMap[originalStatus] || 'scheduled';
       
-      // Log status mapping for Chinese matches and unmapped statuses
+      // Log complete status structure for Chinese matches and unmapped statuses
       if (data.leagues[0]?.slug === 'chn.1' || !statusMap[originalStatus]) {
         logger.info(`Match ${event.id} (${data.leagues[0]?.name}): Original status = ${originalStatus}, Mapped status = ${mappedStatus}, Score = ${homeCompetitor?.score}-${awayCompetitor?.score}`);
+        logger.info(`Complete status structure: ${JSON.stringify(competition.status)}`);
       }
 
       return {
