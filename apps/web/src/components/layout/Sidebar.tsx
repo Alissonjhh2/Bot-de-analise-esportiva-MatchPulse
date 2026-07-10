@@ -46,10 +46,10 @@ export function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed left-0 top-0 h-screen bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-50 flex flex-col transition-transform duration-300 ease-in-out',
+          'h-screen bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-transform duration-300 ease-in-out',
           'w-64',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
-          'lg:translate-x-0 lg:z-40'
+          'lg:translate-x-0'
         )}
         role="navigation"
         aria-label="Navegação principal"

@@ -12,13 +12,32 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Sidebar />
-        <Topbar />
-        <main className="pt-20 pl-4 pr-4 pb-6 lg:pl-64 lg:pr-6">
-          {children}
-        </main>
-        <Tutorial />
+      <div className="flex flex-row h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+        {/* Sidebar - Fixed width, never shrinks */}
+        <div className="w-64 flex-shrink-0 hidden lg:block">
+          <Sidebar />
+        </div>
+        
+        {/* Mobile Sidebar Overlay */}
+        <div className="lg:hidden fixed inset-0 z-50">
+          <Sidebar />
+        </div>
+        
+        {/* Main Content Area - Flexible, takes remaining space */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Header */}
+          <div className="flex-shrink-0">
+            <Topbar />
+          </div>
+          
+          {/* Scrollable Content */}
+          <main className="flex-1 overflow-y-auto px-6 py-6">
+            {children}
+          </main>
+          
+          {/* Tutorial */}
+          <Tutorial />
+        </div>
       </div>
     </SidebarProvider>
   );
