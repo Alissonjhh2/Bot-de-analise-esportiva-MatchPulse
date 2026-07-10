@@ -188,7 +188,7 @@ export default function DashboardPage() {
             <p className="text-gray-600 dark:text-gray-400">Carregando dados...</p>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
             <Card key={i} className="border-0 shadow-sm">
               <CardContent className="p-6">
@@ -215,7 +215,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -248,7 +248,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
       >
         <motion.div
           whileHover={{ y: -4, scale: 1.02 }}
@@ -409,7 +409,7 @@ export default function DashboardPage() {
               </div>
             </div>
           </CardHeader>
-          <CardContent className="p-6">
+          <CardContent className="p-4">
             {matchHits.length === 0 ? (
               <div className="text-center py-16">
                 <motion.div
@@ -443,40 +443,40 @@ export default function DashboardPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={`relative pl-8 pb-8 ${index < matchHits.length - 1 ? 'border-l-2 border-gray-100 dark:border-gray-800' : ''}`}
+                    className={`relative pl-6 pb-4 ${index < matchHits.length - 1 ? 'border-l-2 border-gray-100 dark:border-gray-800' : ''}`}
                   >
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.3, delay: index * 0.1 + 0.2 }}
-                      className="absolute left-0 top-0 w-4 h-4 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-full border-4 border-white dark:border-gray-900 shadow-lg"
+                      className="absolute left-0 top-0 w-3 h-3 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-full border-4 border-white dark:border-gray-900 shadow-lg"
                     />
-                    <div className="flex items-start justify-between p-5 bg-gradient-to-r from-green-50 to-white dark:from-green-900/10 dark:to-gray-900 border border-green-100 dark:border-green-900/30 rounded-xl hover:shadow-lg transition-all duration-300">
+                    <div className="flex items-start justify-between p-3 bg-gradient-to-r from-green-50 to-white dark:from-green-900/10 dark:to-gray-900 border border-green-100 dark:border-green-900/30 rounded-lg hover:shadow-lg transition-all duration-300">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
-                          <Badge variant="success" className="text-xs font-bold px-3 py-1">MATCH</Badge>
-                          <p className="font-bold text-gray-900 dark:text-white text-lg">{hit.strategy.name}</p>
+                          <Badge variant="success" className="text-xs font-bold px-2 py-0.5">MATCH</Badge>
+                          <p className="font-bold text-gray-900 dark:text-white text-base">{hit.strategy.name}</p>
                         </div>
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg">
+                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-2 py-1 rounded-lg">
                             <Clock className="w-4 h-4 text-[#2D69B3]" />
                             <span className="font-medium">Minuto {hit.minute}</span>
                           </div>
-                          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg">
+                          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-2 py-1 rounded-lg">
                             <Activity className="w-4 h-4 text-[#2D69B3]" />
                             <span className="font-medium">Partida: {hit.snapshot?.homeTeam && hit.snapshot?.awayTeam 
                               ? `${hit.snapshot.homeTeam} X ${hit.snapshot.awayTeam}`
                               : hit.matchId.slice(-8)}</span>
                           </div>
-                          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-lg">
+                          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-2 py-1 rounded-lg">
                             <Clock className="w-4 h-4 text-[#2D69B3]" />
                             <span className="font-medium">{new Date(hit.createdAt).toLocaleTimeString()}</span>
                           </div>
                         </div>
                       </div>
                       <div className="ml-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                          <CheckCircle className="w-6 h-6 text-white" />
+                        <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center shadow-lg">
+                          <CheckCircle className="w-5 h-5 text-white" />
                         </div>
                       </div>
                     </div>
@@ -493,7 +493,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-4"
       >
         <motion.div
           whileHover={{ y: -4 }}
