@@ -13,8 +13,6 @@ datasource db {
 // Enums
 enum Role {
   USER
-  ADMIN
-  SUPER_ADMIN
 }
 
 enum Plan {
