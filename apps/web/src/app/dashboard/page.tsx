@@ -680,7 +680,8 @@ export default function DashboardPage() {
               
               <div className="p-4 space-y-3">
                 {liveMatches.map((match) => {
-                  const isLive = match.status === 'in_progress' || match.status === 'halftime';
+                  const isLive = match.status === 'in_progress';
+                  const isHalftime = match.status === 'halftime';
                   const isFinal = match.status === 'final';
                   const startTime = new Date(match.startTime);
                   const formattedTime = startTime.toLocaleTimeString('pt-BR', { 
@@ -700,6 +701,11 @@ export default function DashboardPage() {
                             <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
                             {match.clock}
                           </span>
+                        ) : isHalftime ? (
+                          <span className="flex items-center gap-1 text-orange-500 font-medium text-sm">
+                            <Clock className="w-3 h-3" />
+                            Intervalo
+                          </span>
                         ) : isFinal ? (
                           <span className="text-green-500 font-medium text-sm">Finalizado</span>
                         ) : (
@@ -710,6 +716,8 @@ export default function DashboardPage() {
                         <span className="font-medium">{match.leagueName}</span>
                         {isLive ? (
                           <span className="text-red-500 font-medium text-xs bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded">AO VIVO</span>
+                        ) : isHalftime ? (
+                          <span className="text-orange-500 font-medium text-xs bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded">Intervalo</span>
                         ) : isFinal ? (
                           <span className="text-green-500 font-medium text-xs bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">Finalizado</span>
                         ) : (
