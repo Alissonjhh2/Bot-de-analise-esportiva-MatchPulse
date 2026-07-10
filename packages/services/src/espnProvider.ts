@@ -385,7 +385,7 @@ export class ESPNProvider implements FootballProvider {
         return matchDate >= yesterday && matchDate < tomorrow;
       });
       
-      const todayFormatted = today.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
+      const todayFormatted = today.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
       logger.info(`Filtrando jogos para: ${todayFormatted}`);
       logger.info(`Total matches: ${allMatches.length}, Today's matches: ${todayMatches.length}`);
       logger.info(`Normalized ${todayMatches.length} live matches for today`);
@@ -409,6 +409,7 @@ export class ESPNProvider implements FootballProvider {
         'STATUS_IN_PROGRESS': 'in_progress',
         'STATUS_HALFTIME': 'halftime',
         'STATUS_FINAL': 'final',
+        'STATUS_FULL_TIME': 'final',
         'STATUS_POSTPONED': 'postponed',
         'STATUS_CANCELLED': 'cancelled',
       };

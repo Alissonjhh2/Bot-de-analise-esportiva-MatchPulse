@@ -345,6 +345,7 @@ export default function DashboardPage() {
               <div className="mt-4 pt-4 border-t border-white/20 space-y-2">
                 {liveMatches.map((match) => {
                   const isLive = match.status === 'in_progress' || match.status === 'halftime';
+                  const isFinal = match.status === 'final';
                   const startTime = new Date(match.startTime);
                   const formattedTime = startTime.toLocaleTimeString('pt-BR', { 
                     hour: '2-digit', 
@@ -363,6 +364,8 @@ export default function DashboardPage() {
                             <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
                             {match.clock}
                           </span>
+                        ) : isFinal ? (
+                          <span className="text-green-300 font-medium">Finalizado</span>
                         ) : (
                           <span className="text-white/80">{formattedTime}</span>
                         )}
@@ -371,6 +374,8 @@ export default function DashboardPage() {
                         <span>{match.leagueName}</span>
                         {isLive ? (
                           <span className="text-red-300 font-medium">AO VIVO</span>
+                        ) : isFinal ? (
+                          <span className="text-green-300 font-medium">Finalizado</span>
                         ) : (
                           <span>Vai começar</span>
                         )}
