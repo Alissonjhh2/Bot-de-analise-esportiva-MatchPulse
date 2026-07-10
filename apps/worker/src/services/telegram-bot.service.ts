@@ -96,7 +96,7 @@ O código é válido por 5 minutos.
   private async handleCodeSubmission(chatId: number, code: string) {
     try {
       // Verify code with API
-      const apiUrl = `${this.apiBaseUrl}/api/v1/telegram/verify-link-code/${code}`;
+      const apiUrl = `${this.apiBaseUrl}/telegram/verify-link-code/${code}`;
       logger.info(`🔍 Verifying code with API: ${apiUrl}`);
       
       const response = await fetch(apiUrl);
