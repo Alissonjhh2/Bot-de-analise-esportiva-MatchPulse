@@ -122,8 +122,16 @@ class MatchPulseWorker {
     }
   }
 
-  async sendTelegramNotification(matchId: string, strategy: any, minute: number, snapshot: any) {
+  async sendTelegramNotification(matchId: string, strategy: any, minute: number, snapshot: any, matchStatus: string = 'in_progress') {
     try {
+      // Block notifications during penalties
+      if (matchStatus === 'STATUS_AFTER_SHOOTOUT' || matchStatus === 'STATUS_FINAL_PEN') {
+        logger.info(`⏸️ Match ${matchId} is in penalties - blocking notifications`);
+        return;
+      }
+
+      logger.info(`📤 Attempting to send Telegram notification for strategy ${strategy.name} to user ${strategy.userId}`);
+
       // Check if this match was already notified for this strategy
       if (!notifiedMatches.has(strategy.id)) {
         notifiedMatches.set(strategy.id, new Set());
@@ -144,6 +152,8 @@ class MatchPulseWorker {
         logger.info(`📱 No Telegram connection for user ${strategy.userId}`);
         return;
       }
+
+      logger.info(`✅ Found Telegram connection: chatId=${connection.chatId}`);
 
       // Format message
       const message = this.formatTelegramMessage(strategy, matchId, minute, snapshot);
@@ -326,6 +336,7 @@ class MatchPulseWorker {
       // Fetch live matches for all monitored leagues
       for (const league of uniqueLeagues) {
         try {
+          logger.info(`🏆 Fetching live matches for league: ${league}`);
           const liveMatches = await this.espnProvider.getLiveMatches(league);
           logger.info(`Found ${liveMatches.length} live matches in ${league}`);
 
@@ -338,6 +349,7 @@ class MatchPulseWorker {
 
           // Process each live match
           for (const match of inProgressMatches) {
+            logger.info(`⚽ Processing match: ${match.homeTeam.name} vs ${match.awayTeam.name} (${match.eventId})`);
             await this.processLiveMatch(match);
           }
         } catch (error) {
@@ -352,9 +364,11 @@ class MatchPulseWorker {
   async processLiveMatch(match: any) {
     try {
       logger.info(`Processing match ${match.eventId}: ${match.homeTeam.name} vs ${match.awayTeam.name}`);
+      logger.info(`Match status: ${match.status}, Clock: ${match.clock}`);
 
       // Get match summary from ESPN
       const matchStats = await this.espnProvider.getMatchSummary(match.eventId, match.league);
+      logger.info(`Match stats retrieved for ${match.eventId}`);
 
       // Convert to format expected by rule engine
       const snapshot = {
@@ -393,6 +407,8 @@ class MatchPulseWorker {
         ball_possession_away: matchStats.awayTeam.possession,
       };
 
+      logger.info(`Snapshot created: ${JSON.stringify(snapshot)}`);
+
       // Filter strategies that include this league
       const applicableStrategies = this.strategies.filter(
         strategy => strategy.leagues.includes(match.league)
@@ -402,26 +418,36 @@ class MatchPulseWorker {
 
       // Process with rule engine
       for (const strategy of applicableStrategies) {
-        await this.evaluateStrategy(strategy, snapshot);
+        logger.info(`🎯 Evaluating strategy: ${strategy.name} (${strategy.id})`);
+        await this.evaluateStrategy(strategy, snapshot, match.status);
       }
     } catch (error) {
       logger.error(`Error processing match ${match.eventId}`, error as Error);
     }
   }
 
-  async evaluateStrategy(strategy: any, snapshot: any) {
+  async evaluateStrategy(strategy: any, snapshot: any, matchStatus: string = 'in_progress') {
     try {
+      logger.info(`Evaluating strategy ${strategy.name} for match ${snapshot.matchId} at minute ${snapshot.minute}`);
+      logger.info(`Strategy time range: ${strategy.startMinute} - ${strategy.endMinute}`);
+      logger.info(`Strategy conditions: ${JSON.stringify(strategy.conditions)}`);
+
       // Check if match is within strategy's time range
       const minute = snapshot.minute;
       if (minute < strategy.startMinute || minute > strategy.endMinute) {
+        logger.info(`⏸️ Match minute ${minute} outside strategy range ${strategy.startMinute}-${strategy.endMinute}`);
         return;
       }
+
+      logger.info(`✅ Match minute ${minute} within strategy range`);
 
       // Evaluate conditions using match processor
       const result = await this.matchProcessor.evaluateConditions(
         snapshot,
         strategy.conditions
       );
+
+      logger.info(`🎯 Strategy evaluation result: ${result}`);
 
       if (result) {
         logger.info(`🎯 Strategy ${strategy.name} matched for match ${snapshot.matchId}`);
@@ -435,8 +461,11 @@ class MatchPulseWorker {
           snapshot.matchId,
           strategy,
           minute,
-          snapshot
+          snapshot,
+          matchStatus
         );
+      } else {
+        logger.info(`❌ Strategy ${strategy.name} did not match for match ${snapshot.matchId}`);
       }
     } catch (error) {
       logger.error(`Error evaluating strategy ${strategy.id}`, error as Error);
