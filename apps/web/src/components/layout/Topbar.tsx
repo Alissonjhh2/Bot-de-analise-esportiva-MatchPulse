@@ -21,7 +21,7 @@ export function Topbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-12 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 z-30 lg:left-72">
+    <header className="fixed top-0 left-0 right-0 h-12 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 z-30 lg:left-64">
       <div className="h-full px-3 lg:px-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button

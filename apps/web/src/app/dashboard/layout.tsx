@@ -15,7 +15,7 @@ export default function DashboardLayout({
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Sidebar />
         <Topbar />
-        <main className="pt-20 pl-4 pr-4 pb-6 lg:pl-72 lg:pr-6">
+        <main className="pt-20 pl-4 pr-4 pb-6 lg:pl-64 lg:pr-6">
           {children}
         </main>
         <Tutorial />
