@@ -367,8 +367,36 @@ class MatchPulseWorker {
       logger.info(`Match status: ${match.status}, Clock: ${match.clock}`);
 
       // Get match summary from ESPN
-      const matchStats = await this.espnProvider.getMatchSummary(match.eventId, match.league);
-      logger.info(`Match stats retrieved for ${match.eventId}`);
+      let matchStats;
+      try {
+        matchStats = await this.espnProvider.getMatchSummary(match.eventId, match.league);
+        logger.info(`Match stats retrieved for ${match.eventId}`);
+      } catch (error) {
+        logger.warn(`Failed to get match summary for ${match.eventId}, using basic match data instead`);
+        // Use basic match data when summary is not available
+        matchStats = {
+          homeTeam: {
+            corners: 0,
+            shots: 0,
+            shotsOnTarget: 0,
+            yellowCards: 0,
+            redCards: 0,
+            fouls: 0,
+            offsides: 0,
+            possession: 50,
+          },
+          awayTeam: {
+            corners: 0,
+            shots: 0,
+            shotsOnTarget: 0,
+            yellowCards: 0,
+            redCards: 0,
+            fouls: 0,
+            offsides: 0,
+            possession: 50,
+          },
+        };
+      }
 
       // Convert to format expected by rule engine
       const snapshot = {
