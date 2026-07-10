@@ -21,17 +21,23 @@ export function Topbar() {
   };
 
   return (
-    <header className="h-12 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-      <div className="h-full px-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+    <header className="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="h-full flex items-center justify-between">
+        {/* Mobile layout */}
+        <div className="px-6 flex items-center gap-4 lg:hidden flex-1">
           <button
             onClick={toggleSidebar}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             aria-label="Abrir menu"
           >
             <Menu className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           </button>
-          <div className="flex-1 max-w-xl hidden sm:block">
+        </div>
+        
+        {/* Desktop layout */}
+        <div className="hidden lg:flex items-center justify-between w-full px-6">
+          {/* Search bar - aligned with main content */}
+          <div className="flex-1 max-w-xl">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
               <input
@@ -42,55 +48,55 @@ export function Topbar() {
               />
             </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2 sm:gap-4">
-          <button
-            onClick={() => setTheme(actualTheme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label={actualTheme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
-          >
-            {actualTheme === 'dark' ? (
-              <Sun className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-            ) : (
-              <Moon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-            )}
-          </button>
-          <button 
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors relative" 
-            aria-label="Notificações"
-            onClick={() => alert('Notificações em breve!')}
-          >
-            <Bell className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-[#E6393F] rounded-full" aria-hidden="true" />
-          </button>
-          <div className="relative">
+          
+          <div className="flex items-center gap-2 sm:gap-4">
             <button
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Perfil"
+              onClick={() => setTheme(actualTheme === 'dark' ? 'light' : 'dark')}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              aria-label={actualTheme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
             >
-              <div className="w-10 h-10 bg-[#2D69B3] rounded-full flex items-center justify-center">
-                <UserIcon className="w-5 h-5 text-white" />
-              </div>
-              <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-400 hidden sm:block" />
+              {actualTheme === 'dark' ? (
+                <Sun className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              ) : (
+                <Moon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              )}
             </button>
-            
-            {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2">
-                <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    {user?.displayName || user?.email || 'Usuário'}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                    {user?.email}
-                  </p>
+            <button 
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors relative" 
+              aria-label="Notificações"
+              onClick={() => alert('Notificações em breve!')}
+            >
+              <Bell className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-[#E6393F] rounded-full" aria-hidden="true" />
+            </button>
+            <div className="relative">
+              <button
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Perfil"
+              >
+                <div className="w-10 h-10 bg-[#2D69B3] rounded-full flex items-center justify-center">
+                  <UserIcon className="w-5 h-5 text-white" />
                 </div>
-                <button
-                  onClick={() => {
-                    setShowProfileMenu(false);
-                    router.push('/dashboard/profile');
-                  }}
-                  className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
+                <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-400 hidden sm:block" />
+              </button>
+              
+              {showProfileMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2">
+                  <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {user?.displayName || user?.email || 'Usuário'}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      {user?.email}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      router.push('/dashboard/profile');
+                    }}
+                    className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
                 >
                   <UserIcon className="w-4 h-4" />
                   Perfil
@@ -105,6 +111,7 @@ export function Topbar() {
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
     </header>
