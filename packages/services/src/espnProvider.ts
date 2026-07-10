@@ -508,17 +508,33 @@ export class ESPNProvider implements FootballProvider {
   }
 
   private normalizeMatchStats(data: ESPNSummary, league: string): MatchStats {
+    if (!data.competitions || data.competitions.length === 0) {
+      logger.error(`No competitions data available for match ${data.header.id}`);
+      throw new Error('No competitions data available');
+    }
+
     const competition = data.competitions[0];
+    
+    if (!competition.competitors || competition.competitors.length === 0) {
+      logger.error(`No competitors data available for match ${data.header.id}`);
+      throw new Error('No competitors data available');
+    }
+
     const homeCompetitor = competition.competitors.find(c => c.homeAway === 'home');
     const awayCompetitor = competition.competitors.find(c => c.homeAway === 'away');
 
+    if (!homeCompetitor || !awayCompetitor) {
+      logger.error(`Missing home or away competitor for match ${data.header.id}`);
+      throw new Error('Missing home or away competitor');
+    }
+
     const homeStats = this.normalizeTeamStats(
-      homeCompetitor!,
+      homeCompetitor,
       competition.competitors[0]?.statistics || [],
       true
     );
     const awayStats = this.normalizeTeamStats(
-      awayCompetitor!,
+      awayCompetitor,
       competition.competitors[1]?.statistics || [],
       false
     );
