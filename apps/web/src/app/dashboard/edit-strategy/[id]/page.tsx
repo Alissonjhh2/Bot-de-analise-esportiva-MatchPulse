@@ -57,7 +57,7 @@ interface StrategyCondition {
 const INDICATORS = [
   { value: 'GOALS', label: 'Gols' },
   { value: 'CORNERS', label: 'Escanteios' },
-  { value: 'OFFENSIVE_PRESSURE', label: 'Pressão Ofensiva MatchPulse' },
+  { value: 'OFFENSIVE_PRESSURE', label: 'Pressão Ofensiva' },
   { value: 'SHOTS_ON_GOAL', label: 'Chutes a Gol' },
   { value: 'CARDS', label: 'Cartões' },
   { value: 'FOULS', label: 'Faltas' },
