@@ -57,7 +57,7 @@ interface StrategyCondition {
 const INDICATORS = [
   { value: 'GOALS', label: 'Gols' },
   { value: 'CORNERS', label: 'Escanteios' },
-  { value: 'DANGEROUS_ATTACKS', label: 'Ataques Perigosos' },
+  { value: 'OFFENSIVE_PRESSURE', label: 'Pressão Ofensiva MatchPulse' },
   { value: 'SHOTS_ON_GOAL', label: 'Chutes a Gol' },
   { value: 'CARDS', label: 'Cartões' },
   { value: 'FOULS', label: 'Faltas' },
@@ -101,13 +101,14 @@ export default function EditStrategyPage() {
   const fetchStrategy = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get<{success: boolean, data: {name: string, startMinute: number, endMinute: number, conditions: StrategyCondition[]}}>(`/strategies/${strategyId}`);
+      const response = await apiClient.get<{success: boolean, data: {name: string, startMinute: number, endMinute: number, conditions: StrategyCondition[], leagues: string[]}}>(`/strategies/${strategyId}`);
       const strategy = response.data;
       
       setName(strategy.name);
       setStartMinute(strategy.startMinute);
       setEndMinute(strategy.endMinute);
       setConditions(strategy.conditions || []);
+      setSelectedLeagues(strategy.leagues || [DEFAULT_LEAGUE]);
     } catch (err) {
       console.error('Error fetching strategy:', err);
       setError('Erro ao carregar estratégia.');
@@ -160,6 +161,23 @@ export default function EditStrategyPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Only allow submission if we're on step 4 (review step)
+    if (step !== 4) {
+      return;
+    }
+    
+    // Prevent submission if conditions are not met
+    if (selectedLeagues.length === 0) {
+      setError('Selecione pelo menos um campeonato');
+      return;
+    }
+    
+    if (conditions.length === 0) {
+      setError('Adicione pelo menos uma condição');
+      return;
+    }
+    
     setIsSubmitting(true);
     setError('');
 
@@ -169,6 +187,7 @@ export default function EditStrategyPage() {
         startMinute,
         endMinute,
         conditions,
+        leagues: selectedLeagues,
       });
 
       // Success - redirect to my strategies

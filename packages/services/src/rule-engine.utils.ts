@@ -15,10 +15,10 @@ export function getStatValue(stats: MatchStats, indicator: string, team: string)
              teamLower === 'away' ? stats.corners_away : 
              stats.corners_home + stats.corners_away;
     
-    case 'dangerous_attacks':
-      return teamLower === 'home' ? stats.dangerous_attacks_home : 
-             teamLower === 'away' ? stats.dangerous_attacks_away : 
-             stats.dangerous_attacks_home + stats.dangerous_attacks_away;
+    case 'offensive_pressure':
+      return teamLower === 'home' ? stats.offensive_pressure_home : 
+             teamLower === 'away' ? stats.offensive_pressure_away : 
+             stats.offensive_pressure_home + stats.offensive_pressure_away;
     
     case 'shots_on_goal':
       return teamLower === 'home' ? stats.shots_on_target_home : 

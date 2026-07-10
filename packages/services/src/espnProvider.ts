@@ -471,6 +471,29 @@ export class ESPNProvider implements FootballProvider {
     return periodMap[statusId] || 'Not Started';
   }
 
+  private calculateOffensivePressure(
+    totalShots: number,
+    shotsOnTarget: number,
+    cornerKicks: number,
+    possessionPct: number
+  ): number {
+    // Normalize values to 0-1 range based on typical maximums
+    const normalizedShots = Math.min(totalShots / 30, 1); // max ~30 shots
+    const normalizedShotsOnTarget = Math.min(shotsOnTarget / 15, 1); // max ~15 shots on target
+    const normalizedCorners = Math.min(cornerKicks / 15, 1); // max ~15 corners
+    const normalizedPossession = possessionPct / 100; // max 100%
+
+    // Calculate offensive pressure using weighted formula
+    const pressure = 
+      (normalizedShots * 0.25) +
+      (normalizedShotsOnTarget * 0.40) +
+      (normalizedCorners * 0.20) +
+      (normalizedPossession * 0.15);
+
+    // Scale to 0-100
+    return Math.round(pressure * 100);
+  }
+
   async getMatchSummary(eventId: string, league: string): Promise<MatchStats> {
     const cacheKey = this.getCacheKey('summary', `${league}:${eventId}`);
     const cached = this.getFromCache<MatchStats>(cacheKey);

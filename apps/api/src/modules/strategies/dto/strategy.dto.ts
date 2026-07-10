@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
 export const createStrategyConditionDto = z.object({
-  indicator: z.enum(['GOALS', 'CORNERS', 'DANGEROUS_ATTACKS', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION']),
+  indicator: z.enum(['GOALS', 'CORNERS', 'OFFENSIVE_PRESSURE', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION']),
   team: z.enum(['HOME', 'AWAY', 'MATCH']),
   quantity: z.number().int().min(0, 'Quantity must be non-negative'),
   operator: z.enum(['ANY', 'MORE', 'LESS']),
 });
 
 export const updateStrategyConditionDto = z.object({
-  indicator: z.enum(['GOALS', 'CORNERS', 'DANGEROUS_ATTACKS', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION']).optional(),
+  indicator: z.enum(['GOALS', 'CORNERS', 'OFFENSIVE_PRESSURE', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION']).optional(),
   team: z.enum(['HOME', 'AWAY', 'MATCH']).optional(),
   quantity: z.number().int().min(0, 'Quantity must be non-negative').optional(),
   operator: z.enum(['ANY', 'MORE', 'LESS']).optional(),
@@ -57,7 +57,7 @@ export const strategyResponseDto = z.object({
 export const strategyConditionResponseDto = z.object({
   id: z.string().uuid(),
   strategyId: z.string().uuid(),
-  indicator: z.enum(['GOALS', 'CORNERS', 'DANGEROUS_ATTACKS', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION']),
+  indicator: z.enum(['GOALS', 'CORNERS', 'OFFENSIVE_PRESSURE', 'SHOTS_ON_GOAL', 'CARDS', 'FOULS', 'OFFSIDES', 'BALL_POSSESSION']),
   team: z.enum(['HOME', 'AWAY', 'MATCH']),
   quantity: z.number(),
   operator: z.enum(['ANY', 'MORE', 'LESS']),

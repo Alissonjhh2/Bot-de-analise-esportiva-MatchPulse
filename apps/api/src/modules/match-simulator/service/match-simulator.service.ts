@@ -108,8 +108,8 @@ export class MatchSimulatorService {
       goals_away: 0,
       corners_home: 0,
       corners_away: 0,
-      dangerous_attacks_home: 0,
-      dangerous_attacks_away: 0,
+      offensive_pressure_home: 0,
+      offensive_pressure_away: 0,
       shots_on_target_home: 0,
       shots_on_target_away: 0,
       fouls_home: 0,
@@ -173,15 +173,6 @@ export class MatchSimulatorService {
     const foulProbability = 0.15;
     const cardProbability = 0.02;
     const goalProbability = 0.01;
-
-    // Dangerous attacks
-    if (Math.random() < attackProbability) {
-      if (Math.random() < 0.5) {
-        stats.dangerous_attacks_home++;
-      } else {
-        stats.dangerous_attacks_away++;
-      }
-    }
 
     // Corners
     if (Math.random() < cornerProbability) {

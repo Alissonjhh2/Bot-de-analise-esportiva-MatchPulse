@@ -57,7 +57,7 @@ interface StrategyCondition {
 const INDICATORS = [
   { value: 'GOALS', label: 'Gols' },
   { value: 'CORNERS', label: 'Escanteios' },
-  { value: 'DANGEROUS_ATTACKS', label: 'Ataques Perigosos' },
+  { value: 'OFFENSIVE_PRESSURE', label: 'Pressão Ofensiva MatchPulse' },
   { value: 'SHOTS_ON_GOAL', label: 'Chutes a Gol' },
   { value: 'CARDS', label: 'Cartões' },
   { value: 'FOULS', label: 'Faltas' },
@@ -141,8 +141,13 @@ export default function CreateStrategyPage() {
     }
     
     // Prevent submission if conditions are not met
-    if (conditions.length === 0 || selectedLeagues.length === 0) {
-      setError('Por favor, adicione pelo menos uma condição e selecione pelo menos um campeonato');
+    if (selectedLeagues.length === 0) {
+      setError('Selecione pelo menos um campeonato');
+      return;
+    }
+    
+    if (conditions.length === 0) {
+      setError('Adicione pelo menos uma condição');
       return;
     }
     

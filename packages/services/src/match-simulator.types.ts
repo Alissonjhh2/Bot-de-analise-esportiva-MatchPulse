@@ -3,8 +3,8 @@ export interface MatchStats {
   goals_away: number;
   corners_home: number;
   corners_away: number;
-  dangerous_attacks_home: number;
-  dangerous_attacks_away: number;
+  offensive_pressure_home: number;
+  offensive_pressure_away: number;
   shots_on_target_home: number;
   shots_on_target_away: number;
   fouls_home: number;

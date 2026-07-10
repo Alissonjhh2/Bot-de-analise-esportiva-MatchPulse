@@ -41,7 +41,7 @@ enum LogLevel {
 enum Indicator {
   GOALS
   CORNERS
-  DANGEROUS_ATTACKS
+  OFFENSIVE_PRESSURE
   SHOTS_ON_GOAL
   CARDS
   FOULS

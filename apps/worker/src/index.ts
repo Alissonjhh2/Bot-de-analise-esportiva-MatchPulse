@@ -42,6 +42,29 @@ class MatchPulseWorker {
     });
   }
 
+  private calculateOffensivePressure(
+    totalShots: number,
+    shotsOnTarget: number,
+    cornerKicks: number,
+    possessionPct: number
+  ): number {
+    // Normalize values to 0-1 range based on typical maximums
+    const normalizedShots = Math.min(totalShots / 30, 1); // max ~30 shots
+    const normalizedShotsOnTarget = Math.min(shotsOnTarget / 15, 1); // max ~15 shots on target
+    const normalizedCorners = Math.min(cornerKicks / 15, 1); // max ~15 corners
+    const normalizedPossession = possessionPct / 100; // max 100%
+
+    // Calculate offensive pressure using weighted formula
+    const pressure = 
+      (normalizedShots * 0.25) +
+      (normalizedShotsOnTarget * 0.40) +
+      (normalizedCorners * 0.20) +
+      (normalizedPossession * 0.15);
+
+    // Scale to 0-100
+    return Math.round(pressure * 100);
+  }
+
   async fetchActiveStrategies() {
     try {
       const strategies = await prisma.strategy.findMany({
@@ -141,7 +164,7 @@ class MatchPulseWorker {
     const competition = this.getCompetitionName(snapshot);
     const score = this.getScore(snapshot);
     const corners = this.getCorners(snapshot);
-    const dangerousAttacks = this.getDangerousAttacks(snapshot);
+    const offensivePressure = this.getOffensivePressure(snapshot);
     const shotsOnGoal = this.getShotsOnGoal(snapshot);
     const cards = this.getCards(snapshot);
     const fouls = this.getFouls(snapshot);
@@ -163,7 +186,7 @@ class MatchPulseWorker {
 
 📐 Escanteios: ${corners}
 
-⚡ Ataques Perigosos: ${dangerousAttacks}
+🔥 Pressão Ofensiva: ${offensivePressure}
 
 🎯 Chutes a Gol: ${shotsOnGoal}
 
@@ -211,12 +234,12 @@ class MatchPulseWorker {
     return '0 - 0';
   }
 
-  getDangerousAttacks(snapshot: any): string {
-    // Try to get dangerous attacks from snapshot
-    if (snapshot && snapshot.dangerous_attacks_home !== undefined && snapshot.dangerous_attacks_away !== undefined) {
-      return `${snapshot.dangerous_attacks_home} - ${snapshot.dangerous_attacks_away}`;
+  getOffensivePressure(snapshot: any): string {
+    // Try to get offensive pressure from snapshot
+    if (snapshot && snapshot.offensive_pressure_home !== undefined && snapshot.offensive_pressure_away !== undefined) {
+      return `${snapshot.offensive_pressure_home}/100 - ${snapshot.offensive_pressure_away}/100`;
     }
-    return '0 - 0';
+    return '0/100 - 0/100';
   }
 
   getShotsOnGoal(snapshot: any): string {
@@ -344,8 +367,18 @@ class MatchPulseWorker {
         goals_away: match.away.score,
         corners_home: matchStats.homeTeam.corners,
         corners_away: matchStats.awayTeam.corners,
-        dangerous_attacks_home: matchStats.homeTeam.shots,
-        dangerous_attacks_away: matchStats.awayTeam.shots,
+        offensive_pressure_home: this.calculateOffensivePressure(
+          matchStats.homeTeam.shots,
+          matchStats.homeTeam.shotsOnTarget,
+          matchStats.homeTeam.corners,
+          matchStats.homeTeam.possession
+        ),
+        offensive_pressure_away: this.calculateOffensivePressure(
+          matchStats.awayTeam.shots,
+          matchStats.awayTeam.shotsOnTarget,
+          matchStats.awayTeam.corners,
+          matchStats.awayTeam.possession
+        ),
         shots_on_target_home: matchStats.homeTeam.shotsOnTarget,
         shots_on_target_away: matchStats.awayTeam.shotsOnTarget,
         yellow_cards_home: matchStats.homeTeam.yellowCards,
