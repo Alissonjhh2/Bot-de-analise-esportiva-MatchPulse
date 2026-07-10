@@ -439,9 +439,19 @@ export class ESPNProvider implements FootballProvider {
       const originalStatus = competition.status.type.name;
       const mappedStatus = statusMap[originalStatus] || 'scheduled';
       
+      // Infer status based on clock if status is scheduled but clock shows progress
+      const clockValue = competition.status.displayClock || "0'";
+      const clockMinutes = parseInt(clockValue.replace(/[^0-9]/g, '')) || 0;
+      
+      let finalStatus = mappedStatus;
+      if (mappedStatus === 'scheduled' && clockMinutes > 0) {
+        finalStatus = 'in_progress';
+        logger.info(`Match ${event.id}: Status inferred as 'in_progress' because clock is ${clockValue}`);
+      }
+      
       // Log complete status structure for Chinese matches and unmapped statuses
-      if (data.leagues[0]?.slug === 'chn.1' || !statusMap[originalStatus]) {
-        logger.info(`Match ${event.id} (${data.leagues[0]?.name}): Original status = ${originalStatus}, Mapped status = ${mappedStatus}, Score = ${homeCompetitor?.score}-${awayCompetitor?.score}`);
+      if (data.leagues[0]?.slug === 'chn.1' || !statusMap[originalStatus] || finalStatus !== mappedStatus) {
+        logger.info(`Match ${event.id} (${data.leagues[0]?.name}): Original status = ${originalStatus}, Mapped status = ${mappedStatus}, Final status = ${finalStatus}, Clock = ${clockValue}`);
         logger.info(`Complete status structure: ${JSON.stringify(competition.status)}`);
       }
 
@@ -449,7 +459,7 @@ export class ESPNProvider implements FootballProvider {
         eventId: event.id,
         league: data.leagues[0]?.slug || 'unknown',
         leagueName: data.leagues[0]?.name || 'Unknown',
-        status: mappedStatus,
+        status: finalStatus,
         clock: competition.status.displayClock || "0'",
         period: this.getPeriod(competition.status.type.id),
         homeTeam: {
