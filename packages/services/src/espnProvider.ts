@@ -444,9 +444,18 @@ export class ESPNProvider implements FootballProvider {
       const clockMinutes = parseInt(clockValue.replace(/[^0-9]/g, '')) || 0;
       
       let finalStatus = mappedStatus;
-      if (mappedStatus === 'scheduled' && clockMinutes > 0) {
+      // Only infer as in_progress if:
+      // - Status is scheduled (not already final or other statuses)
+      // - Clock shows progress (> 0)
+      // - Clock doesn't indicate finished game (not 90'+)
+      // - Status is not already mapped to final
+      if (mappedStatus === 'scheduled' && clockMinutes > 0 && clockMinutes < 90 && finalStatus !== 'final') {
         finalStatus = 'in_progress';
         logger.info(`Match ${event.id}: Status inferred as 'in_progress' because clock is ${clockValue}`);
+      } else if (mappedStatus === 'scheduled' && clockMinutes >= 90) {
+        // If clock shows 90+ but status is scheduled, it's likely finished
+        finalStatus = 'final';
+        logger.info(`Match ${event.id}: Status inferred as 'final' because clock is ${clockValue} (90+)`);
       }
       
       // Log complete status structure for Chinese matches and unmapped statuses
