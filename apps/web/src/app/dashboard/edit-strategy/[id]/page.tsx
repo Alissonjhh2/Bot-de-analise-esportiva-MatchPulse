@@ -45,7 +45,6 @@ const LEAGUE_MAPPINGS = [
   { name: 'Liga Russa', slug: 'rus.1' },
   { name: 'Liga Austríaca', slug: 'aut.1' },
   { name: 'Liga Escocesa', slug: 'sco.1' },
-  { name: 'Copa América', slug: 'conmebol.america' },
 ];
 
 const DEFAULT_LEAGUE = 'bra.1';
