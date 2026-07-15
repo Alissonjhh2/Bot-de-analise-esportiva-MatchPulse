@@ -14,11 +14,11 @@ export const LandingPage = () => {
   const y2 = useTransform(scrollY, [0, 500], [0, -200]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 overflow-hidden">
+    <div className="min-h-screen bg-slate-950 overflow-hidden">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#122F5A] to-[#1e3a5f]" />
+        <div className="absolute inset-0 bg-slate-950" />
         <div className="absolute inset-0 opacity-50" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
         }} />
@@ -39,10 +39,10 @@ export const LandingPage = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8"
+              className="inline-flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-sm px-3 py-1 mb-6"
             >
-              <Sparkles className="w-4 h-4 text-[#3DB8F5]" />
-              <span className="text-sm text-white/90 font-medium">
+              <Sparkles className="w-3 h-3 text-slate-400" />
+              <span className="text-xs text-slate-300 font-medium">
                 Integração Oficial com ESPN • Dados em Tempo Real
               </span>
             </motion.div>
@@ -52,10 +52,10 @@ export const LandingPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+              className="text-3xl md:text-5xl font-semibold text-slate-100 mb-4 leading-tight"
             >
               Estratégias de Futebol
-              <span className="block bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] bg-clip-text text-transparent">
+              <span className="block text-slate-400">
                 Inteligentes
               </span>
             </motion.h1>
@@ -64,7 +64,7 @@ export const LandingPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed"
+              className="text-sm md:text-base text-slate-400 mb-8 max-w-3xl mx-auto leading-relaxed"
             >
               Crie alertas personalizados com dados reais da ESPN e receba notificações instantâneas no seu Telegram
             </motion.p>
@@ -79,19 +79,19 @@ export const LandingPage = () => {
               <Link href="/signup">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] text-white hover:from-[#2D69B3] hover:to-[#122F5A] border-0 px-8 py-6 text-lg shadow-2xl shadow-[#2D69B3]/30 hover:shadow-[#2D69B3]/50 transition-all duration-300"
+                  className="bg-slate-700 hover:bg-slate-600 text-slate-100 border-slate-600 px-6 py-3 text-sm rounded-sm transition-all duration-300"
                 >
                   Começar Gratuitamente
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
               <Link href="/login">
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="bg-white/5 backdrop-blur-sm border-white/20 text-white hover:bg-white/10 px-8 py-6 text-lg transition-all duration-300"
+                  className="bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800 px-6 py-3 text-sm rounded-sm transition-all duration-300"
                 >
-                  <Play className="w-5 h-5 mr-2" />
+                  <Play className="w-4 h-4 mr-2" />
                   Ver Demo
                 </Button>
               </Link>
@@ -140,7 +140,7 @@ export const LandingPage = () => {
       </section>
 
       {/* How it Works */}
-      <section className="py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+      <section className="py-16 bg-slate-900">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
@@ -148,10 +148,10 @@ export const LandingPage = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-4">
               Como Funciona
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-slate-400">
               Três passos simples para começar
             </p>
           </motion.div>
@@ -184,17 +184,17 @@ export const LandingPage = () => {
                 whileHover={{ y: -8 }}
                 className="group relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-300" />
-                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${step.color} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <step.icon className="w-8 h-8 text-white" />
+                <div className="absolute inset-0 bg-slate-800 rounded-sm transform rotate-3 group-hover:rotate-6 transition-transform duration-300" />
+                <div className="relative bg-slate-900 rounded-sm p-4 border border-slate-700 transition-all duration-300">
+                  <div className={`w-10 h-10 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3 transition-transform duration-300`}>
+                    <step.icon className="w-5 h-5 text-slate-100" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  <h3 className="text-sm font-semibold text-slate-100 mb-2">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{step.desc}</p>
-                  <div className="absolute top-4 right-4 w-8 h-8 bg-[#2D69B3]/10 rounded-full flex items-center justify-center">
-                    <span className="text-sm font-bold text-[#2D69B3]">{index + 1}</span>
+                  <p className="text-xs text-slate-400 leading-relaxed">{step.desc}</p>
+                  <div className="absolute top-2 right-2 w-6 h-6 bg-slate-800 rounded-sm flex items-center justify-center">
+                    <span className="text-xs font-semibold text-slate-400">{index + 1}</span>
                   </div>
                 </div>
               </motion.div>
@@ -204,7 +204,7 @@ export const LandingPage = () => {
       </section>
 
       {/* Features */}
-      <section className="py-32 bg-white dark:bg-gray-950">
+      <section className="py-16 bg-slate-950">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
@@ -212,10 +212,10 @@ export const LandingPage = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-4">
               Recursos Poderosos
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-slate-400">
               Tudo que você precisa para estratégias vencedoras
             </p>
           </motion.div>
@@ -234,10 +234,10 @@ export const LandingPage = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className={`relative group p-8 rounded-2xl border transition-all duration-300 ${
+                className={`relative group p-4 rounded-sm border transition-all duration-300 ${
                   feature.highlight 
-                    ? 'bg-gradient-to-br from-[#2D69B3] to-[#122F5A] border-transparent shadow-xl shadow-[#2D69B3]/20' 
-                    : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-[#2D69B3]/30 hover:shadow-lg'
+                    ? 'bg-slate-700 border-slate-600' 
+                    : 'bg-slate-900 border-slate-700 hover:border-slate-600'
                 }`}
               >
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
@@ -271,7 +271,7 @@ export const LandingPage = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+      <section className="py-16 bg-slate-900">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
@@ -279,10 +279,10 @@ export const LandingPage = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-4">
               Perguntas Frequentes
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-slate-400">
               Tire suas dúvidas sobre o MatchPulse
             </p>
           </motion.div>
@@ -330,8 +330,8 @@ export const LandingPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#122F5A] to-[#1e3a5f]" />
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute inset-0 bg-slate-950" />
         <div className="absolute inset-0 opacity-50" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
         }} />
@@ -373,19 +373,19 @@ export const LandingPage = () => {
               </span>
             </motion.div>
             
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-4">
               Pronto para Começar?
             </h2>
-            <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm text-slate-400 mb-8 max-w-2xl mx-auto leading-relaxed">
               Crie sua conta gratuita e comece a criar estratégias inteligentes com dados reais da ESPN
             </p>
             <Link href="/signup">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] text-white hover:from-[#2D69B3] hover:to-[#122F5A] border-0 px-10 py-7 text-xl shadow-2xl shadow-[#2D69B3]/30 hover:shadow-[#2D69B3]/50 transition-all duration-300 hover:scale-105"
+                className="bg-slate-700 hover:bg-slate-600 text-slate-100 border-slate-600 px-6 py-3 text-sm rounded-sm transition-all duration-300"
               >
                 Criar Conta Gratuita
-                <ArrowRight className="w-6 h-6 ml-2" />
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
             

@@ -86,9 +86,9 @@ export default function TelegramPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center shadow-lg">
-              <Send className="w-6 h-6 text-white" />
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
+              <Send className="w-4 h-4 text-slate-100" />
             </div>
             <div>
               <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Telegram</h1>
@@ -118,10 +118,10 @@ export default function TelegramPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="flex items-center gap-3"
+        className="flex items-center gap-2"
       >
-        <div className="w-12 h-12 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center shadow-lg">
-          <Send className="w-6 h-6 text-white" />
+        <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
+          <Send className="w-4 h-4 text-slate-100" />
         </div>
         <div>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Telegram</h1>
@@ -135,19 +135,19 @@ export default function TelegramPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-          <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Status da Conexão</h3>
+        <Card className="border border-slate-700">
+          <CardHeader className="border-b border-slate-700 bg-slate-800">
+            <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Status da Conexão</h3>
           </CardHeader>
-          <CardContent className="p-8">
+          <CardContent className="p-3">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className={`p-8 rounded-2xl border-2 transition-all duration-300 ${
+              className={`p-3 rounded-sm border transition-all duration-300 ${
                 isConnected 
-                  ? 'bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-900/30 border-green-200 dark:border-green-800' 
-                  : 'bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-900/30 border-red-200 dark:border-red-800'
+                  ? 'bg-slate-900 border-slate-700' 
+                  : 'bg-slate-900 border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between">

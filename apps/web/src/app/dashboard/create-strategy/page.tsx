@@ -211,9 +211,9 @@ export default function CreateStrategyPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center shadow-lg">
-            <Sparkles className="w-6 h-6 text-white" />
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
+            <Sparkles className="w-4 h-4 text-slate-100" />
           </div>
           <div>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -248,10 +248,10 @@ export default function CreateStrategyPage() {
                 className="relative group"
               >
                 <div
-                  className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center font-bold transition-all duration-300 ${
+                  className={`w-8 h-8 md:w-10 md:h-10 rounded-sm flex items-center justify-center font-bold transition-all duration-300 ${
                     step >= item.step
-                      ? 'bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] text-white shadow-lg shadow-[#2D69B3]/30'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                      ? 'bg-slate-700 text-slate-100'
+                      : 'bg-slate-800 text-slate-400'
                   }`}
                 >
                   {step > item.step ? (
@@ -270,7 +270,7 @@ export default function CreateStrategyPage() {
                     initial={{ width: 0 }}
                     animate={{ width: step > item.step ? '100%' : '0%' }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={`h-full ${step > item.step ? 'bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3]' : 'bg-gray-200 dark:bg-gray-700'}`}
+                    className={`h-full ${step > item.step ? 'bg-slate-700' : 'bg-slate-800'}`}
                   />
                 </div>
               )}
@@ -301,11 +301,11 @@ export default function CreateStrategyPage() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-                <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center">
-                      <Target className="w-5 h-5 text-white" />
+              <Card className="border border-slate-700 bg-slate-800">
+                <CardHeader className="border-b border-slate-700 bg-slate-800">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Target className="w-3 h-3 text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -389,12 +389,12 @@ export default function CreateStrategyPage() {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-              <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+            <Card className="border border-slate-700 bg-slate-800">
+              <CardHeader className="border-b border-slate-700 bg-slate-800">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center">
-                      <Globe className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Globe className="w-3 h-3 text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -459,10 +459,10 @@ export default function CreateStrategyPage() {
                       whileTap={{ scale: 0.98 }}
                       onClick={() => toggleLeague(league.slug)}
                       disabled={isSubmitting}
-                      className={`p-4 rounded-xl border-2 transition-all duration-300 text-sm font-medium text-center ${
+                      className={`p-2 rounded-sm border transition-all duration-300 text-xs font-medium text-center ${
                         selectedLeagues.includes(league.slug)
-                          ? 'border-[#2D69B3] bg-gradient-to-br from-[#3DB8F5]/10 to-[#2D69B3]/10 text-[#2D69B3] dark:bg-[#2D69B3]/20 dark:text-[#60a5fa] shadow-md'
-                          : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                          ? 'border-slate-600 bg-slate-700 text-slate-100'
+                          : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
                       }`}
                     >
                       {league.name}
@@ -496,12 +496,12 @@ export default function CreateStrategyPage() {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-              <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+            <Card className="border border-slate-700 bg-slate-800">
+              <CardHeader className="border-b border-slate-700 bg-slate-800">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center">
-                      <Zap className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Zap className="w-3 h-3 text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -531,9 +531,9 @@ export default function CreateStrategyPage() {
                     <motion.div
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mx-auto mb-6"
+                      className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
                     >
-                      <Plus className="w-10 h-10 text-gray-400" />
+                      <Plus className="w-5 h-5 text-slate-400" />
                     </motion.div>
                     <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                       Nenhuma condição adicionada
@@ -545,9 +545,9 @@ export default function CreateStrategyPage() {
                       type="button"
                       onClick={addCondition}
                       disabled={isSubmitting}
-                      className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30"
+                      className="bg-slate-700 hover:bg-slate-600 rounded-sm px-3 py-2 text-xs"
                     >
-                      <Plus className="w-4 h-4 mr-2" />
+                      <Plus className="w-3 h-3 mr-1" />
                       Adicionar Primeira Condição
                     </Button>
                   </div>
@@ -561,12 +561,12 @@ export default function CreateStrategyPage() {
                         transition={{ duration: 0.3, delay: index * 0.1 }}
                         className="p-6 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-[#2D69B3] hover:shadow-lg transition-all duration-300"
                       >
-                        <div className="flex justify-between items-start mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-lg flex items-center justify-center">
-                              <Zap className="w-4 h-4 text-white" />
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                              <Zap className="w-3 h-3 text-slate-100" />
                             </div>
-                            <h4 className="font-bold text-gray-900 dark:text-white">Condição {index + 1}</h4>
+                            <h4 className="font-semibold text-slate-100 text-xs">Condição {index + 1}</h4>
                           </div>
                           <Button
                             type="button"
@@ -655,11 +655,11 @@ export default function CreateStrategyPage() {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-              <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center">
-                    <Check className="w-5 h-5 text-white" />
+            <Card className="border border-slate-700 bg-slate-800">
+              <CardHeader className="border-b border-slate-700 bg-slate-800">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                    <Check className="w-3 h-3 text-slate-100" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -676,20 +676,20 @@ export default function CreateStrategyPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="p-6 bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/10 dark:to-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/30"
+                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
                 >
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Target className="w-5 h-5 text-[#2D69B3]" />
+                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                    <Target className="w-3 h-3 text-slate-400" />
                     Informações Básicas
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400 mb-1">Nome</p>
-                      <p className="font-bold text-gray-900 dark:text-white">{name}</p>
+                      <p className="text-slate-400 mb-1">Nome</p>
+                      <p className="font-semibold text-slate-100">{name}</p>
                     </div>
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400 mb-1">Intervalo</p>
-                      <p className="font-bold text-gray-900 dark:text-white">
+                      <p className="text-slate-400 mb-1">Intervalo</p>
+                      <p className="font-semibold text-slate-100">
                         {startMinute}&apos; - {endMinute}&apos;
                       </p>
                     </div>
@@ -700,17 +700,17 @@ export default function CreateStrategyPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="p-6 bg-gradient-to-br from-purple-50 to-white dark:from-purple-900/10 dark:to-gray-800 rounded-xl border border-purple-100 dark:border-purple-900/30"
+                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
                 >
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Globe className="w-5 h-5 text-purple-600" />
+                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                    <Globe className="w-3 h-3 text-slate-400" />
                     Campeonatos Monitorados ({selectedLeagues.length})
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {selectedLeagues.map(slug => {
                       const league = LEAGUE_MAPPINGS.find(l => l.slug === slug);
                       return (
-                        <div key={slug} className="text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 px-3 py-2 rounded-lg">
+                        <div key={slug} className="text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded-sm">
                           {league?.name || slug}
                         </div>
                       );
@@ -722,28 +722,28 @@ export default function CreateStrategyPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="p-6 bg-gradient-to-br from-green-50 to-white dark:from-green-900/10 dark:to-gray-800 rounded-xl border border-green-100 dark:border-green-900/30"
+                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
                 >
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-green-600" />
+                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                    <Zap className="w-3 h-3 text-slate-400" />
                     Condições ({conditions.length})
                   </h4>
                   {conditions.map((condition, index) => (
-                    <div key={index} className="mb-3 last:mb-0 pb-3 last:pb-0 border-b border-gray-200 dark:border-gray-700 last:border-0">
-                      <div className="flex flex-wrap items-center gap-2 text-sm">
-                        <span className="font-bold text-gray-900 dark:text-white bg-white dark:bg-gray-700 px-3 py-1 rounded-lg">
+                    <div key={index} className="mb-2 last:mb-0 pb-2 last:pb-0 border-b border-slate-700 last:border-0">
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <span className="font-semibold text-slate-100 bg-slate-800 px-2 py-1 rounded-sm">
                           {INDICATORS.find((i) => i.value === condition.indicator)?.label}
                         </span>
-                        <span className="text-gray-400">•</span>
-                        <span className="text-gray-600 dark:text-gray-400">
+                        <span className="text-slate-400">•</span>
+                        <span className="text-slate-400">
                           {TEAMS.find((t) => t.value === condition.team)?.label}
                         </span>
-                        <span className="text-gray-400">•</span>
-                        <span className="text-gray-600 dark:text-gray-400">
+                        <span className="text-slate-400">•</span>
+                        <span className="text-slate-400">
                           {OPERATORS.find((o) => o.value === condition.operator)?.label}
                         </span>
-                        <span className="text-gray-400">•</span>
-                        <span className="font-bold text-gray-900 dark:text-white bg-white dark:bg-gray-700 px-3 py-1 rounded-lg">{condition.quantity}</span>
+                        <span className="text-slate-400">•</span>
+                        <span className="font-semibold text-slate-100 bg-slate-800 px-2 py-1 rounded-sm">{condition.quantity}</span>
                       </div>
                     </div>
                   ))}

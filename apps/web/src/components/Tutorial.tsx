@@ -61,10 +61,10 @@ export function Tutorial() {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-[#2D69B3] to-[#3DB8F5] rounded-2xl flex items-center justify-center mb-6 mx-auto">
-              <IconComponent className="w-8 h-8 text-white" />
+            <div className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mb-4 mx-auto">
+              <IconComponent className="w-6 h-6 text-slate-100" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 text-center">
+            <h3 className="text-sm font-semibold text-slate-100 mb-2 text-center">
               {step.title}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 text-center mb-8">

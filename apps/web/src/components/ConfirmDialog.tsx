@@ -42,13 +42,13 @@ export default function ConfirmDialog({
               onClick={(e) => e.stopPropagation()}
               className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
             >
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center">
-                      <AlertTriangle className="w-6 h-6 text-white" />
+              <div className="p-3">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
+                      <AlertTriangle className="w-4 h-4 text-slate-100" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
+                    <h3 className="text-sm font-semibold text-slate-100">{title}</h3>
                   </div>
                   <motion.button
                     whileHover={{ scale: 1.1 }}
@@ -73,7 +73,7 @@ export default function ConfirmDialog({
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                     <Button
                       onClick={onConfirm}
-                      className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl px-6 py-3 shadow-lg shadow-red-500/30"
+                      className="bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm px-4 py-2 text-xs"
                     >
                       {confirmText}
                     </Button>
