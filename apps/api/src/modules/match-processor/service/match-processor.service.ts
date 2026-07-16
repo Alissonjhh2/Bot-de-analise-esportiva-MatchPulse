@@ -2,6 +2,8 @@ import { MatchUpdateEvent } from '../../match-simulator/types/match-simulator.ty
 import { RuleEngineService, RuleEngineInput } from '../../rule-engine';
 import { strategyRepository } from '../../strategies/repository/strategy.repository';
 import { logger } from '@matchpulse/logger';
+import { telegramSenderService } from '../../telegram/service/telegram-sender.service';
+import { notificationService } from '../../notifications/service/notification.service';
 
 export interface MatchProcessorConfig {
   enableLogging: boolean;
@@ -69,7 +71,7 @@ export class MatchProcessorService {
 
         // If strategy matched, save match hit
         if (result.result && this.config.saveMatchHits) {
-          await this.saveMatchHit(result, event.matchId);
+          await this.saveMatchHit(result, strategy.userId, event.matchId);
         }
       }
 
@@ -82,11 +84,57 @@ export class MatchProcessorService {
     }
   }
 
-  private async saveMatchHit(result: { strategyId: string }, matchId: string): Promise<void> {
-    // TODO: Implement match hit storage
-    // This should save to a MatchHit table or NotificationHistory
-    if (this.config.enableLogging) {
-      logger.info(`💾 Saving match hit for strategy ${result.strategyId} on match ${matchId}`);
+  private async saveMatchHit(result: { strategyId: string; strategyName: string; matchedConditions: any[] }, userId: string, matchId: string): Promise<void> {
+    try {
+      if (this.config.enableLogging) {
+        logger.info(`💾 Saving match hit for strategy ${result.strategyId} on match ${matchId}`);
+      }
+
+      // Get match details from the event (we need to pass this through)
+      // For now, we'll use placeholder data
+      const matchName = `Match ${matchId}`;
+      const championship = 'Unknown';
+
+      // Format conditions for Telegram message
+      const conditions = result.matchedConditions.map(c => 
+        `${c.indicator} ${c.team}: ${c.actualValue} ${c.operator} ${c.expectedValue}`
+      );
+
+      // Send Telegram notification
+      const telegramSent = await telegramSenderService.sendMatchHitNotification(
+        userId,
+        result.strategyName,
+        matchName,
+        championship,
+        conditions
+      );
+
+      if (telegramSent) {
+        logger.info('📱 Telegram notification sent successfully', { 
+          strategyId: result.strategyId, 
+          userId 
+        });
+      } else {
+        logger.warn('⚠️ Telegram notification failed', { 
+          strategyId: result.strategyId, 
+          userId 
+        });
+      }
+
+      // Save notification to database
+      await notificationService.create(
+        userId,
+        result.strategyId,
+        matchName,
+        championship,
+        `Estratégia "${result.strategyName}" acionada no jogo ${matchName}`
+      );
+
+      if (this.config.enableLogging) {
+        logger.info('✅ Match hit saved successfully', { strategyId: result.strategyId });
+      }
+    } catch (error) {
+      logger.error('Error saving match hit', error as Error);
     }
   }
 }
