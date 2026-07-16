@@ -399,7 +399,7 @@ export default function TodayMatchesPage() {
                   </div>
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-center flex-1">
-                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center rounded-lg overflow-hidden">
                         {match.homeTeam.logo ? (
                           <img 
                             src={match.homeTeam.logo} 
@@ -422,7 +422,7 @@ export default function TodayMatchesPage() {
                     </div>
                     <div className="text-slate-400 text-xs px-2">vs</div>
                     <div className="text-center flex-1">
-                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center rounded-lg overflow-hidden">
                         {match.awayTeam.logo ? (
                           <img 
                             src={match.awayTeam.logo} 
@@ -513,7 +513,7 @@ export default function TodayMatchesPage() {
                       <CardContent className="p-3">
                         <div className="flex items-center justify-between mb-3">
                           <div className="text-center flex-1">
-                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center rounded-lg overflow-hidden">
                               {selectedMatch.homeTeam.logo ? (
                                 <img 
                                   src={selectedMatch.homeTeam.logo} 
@@ -536,7 +536,7 @@ export default function TodayMatchesPage() {
                           </div>
                           <div className="text-slate-400 text-sm px-4 font-medium">vs</div>
                           <div className="text-center flex-1">
-                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center rounded-lg overflow-hidden">
                               {selectedMatch.awayTeam.logo ? (
                                 <img 
                                   src={selectedMatch.awayTeam.logo} 
