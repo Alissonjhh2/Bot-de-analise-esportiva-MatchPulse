@@ -140,7 +140,7 @@ interface ESPNPlayItem {
     id: number;
     text: string;
   };
-  clock: number;
+  clock: number | { display: string; value: number };
   period: number;
   team: {
     id: string;
@@ -645,7 +645,7 @@ export class ESPNProvider implements FootballProvider {
     return data.items.map(item => ({
       id: item.id,
       type: typeMap[item.type.id] || 'other',
-      minute: item.clock,
+      minute: typeof item.clock === 'number' ? item.clock : item.clock.value,
       teamId: item.team.id,
       teamName: item.team.displayName,
       description: item.text,
