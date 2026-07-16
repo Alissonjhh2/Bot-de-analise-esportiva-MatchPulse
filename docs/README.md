@@ -85,28 +85,72 @@ matchpulse/
 
 ### Design System
 
-O design system foi inspirado em plataformas modernas como Vercel, Stripe, Linear, Clerk e Supabase.
+O design system foi inspirado em plataformas modernas como Vercel, Stripe, Linear, Clerk e Supabase. Recentemente atualizado com o **Clean Premium Redesign** para uma interface mais profissional e de alta performance.
 
-#### Cores
-- **Navy**: `#122F5A` - Cor primária escura
-- **Royal Blue**: `#2D69B3` - Cor primária
-- **Sky Blue**: `#3DB8F5` - Cor secundária
-- **Crimson**: `#E6393F` - Cor de erro/atenção
-- **Red**: `#DC2626` - Cor de perigo
-- **White**: `#FFFFFF` - Cor de fundo clara
-- **Pale Gray**: `#F3F4F6` - Cor de fundo secundária
+#### Clean Premium Design Principles
+
+**Filosofia de Design:**
+- **Clean**: Interface limpa, sem distrações visuais desnecessárias
+- **Professional**: Aparência corporativa e confiável
+- **High-Performance**: Otimizado para velocidade e usabilidade
+- **Zero Shadows**: Remoção completa de sombras para visual mais plano e moderno
+- **Generous Spacing**: Espaçamento generoso (p-6 ou p-8) para melhor legibilidade
+- **Strict Typography**: Hierarquia tipográfica rigorosamente aplicada
+
+#### Cores (Clean Premium)
+
+**Light Mode (Default):**
+- **Background Principal**: `bg-slate-50` - Fundo claro neutro
+- **Cards**: `bg-white` - Fundo branco puro
+- **Borders**: `border-slate-200` - Bordas sutis
+- **Títulos**: `text-slate-950` - Texto quase preto para máximo contraste
+- **Texto Secundário**: `text-slate-600` - Texto cinza médio
+- **Indicadores Positivos**: `emerald-600` - Verde esmeralda para sucesso
+- **Indicadores Negativos**: `rose-600` - Rosa avermelhado para erro
+- **Indicadores de Aviso**: `amber-600` - Âmbar para avisos
+- **Ícones/Elementos Decorativos**: `bg-slate-200` - Cinza claro
+
+**Dark Mode:**
+- **Background Principal**: `bg-slate-950` - Fundo muito escuro
+- **Cards**: `bg-slate-900` - Fundo escuro
+- **Borders**: `border-slate-800` - Bordas sutis escuras
+- **Títulos**: `text-slate-100` - Texto quase branco
+- **Texto Secundário**: `text-slate-400` - Texto cinza claro
+- **Indicadores Positivos**: `emerald-500` - Verde esmeralda claro
+- **Indicadores Negativos**: `rose-500` - Rosa avermelhado claro
+- **Indicadores de Aviso**: `amber-500` - Âmbar claro
+- **Ícones/Elementos Decorativos**: `bg-slate-700` - Cinza escuro
+
+**Cores da Marca (Preservadas):**
+- **Navy**: `#122F5A` - Cor primária escura (brand)
+- **Royal Blue**: `#2D69B3` - Cor primária (brand)
+- **Sky Blue**: `#3DB8F5` - Cor secundária (brand)
 
 #### Tipografia
-- **Fonte Principal**: Inter
-- **Tamanhos**: Escala tipográfica consistente
+- **Fonte Principal**: Inter (Google Fonts)
+- **Hierarquia Rigorosa**:
+  - Títulos H1: `text-2xl md:text-3xl lg:text-4xl font-bold`
+  - Títulos H2: `text-xl md:text-2xl font-semibold`
+  - Títulos H3: `text-lg font-semibold`
+  - Subtítulos: `text-sm font-semibold`
+  - Texto corpo: `text-xs md:text-sm`
+  - Texto secundário: `text-xs text-slate-600 dark:text-slate-400`
+- **Tracking**: `tracking-tight` para títulos principais
 
 #### Componentes UI
-- Button (com variants e sizes)
-- Card (com Header, Content, Footer)
-- Input (com label, error e icon)
-- Badge (com variants)
-- Modal (com animações)
-- LoadingSpinner
+- **Button**: Com variants (default, outline, ghost) e sizes (sm, md, lg)
+- **Card**: Com Header, Content, Footer - bordas sutis, sem sombras
+- **Input**: Com label, error e icon - bordas sutis, foco com ring
+- **Badge**: Com variants (success, danger, warning, info, default)
+- **Modal**: Com animações Framer Motion
+- **LoadingSpinner**: Animações suaves
+- **Toggle**: Switch para alternar configurações
+
+#### Tema
+- **Default**: Light mode (alterado de dark mode)
+- **Persistência**: LocalStorage para preferência do usuário
+- **System Support**: Opção de seguir preferência do sistema
+- **Toggle**: Botão no Topbar para alternar entre light/dark mode
 
 ## 🚀 Getting Started
 
@@ -224,13 +268,14 @@ O backend está configurado para deploy no Railway através do arquivo `railway.
 
 ### Dashboard (Protegidas)
 - **Dashboard** (`/dashboard`): Visão geral com estatísticas, gráficos e jogos ao vivo em tempo real
-- **Criar Estratégia** (`/dashboard/create-strategy`): Configuração de novas estratégias em 4 passos (Básico, Ligas, Condições, Revisão)
+- **Jogos de Hoje** (`/dashboard/today-matches`): Lista de jogos do dia com filtros de liga e status, detalhes em tempo real com estatísticas
+- **Criar Estratégia** (`/dashboard/create-strategy`): Configuração de novas estratégias em 5 passos (Tipo, Básico, Ligas/Jogo/Data, Condições, Revisão)
 - **Minhas Estratégias** (`/dashboard/my-strategies`): Gerenciamento de estratégias ativas com editar/deletar
 - **Editar Estratégia** (`/dashboard/edit-strategy/[id]`): Edição de estratégias existentes
-- **Telegram** (`/dashboard/telegram`): Conexão com Telegram bot (@Match2Pulsebot) com código de verificação
-- **Configurações** (`/dashboard/settings`): Configurações do usuário
-- **Histórico** (`/dashboard/history`): Histórico de match hits e alertas
-- **Biblioteca de Estratégias** (`/dashboard/strategy-library`): Biblioteca de estratégias predefinidas
+- **Telegram** (`/dashboard/telegram`): Conexão com Telegram bot (@Match2Pulsebot) com código de verificação - painel técnico
+- **Configurações** (`/dashboard/settings`): Configurações do usuário (notificações, aparência, segurança, tutorial)
+- **Histórico** (`/dashboard/history`): Histórico de match hits e alertas com detalhes de estratégias
+- **Biblioteca de Estratégias Virais** (`/dashboard/strategy-library`): Biblioteca de estratégias populares da comunidade (5+ MatchHits)
 
 ## 🤖 Telegram Bot
 
@@ -323,29 +368,63 @@ npm run clean            # Remove node_modules e dist
 ## 🎯 Funcionalidades Implementadas
 
 ### ✅ Concluídas
-1. **Firebase Authentication**: Autenticação completa com Firebase
-2. **ESPN Integration**: Integração oficial com ESPN API para dados em tempo real
-3. **Telegram Bot**: Bot para envio de alertas com código de verificação
-4. **Rule Engine**: Motor de regras para avaliação de estratégias
-5. **Alerts System**: Sistema completo de alertas com anti-spam
-6. **Dashboard**: Dashboard com estatísticas, gráficos e jogos ao vivo
-7. **Strategy Creation**: Criação de estratégias em 4 passos com seleção de ligas
-8. **Strategy Management**: Gerenciamento completo de estratégias (criar, editar, deletar)
-9. **League Filtering**: Filtragem de estratégias por 32 campeonatos diferentes
-10. **Live Matches**: Monitoramento de jogos ao vivo em tempo real
-11. **Auto-refresh**: Auto-refresh silencioso do dashboard (15s)
-12. **Loading States**: Telas de carregamento bonitas para melhor UX
-13. **Idempotent Operations**: Operações idempotentes (desconectar Telegram)
-14. **Cache System**: Sistema de cache com TTLs diferentes
-15. **Retry Logic**: Retry automático com exponential backoff
+
+**Autenticação & Segurança:**
+1. **Firebase Authentication**: Autenticação completa com Firebase (login, signup, recuperação de senha)
+2. **Protected Routes**: Middleware de proteção para rotas do dashboard
+3. **Session Management**: Gerenciamento de sessão com Firebase Admin SDK
+
+**Integração de Dados:**
+4. **ESPN Integration**: Integração oficial com ESPN API para dados em tempo real
+5. **11 Endpoints Validados**: Scoreboard, Summary, Standings, Teams, Players, Injuries, Calendar, etc.
+6. **Cache System**: Sistema de cache com TTLs diferentes (30s a 10min)
+7. **Retry Logic**: Retry automático com exponential backoff (3 tentativas)
+8. **Data Normalization**: Interface `FootballProvider` padronizada com modelo `MatchStats`
+9. **League Mapping**: 32 campeonatos mapeados com slugs (bra.1, eng.1, esp.1, etc.)
+
+**Telegram & Alertas:**
+10. **Telegram Bot**: Bot para envio de alertas com código de verificação
+11. **Alerts System**: Sistema completo de alertas com anti-spam
+12. **Idempotent Operations**: Operações idempotentes (desconectar Telegram)
+13. **Alert Limitation**: 1 alerta por jogo por estratégia para evitar spam
+14. **Rich Message Format**: Mensagens formatadas com emojis e detalhes completos
+
+**Estratégias & Rule Engine:**
+15. **Rule Engine**: Motor de regras para avaliação de estratégias
+16. **Strategy Creation**: Criação de estratégias em 5 passos (Tipo, Básico, Ligas/Jogo/Data, Condições, Revisão)
+17. **Strategy Management**: Gerenciamento completo de estratégias (criar, editar, deletar)
+18. **League Filtering**: Filtragem de estratégias por 32 campeonatos diferentes
+19. **Strategy Types**: Suporte a 3 tipos de estratégias (general, specific, daily)
+20. **Condition Builder**: Builder visual para criar condições complexas
+21. **Strategy Library**: Biblioteca de estratégias virais da comunidade (5+ MatchHits)
+
+**Dashboard & UI:**
+22. **Dashboard**: Dashboard com estatísticas, gráficos e jogos ao vivo
+23. **Live Matches**: Monitoramento de jogos ao vivo em tempo real
+24. **Today Matches**: Lista de jogos do dia com filtros e detalhes
+25. **Auto-refresh**: Auto-refresh silencioso do dashboard (15s)
+26. **Loading States**: Telas de carregamento bonitas para melhor UX
+27. **Clean Premium Design**: Redesign completo com light mode default, zero shadows, bordas sutis
+28. **Responsive Design**: Interface responsiva para desktop e mobile
+29. **Dark Mode**: Suporte completo a dark mode com persistência
+30. **Animations**: Animações suaves com Framer Motion
+31. **Charts**: Gráficos interativos com Recharts
+
+**Configurações & UX:**
+32. **Settings Page**: Configurações do usuário (notificações, aparência, segurança, tutorial)
+33. **Tutorial System**: Tutorial interativo com opção de reiniciar
+34. **History Page**: Histórico de match hits e alertas
+35. **Technical Panel**: Painel técnico para configuração do Telegram
 
 ### 🔜 Em Desenvolvimento
-1. **Tutorial Interativo**: Tutorial de 4 passos com modal de skip
-2. **Admin Dashboard**: Dashboard administrativo
-3. **Strategy Library**: Biblioteca completa de estratégias predefinidas
-4. **Advanced Analytics**: Análises avançadas de performance de estratégias
-5. **Multi-language Support**: Suporte a múltiplos idiomas
-6. **Mobile App**: Aplicativo mobile nativo
+1. **Admin Dashboard**: Dashboard administrativo para gestão de usuários
+2. **Advanced Analytics**: Análises avançadas de performance de estratégias
+3. **Multi-language Support**: Suporte a múltiplos idiomas (i18n)
+4. **Mobile App**: Aplicativo mobile nativo (React Native)
+5. **Push Notifications**: Notificações push no navegador
+6. **Email Notifications**: Sistema de notificações por email
+7. **Strategy Sharing**: Compartilhamento de estratégias entre usuários
+8. **Performance Metrics**: Métricas detalhadas de ROI e win rate
 
 ## 📄 Licença
 
