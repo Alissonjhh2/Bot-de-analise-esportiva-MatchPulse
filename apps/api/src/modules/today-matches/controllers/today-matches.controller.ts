@@ -46,43 +46,48 @@ export const getMatchStats = async (req: Request, res: Response) => {
       // Try to get real-time possession data from situation endpoint
       const situation = await espnProvider.getMatchSituation(id, leagueSlug);
       
-      // Get summary data for other stats
-      const matchStats = await espnProvider.getMatchSummary(id, leagueSlug);
+      // Get summary data for other stats, but don't fail if it doesn't work
+      let matchStats = null;
+      try {
+        matchStats = await espnProvider.getMatchSummary(id, leagueSlug);
+      } catch (summaryError) {
+        logger.warn(`Match summary failed for ${id}, using situation data only`, { error: summaryError });
+      }
 
       const transformedStats = {
         possession: {
-          home: situation?.possession?.homeTeam || matchStats.homeTeam.possession || 50,
-          away: situation?.possession?.awayTeam || matchStats.awayTeam.possession || 50,
+          home: situation?.possession?.homeTeam || matchStats?.homeTeam.possession || 50,
+          away: situation?.possession?.awayTeam || matchStats?.awayTeam.possession || 50,
         },
         shotsOnGoal: {
-          home: matchStats.homeTeam.shotsOnTarget || 0,
-          away: matchStats.awayTeam.shotsOnTarget || 0,
+          home: matchStats?.homeTeam.shotsOnTarget || 0,
+          away: matchStats?.awayTeam.shotsOnTarget || 0,
         },
         shots: {
-          home: matchStats.homeTeam.shots || 0,
-          away: matchStats.awayTeam.shots || 0,
+          home: matchStats?.homeTeam.shots || 0,
+          away: matchStats?.awayTeam.shots || 0,
         },
         corners: {
-          home: matchStats.homeTeam.corners || 0,
-          away: matchStats.awayTeam.corners || 0,
+          home: matchStats?.homeTeam.corners || 0,
+          away: matchStats?.awayTeam.corners || 0,
         },
         fouls: {
-          home: matchStats.homeTeam.fouls || 0,
-          away: matchStats.awayTeam.fouls || 0,
+          home: matchStats?.homeTeam.fouls || 0,
+          away: matchStats?.awayTeam.fouls || 0,
         },
         cards: {
           home: {
-            yellow: matchStats.homeTeam.yellowCards || 0,
-            red: matchStats.homeTeam.redCards || 0,
+            yellow: matchStats?.homeTeam.yellowCards || 0,
+            red: matchStats?.homeTeam.redCards || 0,
           },
           away: {
-            yellow: matchStats.awayTeam.yellowCards || 0,
-            red: matchStats.awayTeam.redCards || 0,
+            yellow: matchStats?.awayTeam.yellowCards || 0,
+            red: matchStats?.awayTeam.redCards || 0,
           },
         },
         offsides: {
-          home: matchStats.homeTeam.offsides || 0,
-          away: matchStats.awayTeam.offsides || 0,
+          home: matchStats?.homeTeam.offsides || 0,
+          away: matchStats?.awayTeam.offsides || 0,
         },
       };
 
@@ -128,7 +133,7 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
     logger.info(`Fetching match players for event ${id} in league ${leagueSlug}`);
 
     try {
-      const matchStats = await espnProvider.getMatchSummary(id, leagueSlug);
+      // Get play-by-play data without depending on match summary
       const playEvents = await espnProvider.getPlayByPlay(id, leagueSlug);
 
       const goals: Array<{ playerName: string; minute: number; team: 'home' | 'away' }> = [];
@@ -136,10 +141,20 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
       const cards: Array<{ playerName: string; type: 'yellow' | 'red'; minute: number; team: 'home' | 'away' }> = [];
       const assists: Array<{ playerName: string; minute: number; team: 'home' | 'away' }> = [];
 
+      // Extract team IDs from play events
+      const teamIds = new Set<string>();
+      playEvents.forEach(event => {
+        if (event.teamId) teamIds.add(event.teamId);
+      });
+
+      const teamIdArray = Array.from(teamIds);
+      const homeTeamId = teamIdArray[0];
+      const awayTeamId = teamIdArray[1];
+
       // Extract goals from play events
       playEvents.forEach(event => {
         if (event.type === 'goal' && event.player) {
-          const team = event.teamId === matchStats?.homeTeam.teamId ? 'home' : 'away';
+          const team = event.teamId === homeTeamId ? 'home' : 'away';
           goals.push({
             playerName: event.player,
             minute: event.minute,
@@ -155,7 +170,7 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
               playerName: event.player,
               onTarget: 0,
               total: 0,
-              team: event.teamId === matchStats?.homeTeam.teamId ? 'home' : 'away',
+              team: event.teamId === homeTeamId ? 'home' : 'away',
             });
           }
           const shotData = shots.get(key)!;
@@ -166,20 +181,19 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
         }
 
         if ((event.type === 'yellow_card' || event.type === 'red_card') && event.player) {
+          const team = event.teamId === homeTeamId ? 'home' : 'away';
           cards.push({
             playerName: event.player,
             type: event.type === 'yellow_card' ? 'yellow' : 'red',
             minute: event.minute,
-            team: event.teamId === matchStats?.homeTeam.teamId ? 'home' : 'away',
+            team,
           });
         }
       });
 
-      // If no goals found in play events, try to extract from match stats
-      if (goals.length === 0 && matchStats) {
-        logger.warn(`No goals found in play events for match ${id}, checking match stats`);
-        // The match stats might have goal information in a different format
-        // For now, we'll keep the empty array
+      // If no goals found in play events
+      if (goals.length === 0) {
+        logger.warn(`No goals found in play events for match ${id}`);
       }
 
       const topShots = Array.from(shots.values())
