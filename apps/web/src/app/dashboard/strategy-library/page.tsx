@@ -66,13 +66,13 @@ export default function StrategyLibraryPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-xl font-semibold text-slate-100 mb-1 tracking-tight">Viral Strategy Library</h1>
-          <p className="text-xs text-slate-400">Estratégias mais populares da comunidade</p>
+          <h1 className="text-xl font-semibold text-slate-950 dark:text-slate-100 mb-1 tracking-tight">Viral Strategy Library</h1>
+          <p className="text-xs text-slate-600 dark:text-slate-400">Estratégias mais populares da comunidade</p>
         </div>
-        <Card className="border border-slate-700 bg-slate-800">
+        <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <CardContent className="p-4">
             <div className="flex items-center justify-center py-4">
-              <RefreshCw className="w-4 h-4 text-slate-400 animate-spin" />
+              <RefreshCw className="w-4 h-4 text-slate-600 dark:text-slate-400 animate-spin" />
             </div>
           </CardContent>
         </Card>
@@ -83,23 +83,23 @@ export default function StrategyLibraryPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-semibold text-slate-100 mb-1 tracking-tight">Viral Strategy Library</h1>
-        <p className="text-xs text-slate-400">Estratégias mais populares com alto índice de acertos</p>
+        <h1 className="text-xl font-semibold text-slate-950 dark:text-slate-100 mb-1 tracking-tight">Viral Strategy Library</h1>
+        <p className="text-xs text-slate-600 dark:text-slate-400">Estratégias mais populares com alto índice de acertos</p>
       </div>
 
       {strategies.length === 0 ? (
-        <Card className="border border-slate-700 bg-slate-800">
+        <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <CardContent className="p-4 text-center">
-            <div className="w-10 h-10 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-2">
-              <BookOpen className="w-5 h-5 text-slate-400" />
+            <div className="w-10 h-10 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-2">
+              <BookOpen className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             </div>
-            <h3 className="text-sm font-semibold text-slate-100 mb-2">
+            <h3 className="text-sm font-semibold text-slate-950 dark:text-slate-100 mb-2">
               Nenhuma estratégia viral ainda
             </h3>
-            <p className="text-xs text-slate-400 mb-4">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
               Estratégias com 5+ MatchHits aparecerão aqui
             </p>
-            <Button onClick={() => window.location.href = '/dashboard/create-strategy'} className="bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm text-xs px-3 py-2">
+            <Button onClick={() => window.location.href = '/dashboard/create-strategy'} className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-600 text-slate-950 dark:text-slate-100 rounded-sm text-xs px-3 py-2">
               Criar Primeira Estratégia
             </Button>
           </CardContent>
@@ -107,32 +107,32 @@ export default function StrategyLibraryPage() {
       ) : (
         <div className="grid md:grid-cols-2 gap-4">
           {strategies.map((strategy) => (
-            <Card key={strategy.id} className="border border-slate-700 bg-slate-800">
-              <CardHeader className="border-b border-slate-700 bg-slate-800">
+            <Card key={strategy.id} className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+              <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <BookOpen className="w-3 h-3 text-slate-100" />
+                    <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                      <BookOpen className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-100 text-sm">{strategy.name}</h3>
-                      <Badge variant="success" className="mt-1 px-2 py-0.5 text-xs bg-slate-700 text-slate-100 border-slate-600">
+                      <h3 className="font-semibold text-slate-950 dark:text-slate-100 text-sm">{strategy.name}</h3>
+                      <Badge variant="success" className="mt-1 px-2 py-0.5 text-xs bg-slate-200 dark:bg-slate-700 text-slate-950 dark:text-slate-100 border-slate-600">
                         {strategy.matchHits || 0} MatchHits
                       </Badge>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-slate-400">
-                    <Star className="w-3 h-3 text-slate-400" />
+                  <div className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400">
+                    <Star className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                     <span className="font-medium">{strategy.matchHits || 0}</span>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className="p-3">
-                <p className="text-slate-400 mb-3 text-xs">
+                <p className="text-slate-600 dark:text-slate-400 mb-3 text-xs">
                   {strategy.description || 'Sem descrição'}
                 </p>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-xs text-slate-400">
+                  <div className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400">
                     <TrendingUp className="w-3 h-3" />
                     <span>Alta performance</span>
                   </div>
@@ -140,7 +140,7 @@ export default function StrategyLibraryPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => copyStrategy(strategy.id)}
-                    className="border-slate-600 text-slate-300 hover:bg-slate-700 rounded-sm text-xs px-2 py-1"
+                    className="border-slate-600 text-slate-300 hover:bg-slate-200 dark:bg-slate-700 rounded-sm text-xs px-2 py-1"
                   >
                     <Copy className="w-3 h-3 mr-1" />
                     Copiar
