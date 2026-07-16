@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader } from '@matchpulse/ui';
@@ -10,6 +10,8 @@ import { Label } from '@matchpulse/ui';
 import { Plus, Trash2, ArrowRight, ArrowLeft, Check, Search, X, Sparkles, Target, Zap, Globe, Calendar, MapPin } from 'lucide-react';
 import { apiClient } from '@/lib/api';
 import { useSearchParams } from 'next/navigation';
+
+function CreateStrategyContent() {
 
 const LEAGUE_MAPPINGS = [
   { name: 'Campeonato Brasileiro', slug: 'bra.1' },
@@ -85,7 +87,7 @@ const STRATEGY_TYPES = [
   { value: 'daily', label: 'Estratégia Diária', description: 'Aplicada a todos os jogos de um dia específico', icon: Calendar },
 ];
 
-export default function CreateStrategyPage() {
+function CreateStrategyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const matchIdParam = searchParams.get('matchId');
@@ -1130,5 +1132,13 @@ export default function CreateStrategyPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function CreateStrategyPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Carregando...</div>}>
+      <CreateStrategyContent />
+    </Suspense>
   );
 }
