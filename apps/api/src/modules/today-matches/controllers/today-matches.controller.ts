@@ -43,12 +43,16 @@ export const getMatchStats = async (req: Request, res: Response) => {
     logger.info(`Fetching match stats for event ${id} in league ${leagueSlug}`);
 
     try {
+      // Try to get real-time possession data from situation endpoint
+      const situation = await espnProvider.getMatchSituation(id, leagueSlug);
+      
+      // Get summary data for other stats
       const matchStats = await espnProvider.getMatchSummary(id, leagueSlug);
 
       const transformedStats = {
         possession: {
-          home: matchStats.homeTeam.possession || 50,
-          away: matchStats.awayTeam.possession || 50,
+          home: situation?.possession?.homeTeam || matchStats.homeTeam.possession || 50,
+          away: situation?.possession?.awayTeam || matchStats.awayTeam.possession || 50,
         },
         shotsOnGoal: {
           home: matchStats.homeTeam.shotsOnTarget || 0,
@@ -132,13 +136,16 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
       const cards: Array<{ playerName: string; type: 'yellow' | 'red'; minute: number; team: 'home' | 'away' }> = [];
       const assists: Array<{ playerName: string; minute: number; team: 'home' | 'away' }> = [];
 
+      // Extract goals from play events
       playEvents.forEach(event => {
         if (event.type === 'goal' && event.player) {
+          const team = event.teamId === matchStats?.homeTeam.teamId ? 'home' : 'away';
           goals.push({
             playerName: event.player,
             minute: event.minute,
-            team: event.teamId === matchStats?.homeTeam.teamId ? 'home' : 'away',
+            team,
           });
+          logger.info(`Goal found: ${event.player} at ${event.minute}' for ${team}`);
         }
 
         if (event.type === 'shot' && event.player) {
@@ -168,6 +175,13 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
         }
       });
 
+      // If no goals found in play events, try to extract from match stats
+      if (goals.length === 0 && matchStats) {
+        logger.warn(`No goals found in play events for match ${id}, checking match stats`);
+        // The match stats might have goal information in a different format
+        // For now, we'll keep the empty array
+      }
+
       const topShots = Array.from(shots.values())
         .sort((a, b) => b.total - a.total)
         .slice(0, 5);
@@ -179,6 +193,8 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
         assists,
       };
 
+      logger.info(`Returning ${goals.length} goals for match ${id}`);
+      
       res.json({
         success: true,
         data: transformedPlayers,

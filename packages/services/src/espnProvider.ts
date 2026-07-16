@@ -634,6 +634,12 @@ export class ESPNProvider implements FootballProvider {
       7: 'offside',
       8: 'shot',
       9: 'save',
+      10: 'goal', // Penalty goal
+      11: 'goal', // Own goal
+      12: 'goal', // Free kick goal
+      13: 'shot', // Free kick shot
+      14: 'goal', // Header goal
+      15: 'shot', // Header shot
     };
 
     return data.items.map(item => ({
