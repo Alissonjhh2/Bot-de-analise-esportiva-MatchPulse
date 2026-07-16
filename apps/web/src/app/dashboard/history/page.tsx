@@ -42,13 +42,13 @@ export default function HistoryPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Histórico</h1>
-          <p className="text-gray-600 dark:text-gray-400">Histórico de MatchHits das suas estratégias</p>
+          <h1 className="text-xl font-semibold text-slate-100 mb-1 tracking-tight">Histórico</h1>
+          <p className="text-xs text-slate-400">Histórico de MatchHits das suas estratégias</p>
         </div>
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-center py-8">
-              <RefreshCw className="w-6 h-6 text-gray-400 animate-spin" />
+        <Card className="border border-slate-700 bg-slate-800">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-center py-4">
+              <RefreshCw className="w-4 h-4 text-slate-400 animate-spin" />
             </div>
           </CardContent>
         </Card>
@@ -59,55 +59,55 @@ export default function HistoryPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Histórico</h1>
-        <p className="text-gray-600 dark:text-gray-400">Histórico de MatchHits das suas estratégias</p>
+        <h1 className="text-xl font-semibold text-slate-100 mb-1 tracking-tight">Histórico</h1>
+        <p className="text-xs text-slate-400">Histórico de MatchHits das suas estratégias</p>
       </div>
 
       {matchHits.length === 0 ? (
-        <Card className="border-0 shadow-sm">
-          <CardContent className="p-12 text-center">
-            <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-gray-400" />
+        <Card className="border border-slate-700 bg-slate-800">
+          <CardContent className="p-4 text-center">
+            <div className="w-10 h-10 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-2">
+              <CheckCircle className="w-5 h-5 text-slate-400" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-sm font-semibold text-slate-100 mb-2">
               Nenhum MatchHit ainda
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-xs text-slate-400 mb-4">
               Quando suas estratégias derem match, aparecerão aqui
             </p>
           </CardContent>
         </Card>
       ) : (
-        <Card className="border-0 shadow-sm">
-          <CardHeader className="border-b border-gray-100 dark:border-gray-800">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white tracking-tight">
+        <Card className="border border-slate-700 bg-slate-800">
+          <CardHeader className="border-b border-slate-700 bg-slate-800">
+            <h3 className="text-sm font-semibold text-slate-100 tracking-tight">
               Últimos MatchHits
             </h3>
           </CardHeader>
-          <CardContent className="p-6">
-            <div className="space-y-4">
+          <CardContent className="p-3">
+            <div className="space-y-2">
               {matchHits.map((matchHit) => (
                 <div
                   key={matchHit.id}
-                  className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700"
+                  className="flex items-center justify-between p-2 bg-slate-900 rounded-sm border border-slate-700"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                  <div className="flex items-center gap-2">
+                    <div className={`w-6 h-6 rounded-sm flex items-center justify-center ${
                       matchHit.result
-                        ? 'bg-green-100 dark:bg-green-900/30'
-                        : 'bg-red-100 dark:bg-red-900/30'
+                        ? 'bg-slate-700'
+                        : 'bg-slate-700'
                     }`}>
                       {matchHit.result ? (
-                        <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                        <CheckCircle className="w-3 h-3 text-slate-400" />
                       ) : (
-                        <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                        <XCircle className="w-3 h-3 text-slate-400" />
                       )}
                     </div>
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">
+                      <h4 className="font-semibold text-slate-100 text-xs">
                         {matchHit.strategy?.name || 'Estratégia Desconhecida'}
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-xs text-slate-400">
                         Partida: {matchHit.snapshot?.homeTeam && matchHit.snapshot?.awayTeam 
                           ? `${matchHit.snapshot.homeTeam} X ${matchHit.snapshot.awayTeam}`
                           : matchHit.matchId}
@@ -115,13 +115,13 @@ export default function HistoryPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <Badge variant={matchHit.result ? 'success' : 'danger'}>
+                    <Badge variant={matchHit.result ? 'success' : 'danger'} className="px-2 py-0.5 text-xs bg-slate-700 text-slate-100 border-slate-600">
                       {matchHit.result ? 'Match' : 'Falhou'}
                     </Badge>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                    <p className="text-xs text-slate-400 mt-1">
                       Minuto {matchHit.minute}&apos;
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-xs text-slate-500 mt-1">
                       {new Date(matchHit.createdAt).toLocaleString('pt-BR')}
                     </p>
                   </div>

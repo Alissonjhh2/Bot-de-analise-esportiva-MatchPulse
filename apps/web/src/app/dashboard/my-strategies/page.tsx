@@ -95,23 +95,23 @@ export default function MyStrategiesPage() {
         transition={{ duration: 0.6 }}
         className="flex items-center justify-between"
       >
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center shadow-lg">
-            <Sparkles className="w-6 h-6 text-white" />
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
+            <Sparkles className="w-4 h-4 text-slate-100" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+            <h1 className="text-xl font-semibold text-slate-100 tracking-tight">
               Minhas Estratégias
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-xs text-slate-400 mt-1">
               Gerencie suas estratégias ativas
             </p>
           </div>
         </div>
         <Link href="/dashboard/create-strategy">
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30">
-              <Plus className="w-5 h-5 mr-2" />
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button className="bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm px-3 py-2 text-xs">
+              <Plus className="w-3 h-3 mr-1" />
               Criar Estratégia
             </Button>
           </motion.div>
@@ -147,27 +147,27 @@ export default function MyStrategiesPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Card className="border-0 shadow-xl">
-            <CardContent className="p-16">
+          <Card className="border border-slate-700 bg-slate-800">
+            <CardContent className="p-4">
               <div className="text-center">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mx-auto mb-8"
+                  className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
                 >
-                  <Target className="w-12 h-12 text-gray-400" />
+                  <Target className="w-5 h-5 text-slate-400" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                <h3 className="text-sm font-semibold text-slate-100 mb-2">
                   Nenhuma estratégia criada ainda
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+                <p className="text-xs text-slate-400 mb-4 max-w-md mx-auto">
                   Crie sua primeira estratégia para começar a receber alertas em tempo real.
                 </p>
                 <Link href="/dashboard/create-strategy">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-8 py-4 shadow-lg shadow-[#2D69B3]/30">
-                      <Plus className="w-5 h-5 mr-2" />
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Button className="bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm px-3 py-2 text-xs">
+                      <Plus className="w-3 h-3 mr-1" />
                       Criar Primeira Estratégia
                     </Button>
                   </motion.div>
@@ -192,25 +192,25 @@ export default function MyStrategiesPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 group">
-                  <CardContent className="p-6">
+                <Card className="border border-slate-700 bg-slate-800">
+                  <CardContent className="p-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-5">
+                      <div className="flex items-center gap-2">
                         <motion.div
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          className="w-14 h-14 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-2xl flex items-center justify-center shadow-lg shadow-[#2D69B3]/30"
+                          whileHover={{ scale: 1.05, rotate: 3 }}
+                          className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center"
                         >
-                          <Target className="w-7 h-7 text-white" />
+                          <Target className="w-4 h-4 text-slate-100" />
                         </motion.div>
                         <div>
-                          <h3 className="font-bold text-gray-900 dark:text-white text-xl mb-1">{strategy.name}</h3>
-                          <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                            <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg">
-                              <Zap className="w-4 h-4 text-[#2D69B3]" />
+                          <h3 className="font-semibold text-slate-100 text-sm mb-1">{strategy.name}</h3>
+                          <div className="flex items-center gap-2 text-xs text-slate-400">
+                            <div className="flex items-center gap-1 bg-slate-900 px-2 py-1 rounded-sm">
+                              <Zap className="w-3 h-3 text-slate-400" />
                               <span className="font-medium">{strategy.startMinute}&apos; - {strategy.endMinute}&apos;</span>
                             </div>
-                            <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg">
-                              <AlertTriangle className="w-4 h-4 text-[#2D69B3]" />
+                            <div className="flex items-center gap-1 bg-slate-900 px-2 py-1 rounded-sm">
+                              <AlertTriangle className="w-3 h-3 text-slate-400" />
                               <span className="font-medium">{strategy.conditions.length} condição(ões)</span>
                             </div>
                           </div>
@@ -219,10 +219,10 @@ export default function MyStrategiesPage() {
                       <div className="flex items-center gap-3">
                         <Badge
                           variant={strategy.status === 'ACTIVE' ? 'success' : 'default'}
-                          className={`px-4 py-1.5 text-sm font-bold ${
+                          className={`px-2 py-0.5 text-xs font-semibold ${
                             strategy.status === 'ACTIVE' 
-                              ? 'bg-gradient-to-r from-green-500 to-green-600 text-white border-0' 
-                              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                              ? 'bg-slate-700 text-slate-100 border-slate-600' 
+                              : 'bg-slate-700 text-slate-400 border-slate-600'
                           }`}
                         >
                           {strategy.status === 'ACTIVE' ? 'Ativo' : 'Inativo'}

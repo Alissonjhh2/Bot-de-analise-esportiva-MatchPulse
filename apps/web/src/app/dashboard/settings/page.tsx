@@ -25,12 +25,12 @@ export default function SettingsPage() {
         transition={{ duration: 0.6 }}
         className="flex items-center gap-3"
       >
-        <div className="w-12 h-12 bg-gradient-to-br from-[#3DB8F5] to-[#2D69B3] rounded-xl flex items-center justify-center shadow-lg">
-          <Sparkles className="w-6 h-6 text-white" />
+        <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
+          <Sparkles className="w-4 h-4 text-slate-100" />
         </div>
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Configurações</h1>
-          <p className="text-gray-600 dark:text-gray-400">Personalize sua experiência</p>
+          <h1 className="text-xl font-semibold text-slate-100 tracking-tight">Configurações</h1>
+          <p className="text-xs text-slate-400 mt-1">Personalize sua experiência</p>
         </div>
       </motion.div>
 
@@ -41,24 +41,24 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                  <Bell className="w-5 h-5 text-white" />
+          <Card className="border border-slate-700 bg-slate-800">
+            <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Bell className="w-3 h-3 text-slate-100" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Notificações</h3>
+                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Notificações</h3>
               </div>
             </CardHeader>
-            <CardContent className="p-6 space-y-6">
+            <CardContent className="p-3 space-y-3">
               <motion.div
-                whileHover={{ x: 4 }}
+                whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
+                className="flex items-center justify-between p-2 bg-slate-900 rounded-sm"
               >
                 <div>
-                  <p className="font-bold text-gray-900 dark:text-white mb-1">Notificações por Email</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Receba alertas por email</p>
+                  <p className="font-semibold text-slate-100 mb-1 text-xs">Notificações por Email</p>
+                  <p className="text-xs text-slate-400">Receba alertas por email</p>
                 </div>
                 <Toggle
                   checked={emailNotifications}
@@ -68,13 +68,13 @@ export default function SettingsPage() {
                 />
               </motion.div>
               <motion.div
-                whileHover={{ x: 4 }}
+                whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
+                className="flex items-center justify-between p-2 bg-slate-900 rounded-sm"
               >
                 <div>
-                  <p className="font-bold text-gray-900 dark:text-white mb-1">Notificações Push</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Receba notificações no navegador</p>
+                  <p className="font-semibold text-slate-100 mb-1 text-xs">Notificações Push</p>
+                  <p className="text-xs text-slate-400">Receba notificações no navegador</p>
                 </div>
                 <Toggle
                   checked={pushNotifications}
@@ -93,24 +93,24 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Moon className="w-5 h-5 text-white" />
+          <Card className="border border-slate-700 bg-slate-800">
+            <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Moon className="w-3 h-3 text-slate-100" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Aparência</h3>
+                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Aparência</h3>
               </div>
             </CardHeader>
-            <CardContent className="p-6 space-y-6">
+            <CardContent className="p-3 space-y-3">
               <motion.div
-                whileHover={{ x: 4 }}
+                whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
+                className="flex items-center justify-between p-2 bg-slate-900 rounded-sm"
               >
                 <div>
-                  <p className="font-bold text-gray-900 dark:text-white mb-1">Modo Escuro</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Use o tema escuro</p>
+                  <p className="font-semibold text-slate-100 mb-1 text-xs">Modo Escuro</p>
+                  <p className="text-xs text-slate-400">Use o tema escuro</p>
                 </div>
                 <Toggle
                   checked={actualTheme === 'dark'}
@@ -129,26 +129,26 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
-                  <Shield className="w-5 h-5 text-white" />
+          <Card className="border border-slate-700 bg-slate-800">
+            <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Shield className="w-3 h-3 text-slate-100" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Segurança</h3>
+                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Segurança</h3>
               </div>
             </CardHeader>
-            <CardContent className="p-6 space-y-6">
+            <CardContent className="p-3 space-y-3">
               <div>
-                <p className="font-bold text-gray-900 dark:text-white mb-3">Alterar Senha</p>
+                <p className="font-semibold text-slate-100 mb-2 text-xs">Alterar Senha</p>
                 <Input 
                   type="password" 
                   placeholder="Nova senha" 
-                  className="border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
+                  className="border-slate-700 focus:ring-slate-600 focus:border-slate-600 rounded-sm py-2 text-xs"
                 />
               </div>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30">
+                <Button className="bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm px-3 py-2 text-xs">
                   Atualizar Senha
                 </Button>
               </motion.div>
@@ -162,24 +162,24 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-            <CardHeader className="border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
-                  <HelpCircle className="w-5 h-5 text-white" />
+          <Card className="border border-slate-700 bg-slate-800">
+            <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                  <HelpCircle className="w-3 h-3 text-slate-100" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Tutorial</h3>
+                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Tutorial</h3>
               </div>
             </CardHeader>
-            <CardContent className="p-6">
-              <p className="text-gray-600 dark:text-gray-400 mb-6 font-medium">
+            <CardContent className="p-3">
+              <p className="text-slate-400 mb-3 font-medium text-xs">
                 Reabra o tutorial inicial para aprender novamente como usar o MatchPulse
               </p>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button 
                   variant="outline" 
                   onClick={resetTutorial}
-                  className="border-[#2D69B3] text-[#2D69B3] hover:bg-[#2D69B3] hover:text-white rounded-xl px-6 py-3"
+                  className="border-slate-600 text-slate-300 hover:bg-slate-700 rounded-sm text-xs px-3 py-2"
                 >
                   Reiniciar Tutorial
                 </Button>
