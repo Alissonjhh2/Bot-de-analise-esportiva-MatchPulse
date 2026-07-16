@@ -29,12 +29,12 @@ export default function SettingsPage() {
           <Sparkles className="w-4 h-4 text-slate-100" />
         </div>
         <div>
-          <h1 className="text-xl font-semibold text-slate-100 tracking-tight">Configurações</h1>
-          <p className="text-xs text-slate-400 mt-1">Personalize sua experiência</p>
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 tracking-tight">Configurações</h1>
+          <p className="text-xs md:text-sm text-slate-400 mt-1">Personalize sua experiência</p>
         </div>
       </motion.div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-3 md:gap-4 lg:gap-6">
         {/* Notifications Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

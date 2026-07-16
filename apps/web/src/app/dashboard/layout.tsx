@@ -13,15 +13,8 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <div className="flex h-screen bg-slate-950 overflow-hidden">
-        {/* Coluna 1: Navegação Lateral Fixa (w-64) */}
-        <div className="w-64 flex-shrink-0 hidden lg:block border-r border-slate-700">
-          <Sidebar />
-        </div>
-
-        {/* Mobile Drawer */}
-        <div className="lg:hidden fixed inset-0 z-50">
-          <Sidebar />
-        </div>
+        {/* Sidebar - handles both desktop and mobile positioning internally */}
+        <Sidebar />
 
         {/* Coluna 2: Conteúdo Central (flex-1) */}
         <div className="flex-1 flex flex-col overflow-hidden">

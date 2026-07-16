@@ -273,12 +273,12 @@ function CreateStrategyContent() {
             <Sparkles className="w-4 h-4 text-slate-100" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
               Criar Estratégia
             </h1>
           </div>
         </div>
-        <p className="text-gray-600 dark:text-gray-400 ml-15">
+        <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 ml-15">
           Configure uma nova estratégia personalizada
         </p>
       </motion.div>
@@ -388,7 +388,7 @@ function CreateStrategyContent() {
                   </div>
                 </CardHeader>
                 <CardContent className="p-8 space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
                     {STRATEGY_TYPES.map((type) => (
                       <motion.button
                         key={type.value}
@@ -458,7 +458,7 @@ function CreateStrategyContent() {
                       Um nome descritivo para identificar sua estratégia
                     </p>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <Label htmlFor="startMinute" className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">
                         Minuto Inicial
@@ -573,7 +573,7 @@ function CreateStrategyContent() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3 lg:gap-4">
                     {filteredLeagues.map((league) => (
                       <motion.button
                         key={league.slug}

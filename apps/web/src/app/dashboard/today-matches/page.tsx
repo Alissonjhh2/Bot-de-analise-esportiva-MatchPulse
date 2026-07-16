@@ -306,8 +306,8 @@ export default function TodayMatchesPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-sm font-semibold text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
-          <p className="text-xs text-slate-400 flex items-center gap-1">
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
+          <p className="text-xs md:text-sm text-slate-400 flex items-center gap-1">
             <Calendar className="w-3 h-3" />
             {today}
           </p>
@@ -363,7 +363,7 @@ export default function TodayMatchesPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3 lg:gap-4"
       >
         {filteredMatches.length === 0 ? (
           <Card className="col-span-full border border-slate-700 bg-slate-800">
@@ -399,12 +399,12 @@ export default function TodayMatchesPage() {
                   </div>
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-center flex-1">
-                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center rounded-lg overflow-hidden">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-1 flex items-center justify-center rounded-lg overflow-hidden">
                         {match.homeTeam.logo ? (
                           <img 
                             src={match.homeTeam.logo} 
                             alt={match.homeTeam.name}
-                            className="w-10 h-10 object-contain"
+                            className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
                             onError={(e) => {
                               (e.target as HTMLImageElement).style.display = 'none';
                             }}
@@ -422,12 +422,12 @@ export default function TodayMatchesPage() {
                     </div>
                     <div className="text-slate-400 text-xs px-2">vs</div>
                     <div className="text-center flex-1">
-                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center rounded-lg overflow-hidden">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-1 flex items-center justify-center rounded-lg overflow-hidden">
                         {match.awayTeam.logo ? (
                           <img 
                             src={match.awayTeam.logo} 
                             alt={match.awayTeam.name}
-                            className="w-10 h-10 object-contain"
+                            className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
                             onError={(e) => {
                               (e.target as HTMLImageElement).style.display = 'none';
                             }}
@@ -484,7 +484,7 @@ export default function TodayMatchesPage() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-full max-w-2xl bg-slate-800 border-l border-slate-700 z-50 overflow-y-auto"
+              className="fixed right-0 top-0 h-full w-full sm:w-[80%] lg:max-w-2xl bg-slate-800 border-l border-slate-700 z-50 overflow-y-auto"
             >
               <div className="p-3 border-b border-slate-700 flex items-center justify-between sticky top-0 bg-slate-800 z-10">
                 <div>
@@ -513,48 +513,48 @@ export default function TodayMatchesPage() {
                       <CardContent className="p-3">
                         <div className="flex items-center justify-between mb-3">
                           <div className="text-center flex-1">
-                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center rounded-lg overflow-hidden">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 flex items-center justify-center rounded-lg overflow-hidden">
                               {selectedMatch.homeTeam.logo ? (
                                 <img 
                                   src={selectedMatch.homeTeam.logo} 
                                   alt={selectedMatch.homeTeam.name}
-                                  className="w-14 h-14 object-contain"
+                                  className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
                                   onError={(e) => {
                                     (e.target as HTMLImageElement).style.display = 'none';
                                   }}
                                 />
                               ) : (
-                                <div className="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center">
-                                  <span className="text-sm text-slate-400 font-bold">{selectedMatch.homeTeam.name.substring(0, 2).toUpperCase()}</span>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-700 rounded-full flex items-center justify-center">
+                                  <span className="text-xs sm:text-sm text-slate-400 font-bold">{selectedMatch.homeTeam.name.substring(0, 2).toUpperCase()}</span>
                                 </div>
                               )}
                             </div>
-                            <p className="text-sm font-semibold text-slate-100 mb-1">{selectedMatch.homeTeam.name}</p>
+                            <p className="text-xs sm:text-sm font-semibold text-slate-100 mb-1">{selectedMatch.homeTeam.name}</p>
                             {selectedMatch.status !== 'scheduled' && (
-                              <p className="text-2xl font-bold text-slate-100">{selectedMatch.homeTeam.score}</p>
+                              <p className="text-xl sm:text-2xl font-bold text-slate-100">{selectedMatch.homeTeam.score}</p>
                             )}
                           </div>
-                          <div className="text-slate-400 text-sm px-4 font-medium">vs</div>
+                          <div className="text-slate-400 text-xs sm:text-sm px-2 sm:px-4 font-medium">vs</div>
                           <div className="text-center flex-1">
-                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center rounded-lg overflow-hidden">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 flex items-center justify-center rounded-lg overflow-hidden">
                               {selectedMatch.awayTeam.logo ? (
                                 <img 
                                   src={selectedMatch.awayTeam.logo} 
                                   alt={selectedMatch.awayTeam.name}
-                                  className="w-14 h-14 object-contain"
+                                  className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
                                   onError={(e) => {
                                     (e.target as HTMLImageElement).style.display = 'none';
                                   }}
                                 />
                               ) : (
-                                <div className="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center">
-                                  <span className="text-sm text-slate-400 font-bold">{selectedMatch.awayTeam.name.substring(0, 2).toUpperCase()}</span>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-700 rounded-full flex items-center justify-center">
+                                  <span className="text-xs sm:text-sm text-slate-400 font-bold">{selectedMatch.awayTeam.name.substring(0, 2).toUpperCase()}</span>
                                 </div>
                               )}
                             </div>
-                            <p className="text-sm font-semibold text-slate-100 mb-1">{selectedMatch.awayTeam.name}</p>
+                            <p className="text-xs sm:text-sm font-semibold text-slate-100 mb-1">{selectedMatch.awayTeam.name}</p>
                             {selectedMatch.status !== 'scheduled' && (
-                              <p className="text-2xl font-bold text-slate-100">{selectedMatch.awayTeam.score}</p>
+                              <p className="text-xl sm:text-2xl font-bold text-slate-100">{selectedMatch.awayTeam.score}</p>
                             )}
                           </div>
                         </div>

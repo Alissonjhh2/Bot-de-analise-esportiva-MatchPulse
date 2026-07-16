@@ -42,8 +42,8 @@ export default function HistoryPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-xl font-semibold text-slate-100 mb-1 tracking-tight">Histórico</h1>
-          <p className="text-xs text-slate-400">Histórico de MatchHits das suas estratégias</p>
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 mb-1 tracking-tight">Histórico</h1>
+          <p className="text-xs md:text-sm text-slate-400">Histórico de MatchHits das suas estratégias</p>
         </div>
         <Card className="border border-slate-700 bg-slate-800">
           <CardContent className="p-4">
@@ -59,8 +59,8 @@ export default function HistoryPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-semibold text-slate-100 mb-1 tracking-tight">Histórico</h1>
-        <p className="text-xs text-slate-400">Histórico de MatchHits das suas estratégias</p>
+        <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 mb-1 tracking-tight">Histórico</h1>
+        <p className="text-xs md:text-sm text-slate-400">Histórico de MatchHits das suas estratégias</p>
       </div>
 
       {matchHits.length === 0 ? (

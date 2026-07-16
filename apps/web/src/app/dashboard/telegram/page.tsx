@@ -86,7 +86,7 @@ export default function TelegramPage() {
             <Send className="w-3 h-3 text-slate-100" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Telegram</h1>
+            <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Telegram</h1>
           </div>
         </div>
         <Card className="border border-slate-700 bg-slate-800">
@@ -112,7 +112,7 @@ export default function TelegramPage() {
           <Send className="w-3 h-3 text-slate-100" />
         </div>
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">Telegram</h1>
+          <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Telegram</h1>
         </div>
       </div>
 

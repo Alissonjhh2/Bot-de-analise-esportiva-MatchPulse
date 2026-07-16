@@ -236,10 +236,10 @@ export default function DashboardPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-sm font-semibold text-slate-100 mb-1 tracking-tight">
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 mb-1 tracking-tight">
             Dashboard
           </h1>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs md:text-sm text-slate-400">
             Visão geral das suas estratégias e alertas em tempo real
           </p>
         </div>
@@ -260,7 +260,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-4"
       >
         <motion.div
           whileHover={{ y: -2 }}
@@ -447,7 +447,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-2"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-3 lg:gap-4"
       >
         <motion.div
           whileHover={{ y: -2 }}

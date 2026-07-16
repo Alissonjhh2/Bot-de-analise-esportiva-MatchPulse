@@ -48,6 +48,7 @@ export function Sidebar() {
         className={cn(
           'h-screen bg-slate-800 border-r border-slate-700 flex flex-col transition-transform duration-300 ease-in-out',
           'w-64',
+          'fixed z-50 lg:static lg:z-auto',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
           'lg:translate-x-0'
         )}

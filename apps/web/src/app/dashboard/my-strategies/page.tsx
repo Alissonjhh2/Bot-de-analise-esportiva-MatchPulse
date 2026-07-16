@@ -100,10 +100,10 @@ export default function MyStrategiesPage() {
             <Sparkles className="w-4 h-4 text-slate-100" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-slate-100 tracking-tight">
+            <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 tracking-tight">
               Minhas Estratégias
             </h1>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs md:text-sm text-slate-400 mt-1">
               Gerencie suas estratégias ativas
             </p>
           </div>
@@ -181,7 +181,7 @@ export default function MyStrategiesPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="grid gap-6"
+          className="grid gap-3 md:gap-4 lg:gap-6"
         >
           <AnimatePresence>
             {strategies.map((strategy, index) => (
