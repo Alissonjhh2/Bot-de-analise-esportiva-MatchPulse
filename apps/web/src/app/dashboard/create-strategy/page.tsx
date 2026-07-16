@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader } from '@matchpulse/ui';
 import { Button } from '@matchpulse/ui';
 import { Input } from '@matchpulse/ui';
 import { Label } from '@matchpulse/ui';
-import { Plus, Trash2, ArrowRight, ArrowLeft, Check, Search, X, Sparkles, Target, Zap, Globe } from 'lucide-react';
+import { Plus, Trash2, ArrowRight, ArrowLeft, Check, Search, X, Sparkles, Target, Zap, Globe, Calendar, MapPin } from 'lucide-react';
 import { apiClient } from '@/lib/api';
+import { useSearchParams } from 'next/navigation';
 
 const LEAGUE_MAPPINGS = [
   { name: 'Campeonato Brasileiro', slug: 'bra.1' },
@@ -78,17 +79,30 @@ const OPERATORS = [
   { value: 'ANY', label: 'Qualquer' },
 ];
 
+const STRATEGY_TYPES = [
+  { value: 'general', label: 'Estratégia Geral', description: 'Aplicada a todos os jogos das ligas selecionadas', icon: Globe },
+  { value: 'specific', label: 'Estratégia Específica', description: 'Criada para um jogo específico', icon: MapPin },
+  { value: 'daily', label: 'Estratégia Diária', description: 'Aplicada a todos os jogos de um dia específico', icon: Calendar },
+];
+
 export default function CreateStrategyPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const matchIdParam = searchParams.get('matchId');
+  
   const [step, setStep] = useState(1);
+  const [strategyType, setStrategyType] = useState<'general' | 'specific' | 'daily'>(matchIdParam ? 'specific' : 'general');
   const [name, setName] = useState('');
   const [startMinute, setStartMinute] = useState(1);
   const [endMinute, setEndMinute] = useState(90);
   const [conditions, setConditions] = useState<StrategyCondition[]>([]);
   const [selectedLeagues, setSelectedLeagues] = useState<string[]>([DEFAULT_LEAGUE]);
+  const [selectedMatchId, setSelectedMatchId] = useState(matchIdParam || '');
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [availableMatches, setAvailableMatches] = useState<any[]>([]);
 
   const addCondition = () => {
     setConditions([
@@ -132,18 +146,40 @@ export default function CreateStrategyPage() {
     league.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Fetch available matches for specific strategy
+  useEffect(() => {
+    if (strategyType === 'specific') {
+      fetchTodayMatches();
+    }
+  }, [strategyType]);
+
+  const fetchTodayMatches = async () => {
+    try {
+      const response = await apiClient.get<{success: boolean, data: any[]}>('/today-matches');
+      setAvailableMatches(response.data || []);
+    } catch (err) {
+      console.error('Error fetching matches:', err);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
-    // Only allow submission if we're on step 4 (review step)
-    if (step !== 4) {
+    // Calculate final step based on strategy type
+    const finalStep = strategyType === 'general' ? 4 : 3;
+    if (step !== finalStep) {
       return;
     }
     
     // Prevent submission if conditions are not met
-    if (selectedLeagues.length === 0) {
+    if (strategyType === 'general' && selectedLeagues.length === 0) {
       setError('Selecione pelo menos um campeonato');
+      return;
+    }
+    
+    if (strategyType === 'specific' && !selectedMatchId) {
+      setError('Selecione um jogo');
       return;
     }
     
@@ -156,13 +192,26 @@ export default function CreateStrategyPage() {
     setError('');
 
     try {
-      await apiClient.post('/strategies', {
+      const payload: any = {
         name,
         startMinute,
         endMinute,
         conditions,
-        leagues: selectedLeagues,
-      });
+        type: strategyType,
+      };
+
+      if (strategyType === 'general') {
+        payload.leagues = selectedLeagues;
+      } else if (strategyType === 'specific') {
+        payload.matchId = selectedMatchId;
+      } else if (strategyType === 'daily') {
+        payload.date = selectedDate;
+        if (selectedLeagues.length > 0) {
+          payload.leagues = selectedLeagues;
+        }
+      }
+
+      await apiClient.post('/strategies', payload);
 
       // Success - redirect to my strategies
       router.push('/dashboard/my-strategies');
@@ -182,16 +231,24 @@ export default function CreateStrategyPage() {
   };
 
   const nextStep = () => {
-    if (step === 1 && !name.trim()) {
+    if (step === 1 && !strategyType) {
+      setError('Por favor, selecione o tipo de estratégia');
+      return;
+    }
+    if (step === 2 && !name.trim()) {
       setError('Por favor, insira um nome para a estratégia');
       return;
     }
-    if (step === 1 && (startMinute < 1 || endMinute > 90 || startMinute >= endMinute)) {
+    if (step === 2 && (startMinute < 1 || endMinute > 90 || startMinute >= endMinute)) {
       setError('Por favor, insira um intervalo de minutos válido (1-90)');
       return;
     }
-    if (step === 2 && selectedLeagues.length === 0) {
+    if (step === 3 && strategyType === 'general' && selectedLeagues.length === 0) {
       setError('Por favor, selecione pelo menos um campeonato');
+      return;
+    }
+    if (step === 3 && strategyType === 'specific' && !selectedMatchId) {
+      setError('Por favor, selecione um jogo');
       return;
     }
     setError('');
@@ -222,7 +279,7 @@ export default function CreateStrategyPage() {
           </div>
         </div>
         <p className="text-gray-600 dark:text-gray-400 ml-15">
-          Configure uma nova estratégia personalizada em 4 passos
+          Configure uma nova estratégia personalizada
         </p>
       </motion.div>
 
@@ -234,48 +291,61 @@ export default function CreateStrategyPage() {
         className="relative"
       >
         <div className="flex items-center justify-center gap-2 md:gap-4">
-          {[
-            { step: 1, label: 'Básico', icon: Target },
-            { step: 2, label: 'Ligas', icon: Globe },
-            { step: 3, label: 'Condições', icon: Zap },
-            { step: 4, label: 'Revisão', icon: Check },
-          ].map((item, index) => (
-            <div key={item.step} className="flex items-center flex-1">
-              <motion.div
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="relative group"
-              >
-                <div
-                  className={`w-8 h-8 md:w-10 md:h-10 rounded-sm flex items-center justify-center font-bold transition-all duration-300 ${
-                    step >= item.step
-                      ? 'bg-slate-700 text-slate-100'
-                      : 'bg-slate-800 text-slate-400'
-                  }`}
+          {(() => {
+            const stepsStrategy = strategyType === 'general' 
+              ? [
+                  { step: 1, label: 'Tipo', icon: Sparkles },
+                  { step: 2, label: 'Básico', icon: Target },
+                  { step: 3, label: 'Ligas', icon: Globe },
+                  { step: 4, label: 'Condições', icon: Zap },
+                  { step: 5, label: 'Revisão', icon: Check },
+                ]
+              : [
+                  { step: 1, label: 'Tipo', icon: Sparkles },
+                  { step: 2, label: 'Básico', icon: Target },
+                  { step: 3, label: strategyType === 'specific' ? 'Jogo' : 'Data', icon: strategyType === 'specific' ? MapPin : Calendar },
+                  { step: 4, label: 'Condições', icon: Zap },
+                  { step: 5, label: 'Revisão', icon: Check },
+                ];
+            
+            return stepsStrategy.map((item, index) => (
+              <div key={item.step} className="flex items-center flex-1">
+                <motion.div
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="relative group"
                 >
-                  {step > item.step ? (
-                    <Check className="w-6 h-6" />
-                  ) : (
-                    <item.icon className="w-6 h-6" />
-                  )}
-                </div>
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-gray-600 dark:text-gray-400">
-                  {item.label}
-                </div>
-              </motion.div>
-              {index < 3 && (
-                <div className="flex-1 h-1 mx-2 md:mx-4 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: step > item.step ? '100%' : '0%' }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={`h-full ${step > item.step ? 'bg-slate-700' : 'bg-slate-800'}`}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
+                  <div
+                    className={`w-8 h-8 md:w-10 md:h-10 rounded-sm flex items-center justify-center font-bold transition-all duration-300 ${
+                      step >= item.step
+                        ? 'bg-slate-700 text-slate-100'
+                        : 'bg-slate-800 text-slate-400'
+                    }`}
+                  >
+                    {step > item.step ? (
+                      <Check className="w-6 h-6" />
+                    ) : (
+                      <item.icon className="w-6 h-6" />
+                    )}
+                  </div>
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-gray-600 dark:text-gray-400">
+                    {item.label}
+                  </div>
+                </motion.div>
+                {index < 4 && (
+                  <div className="flex-1 h-1 mx-2 md:mx-4 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: step > item.step ? '100%' : '0%' }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className={`h-full ${step > item.step ? 'bg-slate-700' : 'bg-slate-800'}`}
+                    />
+                  </div>
+                )}
+              </div>
+            ));
+          })()}
         </div>
         <div className="h-8" /> {/* Spacer for labels */}
       </motion.div>
@@ -292,10 +362,63 @@ export default function CreateStrategyPage() {
 
       <div>
         <AnimatePresence mode="wait">
-          {/* Step 1: Basic Info */}
+          {/* Step 1: Strategy Type Selection */}
           {step === 1 && (
             <motion.div
               key="step1"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border border-slate-700 bg-slate-800">
+                <CardHeader className="border-b border-slate-700 bg-slate-800">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Sparkles className="w-3 h-3 text-slate-100" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                        Passo 1: Tipo de Estratégia
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Escolha o tipo de estratégia que deseja criar
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-8 space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {STRATEGY_TYPES.map((type) => (
+                      <motion.button
+                        key={type.value}
+                        type="button"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setStrategyType(type.value as any)}
+                        className={`p-6 rounded-sm border transition-all duration-300 text-left ${
+                          strategyType === type.value
+                            ? 'border-slate-600 bg-slate-700 text-slate-100'
+                            : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                        }`}
+                      >
+                        <div className="w-10 h-10 bg-slate-800 rounded-sm flex items-center justify-center mb-3">
+                          <type.icon className="w-5 h-5" />
+                        </div>
+                        <h4 className="font-semibold text-sm mb-2">{type.label}</h4>
+                        <p className="text-xs opacity-80">{type.description}</p>
+                      </motion.button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Step 2: Basic Info */}
+          {step === 2 && (
+            <motion.div
+              key="step2"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
@@ -309,7 +432,7 @@ export default function CreateStrategyPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                        Passo 1: Informações Básicas
+                        Passo 2: Informações Básicas
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                         Defina o nome e o intervalo de tempo da estratégia
@@ -380,10 +503,10 @@ export default function CreateStrategyPage() {
             </motion.div>
           )}
 
-        {/* Step 2: Leagues */}
-        {step === 2 && (
+        {/* Step 3: Leagues (for general strategy) */}
+        {step === 3 && strategyType === 'general' && (
           <motion.div
-            key="step2"
+            key="step3"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
@@ -487,10 +610,119 @@ export default function CreateStrategyPage() {
           </motion.div>
         )}
 
-        {/* Step 3: Conditions */}
-        {step === 3 && (
+        {/* Step 3: Match Selection (for specific strategy) */}
+        {step === 3 && strategyType === 'specific' && (
           <motion.div
-            key="step3"
+            key="step3-specific"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Card className="border border-slate-700 bg-slate-800">
+              <CardHeader className="border-b border-slate-700 bg-slate-800">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                    <MapPin className="w-3 h-3 text-slate-100" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                      Passo 3: Selecionar Jogo
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      Escolha o jogo específico para esta estratégia
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-8 space-y-6">
+                <div className="space-y-3">
+                  {availableMatches.length === 0 ? (
+                    <p className="text-sm text-slate-400">Nenhum jogo disponível hoje</p>
+                  ) : (
+                    availableMatches.map((match) => (
+                      <motion.button
+                        key={match.eventId}
+                        type="button"
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        onClick={() => setSelectedMatchId(match.eventId)}
+                        className={`w-full p-4 rounded-sm border transition-all duration-300 text-left ${
+                          selectedMatchId === match.eventId
+                            ? 'border-slate-600 bg-slate-700 text-slate-100'
+                            : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-semibold text-sm">{match.homeTeam.name} vs {match.awayTeam.name}</p>
+                            <p className="text-xs opacity-80 mt-1">{match.leagueName}</p>
+                          </div>
+                          <div className="text-xs">
+                            {new Date(match.startTime).toLocaleTimeString('pt-BR', {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </div>
+                        </div>
+                      </motion.button>
+                    ))
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Step 3: Date Selection (for daily strategy) */}
+        {step === 3 && strategyType === 'daily' && (
+          <motion.div
+            key="step3-daily"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Card className="border border-slate-700 bg-slate-800">
+              <CardHeader className="border-b border-slate-700 bg-slate-800">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                    <Calendar className="w-3 h-3 text-slate-100" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                      Passo 3: Selecionar Data
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      Escolha a data para esta estratégia diária
+                    </p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-8 space-y-6">
+                <div>
+                  <Label htmlFor="date" className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">
+                    Data
+                  </Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    required
+                    disabled={isSubmitting}
+                    className="border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Step 4: Conditions */}
+        {step === 4 && (
+          <motion.div
+            key="step4"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
@@ -505,7 +737,7 @@ export default function CreateStrategyPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                        Passo 3: Condições
+                        Passo 4: Condições
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                         Defina as regras que acionarão a estratégia
@@ -646,10 +878,10 @@ export default function CreateStrategyPage() {
           </motion.div>
         )}
 
-        {/* Step 4: Review */}
-        {step === 4 && (
+        {/* Step 5: Review */}
+        {step === 5 && (
           <motion.div
-            key="step4"
+            key="step5"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
@@ -663,7 +895,7 @@ export default function CreateStrategyPage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                      Passo 4: Revisão
+                      Passo 5: Revisão
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                       Revise sua estratégia antes de criar
@@ -676,6 +908,21 @@ export default function CreateStrategyPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
+                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                >
+                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                    <Sparkles className="w-3 h-3 text-slate-400" />
+                    Tipo de Estratégia
+                  </h4>
+                  <p className="text-xs text-slate-300">
+                    {STRATEGY_TYPES.find((t) => t.value === strategyType)?.label}
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
                   className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
                 >
                   <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
@@ -696,27 +943,75 @@ export default function CreateStrategyPage() {
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
-                >
-                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                    <Globe className="w-3 h-3 text-slate-400" />
-                    Campeonatos Monitorados ({selectedLeagues.length})
-                  </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                    {selectedLeagues.map(slug => {
-                      const league = LEAGUE_MAPPINGS.find(l => l.slug === slug);
-                      return (
-                        <div key={slug} className="text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded-sm">
-                          {league?.name || slug}
-                        </div>
+                {strategyType === 'general' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                  >
+                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <Globe className="w-3 h-3 text-slate-400" />
+                      Campeonatos Monitorados ({selectedLeagues.length})
+                    </h4>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {selectedLeagues.map(slug => {
+                        const league = LEAGUE_MAPPINGS.find(l => l.slug === slug);
+                        return (
+                          <div key={slug} className="text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded-sm">
+                            {league?.name || slug}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+
+                {strategyType === 'specific' && selectedMatchId && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                  >
+                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <MapPin className="w-3 h-3 text-slate-400" />
+                      Jogo Selecionado
+                    </h4>
+                    {(() => {
+                      const match = availableMatches.find(m => m.eventId === selectedMatchId);
+                      return match ? (
+                        <p className="text-xs text-slate-300">
+                          {match.homeTeam.name} vs {match.awayTeam.name} - {match.leagueName}
+                        </p>
+                      ) : (
+                        <p className="text-xs text-slate-400">Jogo não encontrado</p>
                       );
-                    })}
-                  </div>
-                </motion.div>
+                    })()}
+                  </motion.div>
+                )}
+
+                {strategyType === 'daily' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                  >
+                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <Calendar className="w-3 h-3 text-slate-400" />
+                      Data Selecionada
+                    </h4>
+                    <p className="text-xs text-slate-300">
+                      {new Date(selectedDate).toLocaleDateString('pt-BR', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </p>
+                  </motion.div>
+                )}
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
