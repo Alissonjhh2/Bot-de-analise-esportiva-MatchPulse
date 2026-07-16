@@ -11,8 +11,6 @@ import { Plus, Trash2, ArrowRight, ArrowLeft, Check, Search, X, Sparkles, Target
 import { apiClient } from '@/lib/api';
 import { useSearchParams } from 'next/navigation';
 
-function CreateStrategyContent() {
-
 const LEAGUE_MAPPINGS = [
   { name: 'Campeonato Brasileiro', slug: 'bra.1' },
   { name: 'Campeonato Brasileiro Série B', slug: 'bra.2' },
@@ -169,7 +167,7 @@ function CreateStrategyContent() {
     e.stopPropagation();
     
     // Calculate final step based on strategy type
-    const finalStep = strategyType === 'general' ? 4 : 3;
+    const finalStep = strategyType === 'general' ? 5 : 4;
     if (step !== finalStep) {
       return;
     }
@@ -505,599 +503,598 @@ function CreateStrategyContent() {
             </motion.div>
           )}
 
-        {/* Step 3: Leagues (for general strategy) */}
-        {step === 3 && strategyType === 'general' && (
-          <motion.div
-            key="step3"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card className="border border-slate-700 bg-slate-800">
-              <CardHeader className="border-b border-slate-700 bg-slate-800">
-                <div className="flex items-center justify-between">
+          {/* Step 3: Leagues (for general strategy) */}
+          {step === 3 && strategyType === 'general' && (
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border border-slate-700 bg-slate-800">
+                <CardHeader className="border-b border-slate-700 bg-slate-800">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                        <Globe className="w-3 h-3 text-slate-100" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                          Passo 3: Campeonatos Monitorados
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          Selecione em quais campeonatos esta estratégia será aplicada
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        onClick={selectAllLeagues}
+                        variant="outline"
+                        size="sm"
+                        disabled={isSubmitting}
+                        className="border-[#2D69B3] text-[#2D69B3] hover:bg-[#2D69B3] hover:text-white rounded-xl"
+                      >
+                        Selecionar Todos
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={clearAllLeagues}
+                        variant="outline"
+                        size="sm"
+                        disabled={isSubmitting}
+                        className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
+                      >
+                        Limpar
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-8 space-y-6">
+                  <div className="relative">
+                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Input
+                      placeholder="Pesquisar campeonato..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      disabled={isSubmitting}
+                      className="pl-12 border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
+                    />
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => setSearchQuery('')}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                      >
+                        <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {filteredLeagues.map((league) => (
+                      <motion.button
+                        key={league.slug}
+                        type="button"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => toggleLeague(league.slug)}
+                        disabled={isSubmitting}
+                        className={`p-2 rounded-sm border transition-all duration-300 text-xs font-medium text-center ${
+                          selectedLeagues.includes(league.slug)
+                            ? 'border-slate-600 bg-slate-700 text-slate-100'
+                            : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                        }`}
+                      >
+                        {league.name}
+                      </motion.button>
+                    ))}
+                  </div>
+
+                  {selectedLeagues.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="pt-4 border-t border-gray-200 dark:border-gray-700"
+                    >
+                      <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                        <Globe className="w-4 h-4 text-[#2D69B3]" />
+                        {selectedLeagues.length} campeonato{selectedLeagues.length !== 1 ? 's' : ''} selecionado{selectedLeagues.length !== 1 ? 's' : ''}
+                      </p>
+                    </motion.div>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Step 3: Match Selection (for specific strategy) */}
+          {step === 3 && strategyType === 'specific' && (
+            <motion.div
+              key="step3-specific"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border border-slate-700 bg-slate-800">
+                <CardHeader className="border-b border-slate-700 bg-slate-800">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <Globe className="w-3 h-3 text-slate-100" />
+                      <MapPin className="w-3 h-3 text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                        Passo 2: Campeonatos Monitorados
+                        Passo 3: Selecionar Jogo
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Selecione em quais campeonatos esta estratégia será aplicada
+                        Escolha o jogo específico para esta estratégia
                       </p>
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                </CardHeader>
+                <CardContent className="p-8 space-y-6">
+                  <div className="space-y-3">
+                    {availableMatches.length === 0 ? (
+                      <p className="text-sm text-slate-400">Nenhum jogo disponível hoje</p>
+                    ) : (
+                      availableMatches.map((match) => (
+                        <motion.button
+                          key={match.eventId}
+                          type="button"
+                          whileHover={{ scale: 1.01 }}
+                          whileTap={{ scale: 0.99 }}
+                          onClick={() => setSelectedMatchId(match.eventId)}
+                          className={`w-full p-4 rounded-sm border transition-all duration-300 text-left ${
+                            selectedMatchId === match.eventId
+                              ? 'border-slate-600 bg-slate-700 text-slate-100'
+                              : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="font-semibold text-sm">{match.homeTeam.name} vs {match.awayTeam.name}</p>
+                              <p className="text-xs opacity-80 mt-1">{match.leagueName}</p>
+                            </div>
+                            <div className="text-xs">
+                              {new Date(match.startTime).toLocaleTimeString('pt-BR', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </div>
+                          </div>
+                        </motion.button>
+                      ))
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Step 3: Date Selection (for daily strategy) */}
+          {step === 3 && strategyType === 'daily' && (
+            <motion.div
+              key="step3-daily"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border border-slate-700 bg-slate-800">
+                <CardHeader className="border-b border-slate-700 bg-slate-800">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Calendar className="w-3 h-3 text-slate-100" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                        Passo 3: Selecionar Data
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Escolha a data para esta estratégia diária
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-8 space-y-6">
+                  <div>
+                    <Label htmlFor="date" className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">
+                      Data
+                    </Label>
+                    <Input
+                      id="date"
+                      type="date"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      required
+                      disabled={isSubmitting}
+                      className="border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Step 4: Conditions */}
+          {step === 4 && (
+            <motion.div
+              key="step4"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border border-slate-700 bg-slate-800">
+                <CardHeader className="border-b border-slate-700 bg-slate-800">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                        <Zap className="w-3 h-3 text-slate-100" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+                          Passo 4: Condições
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          Defina as regras que acionarão a estratégia
+                        </p>
+                      </div>
+                    </div>
                     <Button
                       type="button"
-                      onClick={selectAllLeagues}
+                      onClick={addCondition}
                       variant="outline"
                       size="sm"
                       disabled={isSubmitting}
                       className="border-[#2D69B3] text-[#2D69B3] hover:bg-[#2D69B3] hover:text-white rounded-xl"
                     >
-                      Selecionar Todos
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={clearAllLeagues}
-                      variant="outline"
-                      size="sm"
-                      disabled={isSubmitting}
-                      className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
-                    >
-                      Limpar
+                      <Plus className="w-4 h-4 mr-2" />
+                      Adicionar Condição
                     </Button>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-8 space-y-6">
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <Input
-                    placeholder="Pesquisar campeonato..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    disabled={isSubmitting}
-                    className="pl-12 border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
-                  />
-                  {searchQuery && (
-                    <button
-                      type="button"
-                      onClick={() => setSearchQuery('')}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2"
-                    >
-                      <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
-                    </button>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {filteredLeagues.map((league) => (
-                    <motion.button
-                      key={league.slug}
-                      type="button"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => toggleLeague(league.slug)}
-                      disabled={isSubmitting}
-                      className={`p-2 rounded-sm border transition-all duration-300 text-xs font-medium text-center ${
-                        selectedLeagues.includes(league.slug)
-                          ? 'border-slate-600 bg-slate-700 text-slate-100'
-                          : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
-                      }`}
-                    >
-                      {league.name}
-                    </motion.button>
-                  ))}
-                </div>
-
-                {selectedLeagues.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="pt-4 border-t border-gray-200 dark:border-gray-700"
-                  >
-                    <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                      <Globe className="w-4 h-4 text-[#2D69B3]" />
-                      {selectedLeagues.length} campeonato{selectedLeagues.length !== 1 ? 's' : ''} selecionado{selectedLeagues.length !== 1 ? 's' : ''}
-                    </p>
-                  </motion.div>
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
-        {/* Step 3: Match Selection (for specific strategy) */}
-        {step === 3 && strategyType === 'specific' && (
-          <motion.div
-            key="step3-specific"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card className="border border-slate-700 bg-slate-800">
-              <CardHeader className="border-b border-slate-700 bg-slate-800">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                    <MapPin className="w-3 h-3 text-slate-100" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                      Passo 3: Selecionar Jogo
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Escolha o jogo específico para esta estratégia
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-8 space-y-6">
-                <div className="space-y-3">
-                  {availableMatches.length === 0 ? (
-                    <p className="text-sm text-slate-400">Nenhum jogo disponível hoje</p>
-                  ) : (
-                    availableMatches.map((match) => (
-                      <motion.button
-                        key={match.eventId}
-                        type="button"
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.99 }}
-                        onClick={() => setSelectedMatchId(match.eventId)}
-                        className={`w-full p-4 rounded-sm border transition-all duration-300 text-left ${
-                          selectedMatchId === match.eventId
-                            ? 'border-slate-600 bg-slate-700 text-slate-100'
-                            : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
-                        }`}
+                </CardHeader>
+                <CardContent className="p-8">
+                  {conditions.length === 0 ? (
+                    <div className="text-center py-16">
+                      <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
                       >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="font-semibold text-sm">{match.homeTeam.name} vs {match.awayTeam.name}</p>
-                            <p className="text-xs opacity-80 mt-1">{match.leagueName}</p>
+                        <Plus className="w-5 h-5 text-slate-400" />
+                      </motion.div>
+                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                        Nenhuma condição adicionada
+                      </h4>
+                      <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+                        Adicione pelo menos uma condição para que a estratégia funcione.
+                      </p>
+                      <Button
+                        type="button"
+                        onClick={addCondition}
+                        disabled={isSubmitting}
+                        className="bg-slate-700 hover:bg-slate-600 rounded-sm px-3 py-2 text-xs"
+                      >
+                        <Plus className="w-3 h-3 mr-1" />
+                        Adicionar Primeira Condição
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {conditions.map((condition, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                          className="p-6 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-[#2D69B3] hover:shadow-lg transition-all duration-300"
+                        >
+                          <div className="flex justify-between items-start mb-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
+                                <Zap className="w-3 h-3 text-slate-100" />
+                              </div>
+                              <h4 className="font-semibold text-slate-100 text-xs">Condição {index + 1}</h4>
+                            </div>
+                            <Button
+                              type="button"
+                              onClick={() => removeCondition(index)}
+                              variant="ghost"
+                              size="sm"
+                              disabled={isSubmitting}
+                              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
                           </div>
-                          <div className="text-xs">
-                            {new Date(match.startTime).toLocaleTimeString('pt-BR', {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Indicador</Label>
+                              <select
+                                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2D69B3] disabled:opacity-50 transition-colors duration-200"
+                                value={condition.indicator}
+                                onChange={(e) => updateCondition(index, 'indicator', e.target.value)}
+                                disabled={isSubmitting}
+                              >
+                                {INDICATORS.map((ind) => (
+                                  <option key={ind.value} value={ind.value}>
+                                    {ind.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Equipe</Label>
+                              <select
+                                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2D69B3] disabled:opacity-50 transition-colors duration-200"
+                                value={condition.team}
+                                onChange={(e) => updateCondition(index, 'team', e.target.value)}
+                                disabled={isSubmitting}
+                              >
+                                {TEAMS.map((team) => (
+                                  <option key={team.value} value={team.value}>
+                                    {team.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Operador</Label>
+                              <select
+                                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2D69B3] disabled:opacity-50 transition-colors duration-200"
+                                value={condition.operator}
+                                onChange={(e) => updateCondition(index, 'operator', e.target.value)}
+                                disabled={isSubmitting}
+                              >
+                                {OPERATORS.map((op) => (
+                                  <option key={op.value} value={op.value}>
+                                    {op.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Quantidade</Label>
+                              <Input
+  type="number"
+  min="0"
+  value={condition.quantity}
+  onChange={(e) => updateCondition(index, 'quantity', parseInt(e.target.value))}
+  disabled={isSubmitting}
+  className="border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </motion.button>
-                    ))
+                        </motion.div>
+                      ))}
+                    </div>
                   )}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
-        {/* Step 3: Date Selection (for daily strategy) */}
-        {step === 3 && strategyType === 'daily' && (
-          <motion.div
-            key="step3-daily"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card className="border border-slate-700 bg-slate-800">
-              <CardHeader className="border-b border-slate-700 bg-slate-800">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                    <Calendar className="w-3 h-3 text-slate-100" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                      Passo 3: Selecionar Data
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Escolha a data para esta estratégia diária
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-8 space-y-6">
-                <div>
-                  <Label htmlFor="date" className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">
-                    Data
-                  </Label>
-                  <Input
-                    id="date"
-                    type="date"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    required
-                    disabled={isSubmitting}
-                    className="border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
-        {/* Step 4: Conditions */}
-        {step === 4 && (
-          <motion.div
-            key="step4"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card className="border border-slate-700 bg-slate-800">
-              <CardHeader className="border-b border-slate-700 bg-slate-800">
-                <div className="flex items-center justify-between">
+          {/* Step 5: Review */}
+          {step === 5 && (
+            <motion.div
+              key="step5"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border border-slate-700 bg-slate-800">
+                <CardHeader className="border-b border-slate-700 bg-slate-800">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <Zap className="w-3 h-3 text-slate-100" />
+                      <Check className="w-3 h-3 text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                        Passo 4: Condições
+                        Passo 5: Revisão
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Defina as regras que acionarão a estratégia
+                        Revise sua estratégia antes de criar
                       </p>
                     </div>
                   </div>
-                  <Button
-                    type="button"
-                    onClick={addCondition}
-                    variant="outline"
-                    size="sm"
-                    disabled={isSubmitting}
-                    className="border-[#2D69B3] text-[#2D69B3] hover:bg-[#2D69B3] hover:text-white rounded-xl"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Adicionar Condição
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="p-8">
-                {conditions.length === 0 ? (
-                  <div className="text-center py-16">
-                    <motion.div
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
-                    >
-                      <Plus className="w-5 h-5 text-slate-400" />
-                    </motion.div>
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                      Nenhuma condição adicionada
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-                      Adicione pelo menos uma condição para que a estratégia funcione.
-                    </p>
-                    <Button
-                      type="button"
-                      onClick={addCondition}
-                      disabled={isSubmitting}
-                      className="bg-slate-700 hover:bg-slate-600 rounded-sm px-3 py-2 text-xs"
-                    >
-                      <Plus className="w-3 h-3 mr-1" />
-                      Adicionar Primeira Condição
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {conditions.map((condition, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        className="p-6 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-[#2D69B3] hover:shadow-lg transition-all duration-300"
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                              <Zap className="w-3 h-3 text-slate-100" />
-                            </div>
-                            <h4 className="font-semibold text-slate-100 text-xs">Condição {index + 1}</h4>
-                          </div>
-                          <Button
-                            type="button"
-                            onClick={() => removeCondition(index)}
-                            variant="ghost"
-                            size="sm"
-                            disabled={isSubmitting}
-                            className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Indicador</Label>
-                            <select
-                              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2D69B3] disabled:opacity-50 transition-colors duration-200"
-                              value={condition.indicator}
-                              onChange={(e) => updateCondition(index, 'indicator', e.target.value)}
-                              disabled={isSubmitting}
-                            >
-                              {INDICATORS.map((ind) => (
-                                <option key={ind.value} value={ind.value}>
-                                  {ind.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div>
-                            <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Equipe</Label>
-                            <select
-                              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2D69B3] disabled:opacity-50 transition-colors duration-200"
-                              value={condition.team}
-                              onChange={(e) => updateCondition(index, 'team', e.target.value)}
-                              disabled={isSubmitting}
-                            >
-                              {TEAMS.map((team) => (
-                                <option key={team.value} value={team.value}>
-                                  {team.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div>
-                            <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Operador</Label>
-                            <select
-                              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2D69B3] disabled:opacity-50 transition-colors duration-200"
-                              value={condition.operator}
-                              onChange={(e) => updateCondition(index, 'operator', e.target.value)}
-                              disabled={isSubmitting}
-                            >
-                              {OPERATORS.map((op) => (
-                                <option key={op.value} value={op.value}>
-                                  {op.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div>
-                            <Label className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 block">Quantidade</Label>
-                            <Input
-                              type="number"
-                              min="0"
-                              value={condition.quantity}
-                              onChange={(e) => updateCondition(index, 'quantity', parseInt(e.target.value))}
-                              disabled={isSubmitting}
-                              className="border-gray-200 dark:border-gray-700 focus:ring-[#2D69B3] focus:border-[#2D69B3] rounded-xl py-3"
-                            />
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
-        {/* Step 5: Review */}
-        {step === 5 && (
-          <motion.div
-            key="step5"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card className="border border-slate-700 bg-slate-800">
-              <CardHeader className="border-b border-slate-700 bg-slate-800">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                    <Check className="w-3 h-3 text-slate-100" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-                      Passo 5: Revisão
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Revise sua estratégia antes de criar
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-8 space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
-                >
-                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                    <Sparkles className="w-3 h-3 text-slate-400" />
-                    Tipo de Estratégia
-                  </h4>
-                  <p className="text-xs text-slate-300">
-                    {STRATEGY_TYPES.find((t) => t.value === strategyType)?.label}
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 }}
-                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
-                >
-                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                    <Target className="w-3 h-3 text-slate-400" />
-                    Informações Básicas
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                    <div>
-                      <p className="text-slate-400 mb-1">Nome</p>
-                      <p className="font-semibold text-slate-100">{name}</p>
-                    </div>
-                    <div>
-                      <p className="text-slate-400 mb-1">Intervalo</p>
-                      <p className="font-semibold text-slate-100">
-                        {startMinute}&apos; - {endMinute}&apos;
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {strategyType === 'general' && (
+                </CardHeader>
+                <CardContent className="p-8 space-y-6">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
+                    transition={{ delay: 0.1 }}
                     className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
                   >
                     <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                      <Globe className="w-3 h-3 text-slate-400" />
-                      Campeonatos Monitorados ({selectedLeagues.length})
-                    </h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {selectedLeagues.map(slug => {
-                        const league = LEAGUE_MAPPINGS.find(l => l.slug === slug);
-                        return (
-                          <div key={slug} className="text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded-sm">
-                            {league?.name || slug}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                )}
-
-                {strategyType === 'specific' && selectedMatchId && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
-                  >
-                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                      <MapPin className="w-3 h-3 text-slate-400" />
-                      Jogo Selecionado
-                    </h4>
-                    {(() => {
-                      const match = availableMatches.find(m => m.eventId === selectedMatchId);
-                      return match ? (
-                        <p className="text-xs text-slate-300">
-                          {match.homeTeam.name} vs {match.awayTeam.name} - {match.leagueName}
-                        </p>
-                      ) : (
-                        <p className="text-xs text-slate-400">Jogo não encontrado</p>
-                      );
-                    })()}
-                  </motion.div>
-                )}
-
-                {strategyType === 'daily' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
-                  >
-                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                      <Calendar className="w-3 h-3 text-slate-400" />
-                      Data Selecionada
+                      <Sparkles className="w-3 h-3 text-slate-400" />
+                      Tipo de Estratégia
                     </h4>
                     <p className="text-xs text-slate-300">
-                      {new Date(selectedDate).toLocaleDateString('pt-BR', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
+                      {STRATEGY_TYPES.find((t) => t.value === strategyType)?.label}
                     </p>
                   </motion.div>
-                )}
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
-                >
-                  <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                    <Zap className="w-3 h-3 text-slate-400" />
-                    Condições ({conditions.length})
-                  </h4>
-                  {conditions.map((condition, index) => (
-                    <div key={index} className="mb-2 last:mb-0 pb-2 last:pb-0 border-b border-slate-700 last:border-0">
-                      <div className="flex flex-wrap items-center gap-2 text-xs">
-                        <span className="font-semibold text-slate-100 bg-slate-800 px-2 py-1 rounded-sm">
-                          {INDICATORS.find((i) => i.value === condition.indicator)?.label}
-                        </span>
-                        <span className="text-slate-400">•</span>
-                        <span className="text-slate-400">
-                          {TEAMS.find((t) => t.value === condition.team)?.label}
-                        </span>
-                        <span className="text-slate-400">•</span>
-                        <span className="text-slate-400">
-                          {OPERATORS.find((o) => o.value === condition.operator)?.label}
-                        </span>
-                        <span className="text-slate-400">•</span>
-                        <span className="font-semibold text-slate-100 bg-slate-800 px-2 py-1 rounded-sm">{condition.quantity}</span>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 }}
+                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                  >
+                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <Target className="w-3 h-3 text-slate-400" />
+                      Informações Básicas
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <p className="text-slate-400 mb-1">Nome</p>
+                        <p className="font-semibold text-slate-100">{name}</p>
+                      </div>
+                      <div>
+                        <p className="text-slate-400 mb-1">Intervalo</p>
+                        <p className="font-semibold text-slate-100">
+                          {startMinute}&apos; - {endMinute}&apos;
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </motion.div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-        </AnimatePresence>
+                  </motion.div>
 
-        {/* Navigation Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-between items-center"
-        >
+                  {strategyType === 'general' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                    >
+                      <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                        <Globe className="w-3 h-3 text-slate-400" />
+                        Campeonatos Monitorados ({selectedLeagues.length})
+                      </h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                        {selectedLeagues.map(slug => {
+                          const league = LEAGUE_MAPPINGS.find(l => l.slug === slug);
+                          return (
+                            <div key={slug} className="text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded-sm">
+                              {league?.name || slug}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {strategyType === 'specific' && selectedMatchId && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                    >
+                      <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                        <MapPin className="w-3 h-3 text-slate-400" />
+                        Jogo Selecionado
+                      </h4>
+                      {(() => {
+                        const match = availableMatches.find(m => m.eventId === selectedMatchId);
+                        return match ? (
+                          <p className="text-xs text-slate-300">
+                            {match.homeTeam.name} vs {match.awayTeam.name} - {match.leagueName}
+                          </p>
+                        ) : (
+                          <p className="text-xs text-slate-400">Jogo não encontrado</p>
+                        );
+                      })()}
+                    </motion.div>
+                  )}
+
+                  {strategyType === 'daily' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                    >
+                      <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                        <Calendar className="w-3 h-3 text-slate-400" />
+                        Data Selecionada
+                      </h4>
+                      <p className="text-xs text-slate-300">
+                        {new Date(selectedDate).toLocaleDateString('pt-BR', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </p>
+                    </motion.div>
+                  )}
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                  >
+                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <Zap className="w-3 h-3 text-slate-400" />
+                      Condições ({conditions.length})
+                    </h4>
+                    {conditions.map((condition, index) => (
+                      <div key={index} className="mb-2 last:mb-0 pb-2 last:pb-0 border-b border-slate-700 last:border-0">
+                        <div className="flex flex-wrap items-center gap-2 text-xs">
+                          <span className="font-semibold text-slate-100 bg-slate-800 px-2 py-1 rounded-sm">
+                            {INDICATORS.find((i) => i.value === condition.indicator)?.label}
+                          </span>
+                          <span className="text-slate-400">•</span>
+                          <span className="text-slate-400">
+                            {TEAMS.find((t) => t.value === condition.team)?.label}
+                          </span>
+                          <span className="text-slate-400">•</span>
+                          <span className="text-slate-400">
+                            {OPERATORS.find((o) => o.value === condition.operator)?.label}
+                          </span>
+                          <span className="text-slate-400">•</span>
+                          <span className="font-semibold text-slate-100">{condition.quantity}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Navigation Buttons */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="flex justify-between items-center pt-6"
+      >
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button
+            type="button"
+            onClick={prevStep}
+            disabled={step === 1 || isSubmitting}
+            variant="outline"
+            className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl px-6 py-3"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Anterior
+          </Button>
+        </motion.div>
+        {step === 5 ? (
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30"
+            >
+              {isSubmitting ? 'Criando...' : 'Criar Estratégia'}
+              {!isSubmitting && <Check className="w-4 h-4 ml-2" />}
+            </Button>
+          </motion.div>
+        ) : (
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button
               type="button"
-              variant="outline"
-              disabled={step === 1 || isSubmitting}
-              onClick={prevStep}
-              className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl px-6 py-3"
+              onClick={nextStep}
+              disabled={isSubmitting}
+              className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Anterior
+              Próximo
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </motion.div>
-
-          {step === 4 ? (
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                type="button"
-                onClick={handleSubmit}
-                disabled={conditions.length === 0 || selectedLeagues.length === 0 || isSubmitting}
-                className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30"
-              >
-                {isSubmitting ? 'Criando...' : 'Criar Estratégia'}
-                {!isSubmitting && <Check className="w-4 h-4 ml-2" />}
-              </Button>
-            </motion.div>
-          ) : (
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                type="button"
-                onClick={nextStep}
-                disabled={isSubmitting}
-                className="bg-gradient-to-r from-[#3DB8F5] to-[#2D69B3] hover:from-[#2D69B3] hover:to-[#122F5A] text-white rounded-xl px-6 py-3 shadow-lg shadow-[#2D69B3]/30"
-              >
-                Próximo
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </motion.div>
-          )}
-        </motion.div>
-      </div>
+        )}
+      </motion.div>
 
       {/* Loading Overlay */}
       <AnimatePresence>
