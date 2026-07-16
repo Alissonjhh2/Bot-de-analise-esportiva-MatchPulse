@@ -399,14 +399,46 @@ export default function TodayMatchesPage() {
                   </div>
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-center flex-1">
-                      <p className="text-xs font-semibold text-slate-100 mb-1">{match.homeTeam.name}</p>
+                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                        {match.homeTeam.logo ? (
+                          <img 
+                            src={match.homeTeam.logo} 
+                            alt={match.homeTeam.name}
+                            className="w-10 h-10 object-contain"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center">
+                            <span className="text-xs text-slate-400 font-bold">{match.homeTeam.name.substring(0, 2).toUpperCase()}</span>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-xs font-semibold text-slate-100 mb-1 truncate">{match.homeTeam.name}</p>
                       {match.status !== 'scheduled' && (
                         <p className="text-lg font-bold text-slate-100">{match.homeTeam.score}</p>
                       )}
                     </div>
                     <div className="text-slate-400 text-xs px-2">vs</div>
                     <div className="text-center flex-1">
-                      <p className="text-xs font-semibold text-slate-100 mb-1">{match.awayTeam.name}</p>
+                      <div className="w-12 h-12 mx-auto mb-1 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                        {match.awayTeam.logo ? (
+                          <img 
+                            src={match.awayTeam.logo} 
+                            alt={match.awayTeam.name}
+                            className="w-10 h-10 object-contain"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center">
+                            <span className="text-xs text-slate-400 font-bold">{match.awayTeam.name.substring(0, 2).toUpperCase()}</span>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-xs font-semibold text-slate-100 mb-1 truncate">{match.awayTeam.name}</p>
                       {match.status !== 'scheduled' && (
                         <p className="text-lg font-bold text-slate-100">{match.awayTeam.score}</p>
                       )}
@@ -481,6 +513,22 @@ export default function TodayMatchesPage() {
                       <CardContent className="p-3">
                         <div className="flex items-center justify-between mb-3">
                           <div className="text-center flex-1">
+                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                              {selectedMatch.homeTeam.logo ? (
+                                <img 
+                                  src={selectedMatch.homeTeam.logo} 
+                                  alt={selectedMatch.homeTeam.name}
+                                  className="w-14 h-14 object-contain"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).style.display = 'none';
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center">
+                                  <span className="text-sm text-slate-400 font-bold">{selectedMatch.homeTeam.name.substring(0, 2).toUpperCase()}</span>
+                                </div>
+                              )}
+                            </div>
                             <p className="text-sm font-semibold text-slate-100 mb-1">{selectedMatch.homeTeam.name}</p>
                             {selectedMatch.status !== 'scheduled' && (
                               <p className="text-2xl font-bold text-slate-100">{selectedMatch.homeTeam.score}</p>
@@ -488,6 +536,22 @@ export default function TodayMatchesPage() {
                           </div>
                           <div className="text-slate-400 text-sm px-4 font-medium">vs</div>
                           <div className="text-center flex-1">
+                            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                              {selectedMatch.awayTeam.logo ? (
+                                <img 
+                                  src={selectedMatch.awayTeam.logo} 
+                                  alt={selectedMatch.awayTeam.name}
+                                  className="w-14 h-14 object-contain"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).style.display = 'none';
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center">
+                                  <span className="text-sm text-slate-400 font-bold">{selectedMatch.awayTeam.name.substring(0, 2).toUpperCase()}</span>
+                                </div>
+                              )}
+                            </div>
                             <p className="text-sm font-semibold text-slate-100 mb-1">{selectedMatch.awayTeam.name}</p>
                             {selectedMatch.status !== 'scheduled' && (
                               <p className="text-2xl font-bold text-slate-100">{selectedMatch.awayTeam.score}</p>
