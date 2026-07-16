@@ -154,11 +154,29 @@ export default function TodayMatchesPage() {
 
   useEffect(() => {
     fetchMatches();
+    
+    // Auto-refresh matches every 30 seconds
+    const interval = setInterval(() => {
+      fetchMatches();
+    }, 30000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     filterMatches();
   }, [matches, searchQuery, selectedLeague, selectedStatus]);
+
+  // Auto-refresh match details when a match is selected
+  useEffect(() => {
+    if (selectedMatch) {
+      const interval = setInterval(() => {
+        handleMatchClick(selectedMatch);
+      }, 15000); // Refresh every 15 seconds for live matches
+      
+      return () => clearInterval(interval);
+    }
+  }, [selectedMatch]);
 
   const fetchMatches = async () => {
     try {
@@ -204,14 +222,14 @@ export default function TodayMatchesPage() {
     setLoadingDetails(true);
     
     try {
-      const statsResponse = await apiClient.get<{success: boolean, data: MatchStats}>(`/matches/${match.eventId}/stats`);
+      const statsResponse = await apiClient.get<{success: boolean, data: MatchStats}>(`/matches/${match.eventId}/stats?league=${match.league}`);
       setMatchStats(statsResponse.data || null);
 
-      const playerResponse = await apiClient.get<{success: boolean, data: PlayerStats}>(`/matches/${match.eventId}/players`);
+      const playerResponse = await apiClient.get<{success: boolean, data: PlayerStats}>(`/matches/${match.eventId}/players?league=${match.league}`);
       setPlayerStats(playerResponse.data || null);
 
       if (match.status === 'scheduled') {
-        const preGameResponse = await apiClient.get<{success: boolean, data: PreGameContext}>(`/matches/${match.eventId}/pre-game`);
+        const preGameResponse = await apiClient.get<{success: boolean, data: PreGameContext}>(`/matches/${match.eventId}/pre-game?league=${match.league}`);
         setPreGameContext(preGameResponse.data || null);
       } else {
         setPreGameContext(null);

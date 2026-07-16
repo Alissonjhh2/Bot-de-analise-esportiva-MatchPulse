@@ -157,6 +157,17 @@ interface ESPNPlays {
   count: number;
 }
 
+interface ESPNSituation {
+  possession: {
+    homeTeam: number;
+    awayTeam: number;
+  };
+  lastPlay: {
+    text: string;
+    teamId: string;
+  };
+}
+
 interface ESPNTeam {
   team: {
     id: string;
@@ -634,6 +645,23 @@ export class ESPNProvider implements FootballProvider {
       description: item.text,
       player: item.athlete?.displayName,
     }));
+  }
+
+  async getMatchSituation(eventId: string, league: string): Promise<ESPNSituation | null> {
+    const cacheKey = this.getCacheKey('situation', `${league}:${eventId}`);
+    const cached = this.getFromCache<ESPNSituation>(cacheKey);
+    if (cached) return cached;
+
+    const url = `${this.coreUrl}/leagues/${league}/events/${eventId}/competitions/${eventId}/situation`;
+
+    try {
+      const data = await this.fetchWithRetry<ESPNSituation>(url);
+      this.setCache(cacheKey, data, CACHE_TTL.plays);
+      return data;
+    } catch (error) {
+      logger.error(`Failed to fetch match situation for ${eventId}`, error instanceof Error ? error : new Error(String(error)));
+      return null;
+    }
   }
 
   async getStandings(league: string): Promise<StandingsEntry[]> {

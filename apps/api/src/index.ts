@@ -19,6 +19,7 @@ import notificationRoutes from './modules/notifications/routes/notification.rout
 import matchHitRoutes from './modules/match-hits/routes/match-hit.routes';
 import liveMatchesRoutes from './modules/live-matches/routes/live-matches.routes';
 import todayMatchesRoutes from './modules/today-matches/routes/today-matches.routes';
+import { getMatchStats, getMatchPlayers, getPreGameContext } from './modules/today-matches/controllers/today-matches.controller';
 
 // Initialize Firebase Admin - Optional in development, required in production
 try {
@@ -98,6 +99,12 @@ app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/match-hits', matchHitRoutes);
 app.use('/api/v1/live-matches', liveMatchesRoutes);
 app.use('/api/v1/today-matches', todayMatchesRoutes);
+
+// Match details routes (for compatibility with frontend)
+app.get('/api/v1/matches/:id/stats', getMatchStats);
+app.get('/api/v1/matches/:id/players', getMatchPlayers);
+app.get('/api/v1/matches/:id/pre-game', getPreGameContext);
+
 logger.info('API routes registered successfully');
 
 // Swagger documentation (only in development)
