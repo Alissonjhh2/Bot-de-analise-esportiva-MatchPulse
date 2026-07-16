@@ -155,10 +155,10 @@ export default function TodayMatchesPage() {
   useEffect(() => {
     fetchMatches();
     
-    // Auto-refresh matches every 30 seconds
+    // Auto-refresh matches every 15 seconds for better live updates
     const interval = setInterval(() => {
       fetchMatches();
-    }, 30000);
+    }, 15000);
     
     return () => clearInterval(interval);
   }, []);
@@ -172,7 +172,7 @@ export default function TodayMatchesPage() {
     if (selectedMatch) {
       const interval = setInterval(() => {
         handleMatchClick(selectedMatch);
-      }, 15000); // Refresh every 15 seconds for live matches
+      }, 10000); // Refresh every 10 seconds for live matches
       
       return () => clearInterval(interval);
     }
