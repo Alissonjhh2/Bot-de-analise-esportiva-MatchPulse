@@ -624,11 +624,6 @@ export class ESPNProvider implements FootballProvider {
   }
 
   private normalizePlayEvents(data: ESPNPlays): PlayEvent[] {
-    // Log first item for debugging
-    if (data.items && data.items.length > 0) {
-      logger.info(`First play event raw data:`, { rawData: JSON.stringify(data.items[0], null, 2) });
-    }
-
     const typeMap: Record<number, PlayEvent['type']> = {
       1: 'goal',
       2: 'yellow_card',
