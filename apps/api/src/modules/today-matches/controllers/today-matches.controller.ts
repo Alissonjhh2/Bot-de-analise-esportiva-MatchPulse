@@ -136,10 +136,17 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
       // Get play-by-play data without depending on match summary
       const playEvents = await espnProvider.getPlayByPlay(id, leagueSlug);
 
+      logger.info(`Received ${playEvents.length} play events for match ${id}`);
+
       const goals: Array<{ playerName: string; minute: number; team: 'home' | 'away' }> = [];
       const shots: Map<string, { playerName: string; onTarget: number; total: number; team: 'home' | 'away' }> = new Map();
       const cards: Array<{ playerName: string; type: 'yellow' | 'red'; minute: number; team: 'home' | 'away' }> = [];
       const assists: Array<{ playerName: string; minute: number; team: 'home' | 'away' }> = [];
+
+      // Log first few events for debugging
+      playEvents.slice(0, 5).forEach((event, idx) => {
+        logger.info(`Event ${idx}: type=${event.type}, player=${event.player}, minute=${event.minute}, teamId=${event.teamId}`);
+      });
 
       // Extract team IDs from play events
       const teamIds = new Set<string>();
@@ -150,6 +157,8 @@ export const getMatchPlayers = async (req: Request, res: Response) => {
       const teamIdArray = Array.from(teamIds);
       const homeTeamId = teamIdArray[0];
       const awayTeamId = teamIdArray[1];
+
+      logger.info(`Team IDs: home=${homeTeamId}, away=${awayTeamId}`);
 
       // Extract goals from play events
       playEvents.forEach(event => {
