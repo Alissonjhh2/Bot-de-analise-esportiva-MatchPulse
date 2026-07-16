@@ -4,7 +4,6 @@ import { Sidebar } from '@/components/layout/Sidebar';
 import { Topbar } from '@/components/layout/Topbar';
 import { Tutorial } from '@/components/Tutorial';
 import { SidebarProvider } from '@/contexts/SidebarContext';
-import { ContextPanel } from '@/components/layout/ContextPanel';
 
 export default function DashboardLayout({
   children,
@@ -31,11 +30,6 @@ export default function DashboardLayout({
             {children}
           </main>
           <Tutorial />
-        </div>
-
-        {/* Coluna 3: Contexto/Alerts (w-80) */}
-        <div className="w-80 flex-shrink-0 hidden xl:block border-l border-slate-700">
-          <ContextPanel />
         </div>
       </div>
     </SidebarProvider>

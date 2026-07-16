@@ -333,17 +333,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs text-slate-400 mb-1">Jogos Monitorados</p>
-                  <div className="flex items-center gap-1">
-                    <p className="text-sm font-semibold text-slate-100">{stats.gamesMonitored}</p>
-                    {stats.gamesMonitored > 0 && (
-                      <button
-                        onClick={() => setShowLiveMatches(!showLiveMatches)}
-                        className="text-xs text-slate-400 hover:text-slate-100 font-medium underline"
-                      >
-                        {showLiveMatches ? 'Ocultar' : 'Quais?'}
-                      </button>
-                    )}
-                  </div>
+                  <p className="text-sm font-semibold text-slate-100">{stats.gamesMonitored}</p>
                 </div>
                 <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
                   <Activity className="w-3 h-3 text-slate-100" />
