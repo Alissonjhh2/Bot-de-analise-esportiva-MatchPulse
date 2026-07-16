@@ -269,8 +269,8 @@ function CreateStrategyContent() {
         transition={{ duration: 0.6 }}
       >
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-slate-100" />
+          <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+            <Sparkles className="w-4 h-4 text-slate-950 dark:text-slate-100" />
           </div>
           <div>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -319,8 +319,8 @@ function CreateStrategyContent() {
                   <div
                     className={`w-8 h-8 md:w-10 md:h-10 rounded-sm flex items-center justify-center font-bold transition-all duration-300 ${
                       step >= item.step
-                        ? 'bg-slate-700 text-slate-100'
-                        : 'bg-slate-800 text-slate-400'
+                        ? 'bg-slate-200 dark:bg-slate-700 text-slate-950 dark:text-slate-100'
+                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400'
                     }`}
                   >
                     {step > item.step ? (
@@ -339,7 +339,7 @@ function CreateStrategyContent() {
                       initial={{ width: 0 }}
                       animate={{ width: step > item.step ? '100%' : '0%' }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className={`h-full ${step > item.step ? 'bg-slate-700' : 'bg-slate-800'}`}
+                      className={`h-full ${step > item.step ? 'bg-slate-200 dark:bg-slate-700' : 'bg-white dark:bg-slate-900'}`}
                     />
                   </div>
                 )}
@@ -371,11 +371,11 @@ function CreateStrategyContent() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
-                <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <Sparkles className="w-3 h-3 text-slate-100" />
+                    <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Sparkles className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -398,11 +398,11 @@ function CreateStrategyContent() {
                         onClick={() => setStrategyType(type.value as any)}
                         className={`p-6 rounded-sm border transition-all duration-300 text-left ${
                           strategyType === type.value
-                            ? 'border-slate-600 bg-slate-700 text-slate-100'
-                            : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                            ? 'border-slate-600 bg-slate-200 dark:bg-slate-700 text-slate-950 dark:text-slate-100'
+                            : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-600'
                         }`}
                       >
-                        <div className="w-10 h-10 bg-slate-800 rounded-sm flex items-center justify-center mb-3">
+                        <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-sm flex items-center justify-center mb-3">
                           <type.icon className="w-5 h-5" />
                         </div>
                         <h4 className="font-semibold text-sm mb-2">{type.label}</h4>
@@ -424,11 +424,11 @@ function CreateStrategyContent() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
-                <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <Target className="w-3 h-3 text-slate-100" />
+                    <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Target className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -512,12 +512,12 @@ function CreateStrategyContent() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
-                <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                        <Globe className="w-3 h-3 text-slate-100" />
+                      <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                        <Globe className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -584,8 +584,8 @@ function CreateStrategyContent() {
                         disabled={isSubmitting}
                         className={`p-2 rounded-sm border transition-all duration-300 text-xs font-medium text-center ${
                           selectedLeagues.includes(league.slug)
-                            ? 'border-slate-600 bg-slate-700 text-slate-100'
-                            : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                            ? 'border-slate-600 bg-slate-200 dark:bg-slate-700 text-slate-950 dark:text-slate-100'
+                            : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-600'
                         }`}
                       >
                         {league.name}
@@ -619,11 +619,11 @@ function CreateStrategyContent() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
-                <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <MapPin className="w-3 h-3 text-slate-100" />
+                    <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                      <MapPin className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -638,7 +638,7 @@ function CreateStrategyContent() {
                 <CardContent className="p-8 space-y-6">
                   <div className="space-y-3">
                     {availableMatches.length === 0 ? (
-                      <p className="text-sm text-slate-400">Nenhum jogo disponível hoje</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Nenhum jogo disponível hoje</p>
                     ) : (
                       availableMatches.map((match) => (
                         <motion.button
@@ -649,8 +649,8 @@ function CreateStrategyContent() {
                           onClick={() => setSelectedMatchId(match.eventId)}
                           className={`w-full p-4 rounded-sm border transition-all duration-300 text-left ${
                             selectedMatchId === match.eventId
-                              ? 'border-slate-600 bg-slate-700 text-slate-100'
-                              : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                              ? 'border-slate-600 bg-slate-200 dark:bg-slate-700 text-slate-950 dark:text-slate-100'
+                              : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-600'
                           }`}
                         >
                           <div className="flex items-center justify-between">
@@ -683,11 +683,11 @@ function CreateStrategyContent() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
-                <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <Calendar className="w-3 h-3 text-slate-100" />
+                    <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Calendar className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -728,12 +728,12 @@ function CreateStrategyContent() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
-                <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                        <Zap className="w-3 h-3 text-slate-100" />
+                      <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                        <Zap className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -763,9 +763,9 @@ function CreateStrategyContent() {
                       <motion.div
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
+                        className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
                       >
-                        <Plus className="w-5 h-5 text-slate-400" />
+                        <Plus className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       </motion.div>
                       <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                         Nenhuma condição adicionada
@@ -777,7 +777,7 @@ function CreateStrategyContent() {
                         type="button"
                         onClick={addCondition}
                         disabled={isSubmitting}
-                        className="bg-slate-700 hover:bg-slate-600 rounded-sm px-3 py-2 text-xs"
+                        className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-600 rounded-sm px-3 py-2 text-xs"
                       >
                         <Plus className="w-3 h-3 mr-1" />
                         Adicionar Primeira Condição
@@ -795,10 +795,10 @@ function CreateStrategyContent() {
                         >
                           <div className="flex justify-between items-start mb-2">
                             <div className="flex items-center gap-2">
-                              <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                                <Zap className="w-3 h-3 text-slate-100" />
+                              <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                                <Zap className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                               </div>
-                              <h4 className="font-semibold text-slate-100 text-xs">Condição {index + 1}</h4>
+                              <h4 className="font-semibold text-slate-950 dark:text-slate-100 text-xs">Condição {index + 1}</h4>
                             </div>
                             <Button
                               type="button"
@@ -887,11 +887,11 @@ function CreateStrategyContent() {
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
-                <CardHeader className="border-b border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                      <Check className="w-3 h-3 text-slate-100" />
+                    <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                      <Check className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
@@ -908,10 +908,10 @@ function CreateStrategyContent() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                    className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm"
                   >
-                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                      <Sparkles className="w-3 h-3 text-slate-400" />
+                    <h4 className="font-semibold text-slate-950 dark:text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <Sparkles className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                       Tipo de Estratégia
                     </h4>
                     <p className="text-xs text-slate-300">
@@ -923,20 +923,20 @@ function CreateStrategyContent() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15 }}
-                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                    className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm"
                   >
-                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                      <Target className="w-3 h-3 text-slate-400" />
+                    <h4 className="font-semibold text-slate-950 dark:text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <Target className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                       Informações Básicas
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                       <div>
-                        <p className="text-slate-400 mb-1">Nome</p>
-                        <p className="font-semibold text-slate-100">{name}</p>
+                        <p className="text-slate-600 dark:text-slate-400 mb-1">Nome</p>
+                        <p className="font-semibold text-slate-950 dark:text-slate-100">{name}</p>
                       </div>
                       <div>
-                        <p className="text-slate-400 mb-1">Intervalo</p>
-                        <p className="font-semibold text-slate-100">
+                        <p className="text-slate-600 dark:text-slate-400 mb-1">Intervalo</p>
+                        <p className="font-semibold text-slate-950 dark:text-slate-100">
                           {startMinute}&apos; - {endMinute}&apos;
                         </p>
                       </div>
@@ -948,17 +948,17 @@ function CreateStrategyContent() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                      className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm"
                     >
-                      <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                        <Globe className="w-3 h-3 text-slate-400" />
+                      <h4 className="font-semibold text-slate-950 dark:text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                        <Globe className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                         Campeonatos Monitorados ({selectedLeagues.length})
                       </h4>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                         {selectedLeagues.map(slug => {
                           const league = LEAGUE_MAPPINGS.find(l => l.slug === slug);
                           return (
-                            <div key={slug} className="text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded-sm">
+                            <div key={slug} className="text-xs text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 rounded-sm">
                               {league?.name || slug}
                             </div>
                           );
@@ -972,10 +972,10 @@ function CreateStrategyContent() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                      className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm"
                     >
-                      <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                        <MapPin className="w-3 h-3 text-slate-400" />
+                      <h4 className="font-semibold text-slate-950 dark:text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                        <MapPin className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                         Jogo Selecionado
                       </h4>
                       {(() => {
@@ -985,7 +985,7 @@ function CreateStrategyContent() {
                             {match.homeTeam.name} vs {match.awayTeam.name} - {match.leagueName}
                           </p>
                         ) : (
-                          <p className="text-xs text-slate-400">Jogo não encontrado</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">Jogo não encontrado</p>
                         );
                       })()}
                     </motion.div>
@@ -996,10 +996,10 @@ function CreateStrategyContent() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
-                      className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                      className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm"
                     >
-                      <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                        <Calendar className="w-3 h-3 text-slate-400" />
+                      <h4 className="font-semibold text-slate-950 dark:text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                        <Calendar className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                         Data Selecionada
                       </h4>
                       <p className="text-xs text-slate-300">
@@ -1017,28 +1017,28 @@ function CreateStrategyContent() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="p-3 bg-slate-900 border border-slate-700 rounded-sm"
+                    className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm"
                   >
-                    <h4 className="font-semibold text-slate-100 mb-2 flex items-center gap-2 text-xs">
-                      <Zap className="w-3 h-3 text-slate-400" />
+                    <h4 className="font-semibold text-slate-950 dark:text-slate-100 mb-2 flex items-center gap-2 text-xs">
+                      <Zap className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                       Condições ({conditions.length})
                     </h4>
                     {conditions.map((condition, index) => (
-                      <div key={index} className="mb-2 last:mb-0 pb-2 last:pb-0 border-b border-slate-700 last:border-0">
+                      <div key={index} className="mb-2 last:mb-0 pb-2 last:pb-0 border-b border-slate-200 dark:border-slate-800 last:border-0">
                         <div className="flex flex-wrap items-center gap-2 text-xs">
-                          <span className="font-semibold text-slate-100 bg-slate-800 px-2 py-1 rounded-sm">
+                          <span className="font-semibold text-slate-950 dark:text-slate-100 bg-white dark:bg-slate-900 px-2 py-1 rounded-sm">
                             {INDICATORS.find((i) => i.value === condition.indicator)?.label}
                           </span>
-                          <span className="text-slate-400">•</span>
-                          <span className="text-slate-400">
+                          <span className="text-slate-600 dark:text-slate-400">•</span>
+                          <span className="text-slate-600 dark:text-slate-400">
                             {TEAMS.find((t) => t.value === condition.team)?.label}
                           </span>
-                          <span className="text-slate-400">•</span>
-                          <span className="text-slate-400">
+                          <span className="text-slate-600 dark:text-slate-400">•</span>
+                          <span className="text-slate-600 dark:text-slate-400">
                             {OPERATORS.find((o) => o.value === condition.operator)?.label}
                           </span>
-                          <span className="text-slate-400">•</span>
-                          <span className="font-semibold text-slate-100">{condition.quantity}</span>
+                          <span className="text-slate-600 dark:text-slate-400">•</span>
+                          <span className="font-semibold text-slate-950 dark:text-slate-100">{condition.quantity}</span>
                         </div>
                       </div>
                     ))}

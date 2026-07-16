@@ -267,15 +267,15 @@ export default function TodayMatchesPage() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-sm font-semibold text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
-            <p className="text-xs text-slate-400">Carregando jogos...</p>
+            <h1 className="text-sm font-semibold text-slate-950 dark:text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Carregando jogos...</p>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {[...Array(6)].map((_, i) => (
-            <Card key={i} className="border border-slate-700 bg-slate-800">
+            <Card key={i} className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <CardContent className="p-3">
-                <div className="h-24 bg-slate-700 animate-pulse rounded-xl" />
+                <div className="h-24 bg-slate-200 dark:bg-slate-700 animate-pulse rounded-xl" />
               </CardContent>
             </Card>
           ))}
@@ -289,8 +289,8 @@ export default function TodayMatchesPage() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-sm font-semibold text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
-            <p className="text-xs text-red-400">{error}</p>
+            <h1 className="text-sm font-semibold text-slate-950 dark:text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
+            <p className="text-xs text-rose-600 dark:text-rose-500">{error}</p>
           </div>
         </div>
       </div>
@@ -306,8 +306,8 @@ export default function TodayMatchesPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
-          <p className="text-xs md:text-sm text-slate-400 flex items-center gap-1">
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-950 dark:text-slate-100 mb-1 tracking-tight">Jogos de Hoje</h1>
+          <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 flex items-center gap-1">
             <Calendar className="w-3 h-3" />
             {today}
           </p>
@@ -326,18 +326,18 @@ export default function TodayMatchesPage() {
         className="flex flex-wrap items-center gap-2"
       >
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-400" />
+          <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-600 dark:text-slate-400" />
           <Input
             placeholder="Buscar time..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-8 bg-slate-800 border-slate-700 text-slate-100 text-xs h-8"
+            className="pl-8 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-950 dark:text-slate-100 text-xs h-8"
           />
         </div>
         <select
           value={selectedLeague}
           onChange={(e) => setSelectedLeague(e.target.value)}
-          className="bg-slate-800 border border-slate-700 text-slate-100 text-xs px-2 py-1.5 rounded-sm"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-950 dark:text-slate-100 text-xs px-2 py-1.5 rounded-sm"
         >
           <option value="all">Todas as ligas</option>
           {leagues.map((league) => (
@@ -349,7 +349,7 @@ export default function TodayMatchesPage() {
         <select
           value={selectedStatus}
           onChange={(e) => setSelectedStatus(e.target.value)}
-          className="bg-slate-800 border border-slate-700 text-slate-100 text-xs px-2 py-1.5 rounded-sm"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-950 dark:text-slate-100 text-xs px-2 py-1.5 rounded-sm"
         >
           <option value="all">Todos os status</option>
           <option value="scheduled">Agendado</option>
@@ -366,13 +366,13 @@ export default function TodayMatchesPage() {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3 lg:gap-4"
       >
         {filteredMatches.length === 0 ? (
-          <Card className="col-span-full border border-slate-700 bg-slate-800">
+          <Card className="col-span-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
             <CardContent className="p-6 text-center">
-              <div className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3">
-                <Calendar className="w-5 h-5 text-slate-400" />
+              <div className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3">
+                <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </div>
-              <h3 className="text-sm font-semibold text-slate-100 mb-2">Nenhum jogo encontrado</h3>
-              <p className="text-xs text-slate-400">
+              <h3 className="text-sm font-semibold text-slate-950 dark:text-slate-100 mb-2">Nenhum jogo encontrado</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
                 {searchQuery || selectedLeague !== 'all' || selectedStatus !== 'all'
                   ? 'Tente ajustar os filtros'
                   : 'Não há jogos programados para hoje'}
@@ -388,13 +388,13 @@ export default function TodayMatchesPage() {
               transition={{ duration: 0.5, delay: index * 0.05 }}
               whileHover={{ y: -2 }}
             >
-              <Card className="border border-slate-700 bg-slate-800">
+              <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                 <div 
-                  className="p-3 cursor-pointer hover:bg-slate-700 transition-all duration-300"
+                  className="p-3 cursor-pointer hover:bg-slate-200 dark:bg-slate-700 transition-all duration-300"
                   onClick={() => handleMatchClick(match)}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-slate-400 font-medium">{match.leagueName}</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">{match.leagueName}</span>
                     {getStatusBadge(match.status, match.clock)}
                   </div>
                   <div className="flex items-center justify-between mb-2">
@@ -410,17 +410,17 @@ export default function TodayMatchesPage() {
                             }}
                           />
                         ) : (
-                          <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center">
-                            <span className="text-xs text-slate-400 font-bold">{match.homeTeam.name.substring(0, 2).toUpperCase()}</span>
+                          <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center">
+                            <span className="text-xs text-slate-600 dark:text-slate-400 font-bold">{match.homeTeam.name.substring(0, 2).toUpperCase()}</span>
                           </div>
                         )}
                       </div>
-                      <p className="text-xs font-semibold text-slate-100 mb-1 truncate">{match.homeTeam.name}</p>
+                      <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-1 truncate">{match.homeTeam.name}</p>
                       {match.status !== 'scheduled' && (
-                        <p className="text-lg font-bold text-slate-100">{match.homeTeam.score}</p>
+                        <p className="text-lg font-bold text-slate-950 dark:text-slate-100">{match.homeTeam.score}</p>
                       )}
                     </div>
-                    <div className="text-slate-400 text-xs px-2">vs</div>
+                    <div className="text-slate-600 dark:text-slate-400 text-xs px-2">vs</div>
                     <div className="text-center flex-1">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-1 flex items-center justify-center rounded-lg overflow-hidden">
                         {match.awayTeam.logo ? (
@@ -433,19 +433,19 @@ export default function TodayMatchesPage() {
                             }}
                           />
                         ) : (
-                          <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center">
-                            <span className="text-xs text-slate-400 font-bold">{match.awayTeam.name.substring(0, 2).toUpperCase()}</span>
+                          <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center">
+                            <span className="text-xs text-slate-600 dark:text-slate-400 font-bold">{match.awayTeam.name.substring(0, 2).toUpperCase()}</span>
                           </div>
                         )}
                       </div>
-                      <p className="text-xs font-semibold text-slate-100 mb-1 truncate">{match.awayTeam.name}</p>
+                      <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-1 truncate">{match.awayTeam.name}</p>
                       {match.status !== 'scheduled' && (
-                        <p className="text-lg font-bold text-slate-100">{match.awayTeam.score}</p>
+                        <p className="text-lg font-bold text-slate-950 dark:text-slate-100">{match.awayTeam.score}</p>
                       )}
                     </div>
                   </div>
                   {match.status === 'scheduled' && (
-                    <div className="flex items-center justify-center gap-1 text-xs text-slate-400">
+                    <div className="flex items-center justify-center gap-1 text-xs text-slate-600 dark:text-slate-400">
                       <Clock className="w-3 h-3" />
                       {new Date(match.startTime).toLocaleTimeString('pt-BR', {
                         hour: '2-digit',
@@ -456,7 +456,7 @@ export default function TodayMatchesPage() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full mt-2 text-xs text-slate-400 hover:text-slate-100 hover:bg-slate-700"
+                    className="w-full mt-2 text-xs text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:text-slate-100 hover:bg-slate-200 dark:bg-slate-700"
                   >
                     Ver Detalhes
                     <ChevronRight className="w-3 h-3 ml-1" />
@@ -484,32 +484,32 @@ export default function TodayMatchesPage() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-full sm:w-[80%] lg:max-w-2xl bg-slate-800 border-l border-slate-700 z-50 overflow-y-auto"
+              className="fixed right-0 top-0 h-full w-full sm:w-[80%] lg:max-w-2xl bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 z-50 overflow-y-auto"
             >
-              <div className="p-3 border-b border-slate-700 flex items-center justify-between sticky top-0 bg-slate-800 z-10">
+              <div className="p-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900 z-10">
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-100">Detalhes do Jogo</h3>
-                  <p className="text-xs text-slate-400">{selectedMatch.leagueName}</p>
+                  <h3 className="text-sm font-semibold text-slate-950 dark:text-slate-100">Detalhes do Jogo</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">{selectedMatch.leagueName}</p>
                 </div>
                 <button
                   onClick={closeDetails}
-                  className="p-2 rounded-sm hover:bg-slate-700 transition-colors"
+                  className="p-2 rounded-sm hover:bg-slate-200 dark:bg-slate-700 transition-colors"
                 >
-                  <X className="w-4 h-4 text-slate-400" />
+                  <X className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 </button>
               </div>
 
               <div className="p-3 space-y-4">
                 {loadingDetails ? (
                   <div className="text-center py-8">
-                    <div className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3 animate-pulse">
-                      <Activity className="w-5 h-5 text-slate-400" />
+                    <div className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3 animate-pulse">
+                      <Activity className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                     </div>
-                    <p className="text-xs text-slate-400">Carregando detalhes...</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Carregando detalhes...</p>
                   </div>
                 ) : (
                   <>
-                    <Card className="border border-slate-700 bg-slate-800">
+                    <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                       <CardContent className="p-3">
                         <div className="flex items-center justify-between mb-3">
                           <div className="text-center flex-1">
@@ -524,17 +524,17 @@ export default function TodayMatchesPage() {
                                   }}
                                 />
                               ) : (
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-700 rounded-full flex items-center justify-center">
-                                  <span className="text-xs sm:text-sm text-slate-400 font-bold">{selectedMatch.homeTeam.name.substring(0, 2).toUpperCase()}</span>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center">
+                                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold">{selectedMatch.homeTeam.name.substring(0, 2).toUpperCase()}</span>
                                 </div>
                               )}
                             </div>
-                            <p className="text-xs sm:text-sm font-semibold text-slate-100 mb-1">{selectedMatch.homeTeam.name}</p>
+                            <p className="text-xs sm:text-sm font-semibold text-slate-950 dark:text-slate-100 mb-1">{selectedMatch.homeTeam.name}</p>
                             {selectedMatch.status !== 'scheduled' && (
-                              <p className="text-xl sm:text-2xl font-bold text-slate-100">{selectedMatch.homeTeam.score}</p>
+                              <p className="text-xl sm:text-2xl font-bold text-slate-950 dark:text-slate-100">{selectedMatch.homeTeam.score}</p>
                             )}
                           </div>
-                          <div className="text-slate-400 text-xs sm:text-sm px-2 sm:px-4 font-medium">vs</div>
+                          <div className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm px-2 sm:px-4 font-medium">vs</div>
                           <div className="text-center flex-1">
                             <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 flex items-center justify-center rounded-lg overflow-hidden">
                               {selectedMatch.awayTeam.logo ? (
@@ -547,18 +547,18 @@ export default function TodayMatchesPage() {
                                   }}
                                 />
                               ) : (
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-700 rounded-full flex items-center justify-center">
-                                  <span className="text-xs sm:text-sm text-slate-400 font-bold">{selectedMatch.awayTeam.name.substring(0, 2).toUpperCase()}</span>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center">
+                                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold">{selectedMatch.awayTeam.name.substring(0, 2).toUpperCase()}</span>
                                 </div>
                               )}
                             </div>
-                            <p className="text-xs sm:text-sm font-semibold text-slate-100 mb-1">{selectedMatch.awayTeam.name}</p>
+                            <p className="text-xs sm:text-sm font-semibold text-slate-950 dark:text-slate-100 mb-1">{selectedMatch.awayTeam.name}</p>
                             {selectedMatch.status !== 'scheduled' && (
-                              <p className="text-xl sm:text-2xl font-bold text-slate-100">{selectedMatch.awayTeam.score}</p>
+                              <p className="text-xl sm:text-2xl font-bold text-slate-950 dark:text-slate-100">{selectedMatch.awayTeam.score}</p>
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+                        <div className="flex items-center justify-center gap-2 text-xs text-slate-600 dark:text-slate-400">
                           {getStatusBadge(selectedMatch.status, selectedMatch.clock)}
                           {selectedMatch.stadium && (
                             <span>• {selectedMatch.stadium}</span>
@@ -571,81 +571,81 @@ export default function TodayMatchesPage() {
                     </Card>
 
                     {preGameContext && (
-                      <Card className="border border-slate-700 bg-slate-800">
-                        <CardHeader className="border-b border-slate-700 bg-slate-800">
-                          <h4 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+                      <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                        <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                          <h4 className="text-sm font-semibold text-slate-950 dark:text-slate-100 flex items-center gap-2">
                             <TrendingUp className="w-4 h-4" />
                             Contexto Pré-Jogo
                           </h4>
                         </CardHeader>
                         <CardContent className="p-3 space-y-3">
                           <div>
-                            <p className="text-xs font-semibold text-slate-100 mb-2">{selectedMatch.homeTeam.name}</p>
+                            <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-2">{selectedMatch.homeTeam.name}</p>
                             <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div className="bg-slate-900 p-2 rounded-sm">
-                                <p className="text-slate-400">Gols/Jogo</p>
-                                <p className="text-slate-100 font-semibold">{preGameContext.homeTeam.goalsPerGame}</p>
+                              <div className="bg-slate-50 dark:bg-slate-900 p-2 rounded-sm">
+                                <p className="text-slate-600 dark:text-slate-400">Gols/Jogo</p>
+                                <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.homeTeam.goalsPerGame}</p>
                               </div>
-                              <div className="bg-slate-900 p-2 rounded-sm">
-                                <p className="text-slate-400">Gols Sofridos/Jogo</p>
-                                <p className="text-slate-100 font-semibold">{preGameContext.homeTeam.goalsConcededPerGame}</p>
+                              <div className="bg-slate-50 dark:bg-slate-900 p-2 rounded-sm">
+                                <p className="text-slate-600 dark:text-slate-400">Gols Sofridos/Jogo</p>
+                                <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.homeTeam.goalsConcededPerGame}</p>
                               </div>
                             </div>
                             {preGameContext.homeTeam.homePerformance && (
-                              <div className="mt-2 bg-slate-900 p-2 rounded-sm">
-                                <p className="text-slate-400 mb-1">Performance em Casa</p>
+                              <div className="mt-2 bg-slate-50 dark:bg-slate-900 p-2 rounded-sm">
+                                <p className="text-slate-600 dark:text-slate-400 mb-1">Performance em Casa</p>
                                 <div className="flex gap-2">
-                                  <span className="text-green-400 font-semibold">V: {preGameContext.homeTeam.homePerformance.wins}</span>
-                                  <span className="text-slate-400 font-semibold">E: {preGameContext.homeTeam.homePerformance.draws}</span>
-                                  <span className="text-red-400 font-semibold">D: {preGameContext.homeTeam.homePerformance.losses}</span>
+                                  <span className="text-emerald-600 dark:text-emerald-500 font-semibold">V: {preGameContext.homeTeam.homePerformance.wins}</span>
+                                  <span className="text-slate-600 dark:text-slate-400 font-semibold">E: {preGameContext.homeTeam.homePerformance.draws}</span>
+                                  <span className="text-rose-600 dark:text-rose-500 font-semibold">D: {preGameContext.homeTeam.homePerformance.losses}</span>
                                 </div>
                               </div>
                             )}
                           </div>
 
                           <div>
-                            <p className="text-xs font-semibold text-slate-100 mb-2">{selectedMatch.awayTeam.name}</p>
+                            <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-2">{selectedMatch.awayTeam.name}</p>
                             <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div className="bg-slate-900 p-2 rounded-sm">
-                                <p className="text-slate-400">Gols/Jogo</p>
-                                <p className="text-slate-100 font-semibold">{preGameContext.awayTeam.goalsPerGame}</p>
+                              <div className="bg-slate-50 dark:bg-slate-900 p-2 rounded-sm">
+                                <p className="text-slate-600 dark:text-slate-400">Gols/Jogo</p>
+                                <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.awayTeam.goalsPerGame}</p>
                               </div>
-                              <div className="bg-slate-900 p-2 rounded-sm">
-                                <p className="text-slate-400">Gols Sofridos/Jogo</p>
-                                <p className="text-slate-100 font-semibold">{preGameContext.awayTeam.goalsConcededPerGame}</p>
+                              <div className="bg-slate-50 dark:bg-slate-900 p-2 rounded-sm">
+                                <p className="text-slate-600 dark:text-slate-400">Gols Sofridos/Jogo</p>
+                                <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.awayTeam.goalsConcededPerGame}</p>
                               </div>
                             </div>
                             {preGameContext.awayTeam.awayPerformance && (
-                              <div className="mt-2 bg-slate-900 p-2 rounded-sm">
-                                <p className="text-slate-400 mb-1">Performance Fora</p>
+                              <div className="mt-2 bg-slate-50 dark:bg-slate-900 p-2 rounded-sm">
+                                <p className="text-slate-600 dark:text-slate-400 mb-1">Performance Fora</p>
                                 <div className="flex gap-2">
-                                  <span className="text-green-400 font-semibold">V: {preGameContext.awayTeam.awayPerformance.wins}</span>
-                                  <span className="text-slate-400 font-semibold">E: {preGameContext.awayTeam.awayPerformance.draws}</span>
-                                  <span className="text-red-400 font-semibold">D: {preGameContext.awayTeam.awayPerformance.losses}</span>
+                                  <span className="text-emerald-600 dark:text-emerald-500 font-semibold">V: {preGameContext.awayTeam.awayPerformance.wins}</span>
+                                  <span className="text-slate-600 dark:text-slate-400 font-semibold">E: {preGameContext.awayTeam.awayPerformance.draws}</span>
+                                  <span className="text-rose-600 dark:text-rose-500 font-semibold">D: {preGameContext.awayTeam.awayPerformance.losses}</span>
                                 </div>
                               </div>
                             )}
                           </div>
 
-                          <div className="bg-slate-900 p-3 rounded-sm">
-                            <p className="text-xs font-semibold text-slate-100 mb-2">Previsão</p>
+                          <div className="bg-slate-50 dark:bg-slate-900 p-3 rounded-sm">
+                            <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-2">Previsão</p>
                             <div className="grid grid-cols-3 gap-2 text-xs text-center">
                               <div>
-                                <p className="text-slate-400">Casa</p>
-                                <p className="text-slate-100 font-semibold">{preGameContext.prediction.homeWin}%</p>
+                                <p className="text-slate-600 dark:text-slate-400">Casa</p>
+                                <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.prediction.homeWin}%</p>
                               </div>
                               <div>
-                                <p className="text-slate-400">Empate</p>
-                                <p className="text-slate-100 font-semibold">{preGameContext.prediction.draw}%</p>
+                                <p className="text-slate-600 dark:text-slate-400">Empate</p>
+                                <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.prediction.draw}%</p>
                               </div>
                               <div>
-                                <p className="text-slate-400">Fora</p>
-                                <p className="text-slate-100 font-semibold">{preGameContext.prediction.awayWin}%</p>
+                                <p className="text-slate-600 dark:text-slate-400">Fora</p>
+                                <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.prediction.awayWin}%</p>
                               </div>
                             </div>
                             <div className="mt-2 text-center">
-                              <p className="text-slate-400">Gols Esperados</p>
-                              <p className="text-slate-100 font-semibold">{preGameContext.prediction.expectedGoals}</p>
+                              <p className="text-slate-600 dark:text-slate-400">Gols Esperados</p>
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{preGameContext.prediction.expectedGoals}</p>
                             </div>
                           </div>
                         </CardContent>
@@ -653,9 +653,9 @@ export default function TodayMatchesPage() {
                     )}
 
                     {matchStats && selectedMatch.status !== 'scheduled' && (
-                      <Card className="border border-slate-700 bg-slate-800">
-                        <CardHeader className="border-b border-slate-700 bg-slate-800">
-                          <h4 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+                      <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                        <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                          <h4 className="text-sm font-semibold text-slate-950 dark:text-slate-100 flex items-center gap-2">
                             <Activity className="w-4 h-4" />
                             Estatísticas em Tempo Real
                           </h4>
@@ -670,9 +670,9 @@ export default function TodayMatchesPage() {
                                 { name: 'Escanteios', casa: matchStats.corners.home, fora: matchStats.corners.away },
                                 { name: 'Faltas', casa: matchStats.fouls.home, fora: matchStats.fouls.away },
                               ]}>
-                                <CartesianGrid strokeDasharray="3 3" className="stroke-slate-700" />
-                                <XAxis dataKey="name" className="text-slate-400 text-xs" />
-                                <YAxis className="text-slate-400 text-xs" />
+                                <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
+                                <XAxis dataKey="name" className="text-slate-600 dark:text-slate-400 text-xs" />
+                                <YAxis className="text-slate-600 dark:text-slate-400 text-xs" />
                                 <Tooltip
                                   contentStyle={{
                                     backgroundColor: '#1e293b',
@@ -690,11 +690,11 @@ export default function TodayMatchesPage() {
                           {/* Detailed Stats */}
                           <div className="grid grid-cols-3 gap-2 text-xs">
                             <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.possession.home}%</p>
-                              <p className="text-slate-400">Posse</p>
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.possession.home}%</p>
+                              <p className="text-slate-600 dark:text-slate-400">Posse</p>
                             </div>
                             <div className="text-center">
-                              <div className="w-full bg-slate-700 rounded-full h-1.5 mt-3">
+                              <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 mt-3">
                                 <div
                                   className="bg-slate-400 h-1.5 rounded-full"
                                   style={{ width: `${matchStats.possession.home}%` }}
@@ -702,41 +702,41 @@ export default function TodayMatchesPage() {
                               </div>
                             </div>
                             <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.possession.away}%</p>
-                              <p className="text-slate-400">Posse</p>
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.possession.away}%</p>
+                              <p className="text-slate-600 dark:text-slate-400">Posse</p>
                             </div>
                           </div>
                           <div className="grid grid-cols-3 gap-2 text-xs">
                             <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.shotsOnGoal.home}</p>
-                              <p className="text-slate-400">Chutes a Gol</p>
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.shotsOnGoal.home}</p>
+                              <p className="text-slate-600 dark:text-slate-400">Chutes a Gol</p>
                             </div>
-                            <div className="text-center text-slate-400">-</div>
+                            <div className="text-center text-slate-600 dark:text-slate-400">-</div>
                             <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.shotsOnGoal.away}</p>
-                              <p className="text-slate-400">Chutes a Gol</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-3 gap-2 text-xs">
-                            <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.corners.home}</p>
-                              <p className="text-slate-400">Escanteios</p>
-                            </div>
-                            <div className="text-center text-slate-400">-</div>
-                            <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.corners.away}</p>
-                              <p className="text-slate-400">Escanteios</p>
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.shotsOnGoal.away}</p>
+                              <p className="text-slate-600 dark:text-slate-400">Chutes a Gol</p>
                             </div>
                           </div>
                           <div className="grid grid-cols-3 gap-2 text-xs">
                             <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.fouls.home}</p>
-                              <p className="text-slate-400">Faltas</p>
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.corners.home}</p>
+                              <p className="text-slate-600 dark:text-slate-400">Escanteios</p>
                             </div>
-                            <div className="text-center text-slate-400">-</div>
+                            <div className="text-center text-slate-600 dark:text-slate-400">-</div>
                             <div className="text-center">
-                              <p className="text-slate-100 font-semibold">{matchStats.fouls.away}</p>
-                              <p className="text-slate-400">Faltas</p>
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.corners.away}</p>
+                              <p className="text-slate-600 dark:text-slate-400">Escanteios</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-xs">
+                            <div className="text-center">
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.fouls.home}</p>
+                              <p className="text-slate-600 dark:text-slate-400">Faltas</p>
+                            </div>
+                            <div className="text-center text-slate-600 dark:text-slate-400">-</div>
+                            <div className="text-center">
+                              <p className="text-slate-950 dark:text-slate-100 font-semibold">{matchStats.fouls.away}</p>
+                              <p className="text-slate-600 dark:text-slate-400">Faltas</p>
                             </div>
                           </div>
                         </CardContent>
@@ -744,9 +744,9 @@ export default function TodayMatchesPage() {
                     )}
 
                     {playerStats && (
-                      <Card className="border border-slate-700 bg-slate-800">
-                        <CardHeader className="border-b border-slate-700 bg-slate-800">
-                          <h4 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+                      <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                        <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                          <h4 className="text-sm font-semibold text-slate-950 dark:text-slate-100 flex items-center gap-2">
                             <Target className="w-4 h-4" />
                             Estatísticas de Jogadores
                           </h4>
@@ -754,15 +754,15 @@ export default function TodayMatchesPage() {
                         <CardContent className="p-3 space-y-3">
                           {playerStats.goals.length > 0 && (
                             <div>
-                              <p className="text-xs font-semibold text-slate-100 mb-2">Gols</p>
+                              <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-2">Gols</p>
                               <div className="space-y-1">
                                 {playerStats.goals.map((goal, idx) => (
-                                  <div key={idx} className="flex items-center justify-between bg-slate-900 p-2 rounded-sm text-xs">
+                                  <div key={idx} className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-2 rounded-sm text-xs">
                                     <div className="flex items-center gap-2">
                                       <Badge variant="success" className="text-xs px-1 py-0.5">GOL</Badge>
-                                      <span className="text-slate-100">{goal.playerName}</span>
+                                      <span className="text-slate-950 dark:text-slate-100">{goal.playerName}</span>
                                     </div>
-                                    <span className="text-slate-400">{goal.minute}&apos;</span>
+                                    <span className="text-slate-600 dark:text-slate-400">{goal.minute}&apos;</span>
                                   </div>
                                 ))}
                               </div>
@@ -771,14 +771,14 @@ export default function TodayMatchesPage() {
 
                           {playerStats.shots.length > 0 && (
                             <div>
-                              <p className="text-xs font-semibold text-slate-100 mb-2">Top Chutes</p>
+                              <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-2">Top Chutes</p>
                               <div className="space-y-1">
                                 {playerStats.shots.slice(0, 5).map((shot, idx) => (
-                                  <div key={idx} className="flex items-center justify-between bg-slate-900 p-2 rounded-sm text-xs">
-                                    <span className="text-slate-100">{shot.playerName}</span>
+                                  <div key={idx} className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-2 rounded-sm text-xs">
+                                    <span className="text-slate-950 dark:text-slate-100">{shot.playerName}</span>
                                     <div className="flex items-center gap-2">
-                                      <span className="text-slate-400">{shot.onTarget} a gol</span>
-                                      <span className="text-slate-400">{shot.total} total</span>
+                                      <span className="text-slate-600 dark:text-slate-400">{shot.onTarget} a gol</span>
+                                      <span className="text-slate-600 dark:text-slate-400">{shot.total} total</span>
                                     </div>
                                   </div>
                                 ))}
@@ -788,10 +788,10 @@ export default function TodayMatchesPage() {
 
                           {playerStats.cards.length > 0 && (
                             <div>
-                              <p className="text-xs font-semibold text-slate-100 mb-2">Cartões</p>
+                              <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-2">Cartões</p>
                               <div className="space-y-1">
                                 {playerStats.cards.map((card, idx) => (
-                                  <div key={idx} className="flex items-center justify-between bg-slate-900 p-2 rounded-sm text-xs">
+                                  <div key={idx} className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-2 rounded-sm text-xs">
                                     <div className="flex items-center gap-2">
                                       <Badge 
                                         variant={card.type === 'yellow' ? 'warning' : 'danger'} 
@@ -799,9 +799,9 @@ export default function TodayMatchesPage() {
                                       >
                                         {card.type === 'yellow' ? 'AM' : 'VM'}
                                       </Badge>
-                                      <span className="text-slate-100">{card.playerName}</span>
+                                      <span className="text-slate-950 dark:text-slate-100">{card.playerName}</span>
                                     </div>
-                                    <span className="text-slate-400">{card.minute}&apos;</span>
+                                    <span className="text-slate-600 dark:text-slate-400">{card.minute}&apos;</span>
                                   </div>
                                 ))}
                               </div>
@@ -810,15 +810,15 @@ export default function TodayMatchesPage() {
 
                           {playerStats.assists.length > 0 && (
                             <div>
-                              <p className="text-xs font-semibold text-slate-100 mb-2">Assistências</p>
+                              <p className="text-xs font-semibold text-slate-950 dark:text-slate-100 mb-2">Assistências</p>
                               <div className="space-y-1">
                                 {playerStats.assists.map((assist, idx) => (
-                                  <div key={idx} className="flex items-center justify-between bg-slate-900 p-2 rounded-sm text-xs">
+                                  <div key={idx} className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-2 rounded-sm text-xs">
                                     <div className="flex items-center gap-2">
                                       <Badge variant="info" className="text-xs px-1 py-0.5">AST</Badge>
-                                      <span className="text-slate-100">{assist.playerName}</span>
+                                      <span className="text-slate-950 dark:text-slate-100">{assist.playerName}</span>
                                     </div>
-                                    <span className="text-slate-400">{assist.minute}&apos;</span>
+                                    <span className="text-slate-600 dark:text-slate-400">{assist.minute}&apos;</span>
                                   </div>
                                 ))}
                               </div>
@@ -826,7 +826,7 @@ export default function TodayMatchesPage() {
                           )}
 
                           {playerStats.goals.length === 0 && playerStats.shots.length === 0 && playerStats.cards.length === 0 && playerStats.assists.length === 0 && (
-                            <p className="text-xs text-slate-400 text-center py-4">Nenhuma estatística de jogador disponível</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400 text-center py-4">Nenhuma estatística de jogador disponível</p>
                           )}
                         </CardContent>
                       </Card>
@@ -837,15 +837,15 @@ export default function TodayMatchesPage() {
                         href={`/dashboard/create-strategy?matchId=${selectedMatch.eventId}`}
                         className="flex-1"
                       >
-                        <Button className="w-full bg-slate-700 hover:bg-slate-600 text-slate-100 text-xs">
+                        <Button className="w-full bg-slate-200 dark:bg-slate-700 hover:bg-slate-600 text-slate-950 dark:text-slate-100 text-xs">
                           <Plus className="w-3 h-3 mr-1" />
                           Criar Estratégia para este Jogo
                         </Button>
                       </Link>
-                      <Button variant="outline" className="bg-slate-800 border-slate-700 text-slate-100 text-xs">
+                      <Button variant="outline" className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-950 dark:text-slate-100 text-xs">
                         <Star className="w-3 h-3" />
                       </Button>
-                      <Button variant="outline" className="bg-slate-800 border-slate-700 text-slate-100 text-xs">
+                      <Button variant="outline" className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-950 dark:text-slate-100 text-xs">
                         <Share2 className="w-3 h-3" />
                       </Button>
                     </div>

@@ -196,8 +196,8 @@ export default function DashboardPage() {
       <div className="space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Dashboard</h1>
-            <p className="text-gray-600 dark:text-gray-400">Carregando dados...</p>
+            <h1 className="text-3xl font-bold text-slate-950 dark:text-slate-100 mb-2 tracking-tight">Dashboard</h1>
+            <p className="text-slate-600 dark:text-slate-400">Carregando dados...</p>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -218,8 +218,8 @@ export default function DashboardPage() {
       <div className="space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Dashboard</h1>
-            <p className="text-red-600 dark:text-red-400">{error}</p>
+            <h1 className="text-3xl font-bold text-slate-950 dark:text-slate-100 mb-2 tracking-tight">Dashboard</h1>
+            <p className="text-rose-600 dark:text-rose-400">{error}</p>
           </div>
         </div>
       </div>
@@ -236,10 +236,10 @@ export default function DashboardPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 mb-1 tracking-tight">
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-950 dark:text-slate-100 mb-1 tracking-tight">
             Dashboard
           </h1>
-          <p className="text-xs md:text-sm text-slate-400">
+          <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400">
             Visão geral das suas estratégias e alertas em tempo real
           </p>
         </div>
@@ -247,9 +247,9 @@ export default function DashboardPage() {
           <motion.div
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="flex items-center gap-1 text-xs text-slate-100 bg-slate-700 px-2 py-1 rounded-sm"
+            className="flex items-center gap-1 text-xs text-slate-950 dark:text-slate-100 bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded-sm border border-slate-200 dark:border-slate-700"
           >
-            <div className="w-1.5 h-1.5 bg-slate-100 rounded-full animate-pulse" />
+            <div className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-pulse" />
             <span className="font-medium">Live</span>
           </motion.div>
         </div>
@@ -266,15 +266,15 @@ export default function DashboardPage() {
           whileHover={{ y: -2 }}
           transition={{ duration: 0.2 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardContent className="p-3">
+          <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-slate-400 mb-1">Estratégias Ativas</p>
-                  <p className="text-sm font-semibold text-slate-100">{stats.activeStrategies}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">Estratégias Ativas</p>
+                  <p className="text-lg font-semibold text-slate-950 dark:text-slate-100">{stats.activeStrategies}</p>
                 </div>
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <AlertCircle className="w-3 h-3 text-slate-100" />
+                <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <AlertCircle className="w-4 h-4 text-slate-950 dark:text-slate-100" />
                 </div>
               </div>
             </CardContent>
@@ -285,15 +285,15 @@ export default function DashboardPage() {
           whileHover={{ y: -2 }}
           transition={{ duration: 0.2 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardContent className="p-3">
+          <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-slate-400 mb-1">Match Hits Hoje</p>
-                  <p className="text-sm font-semibold text-slate-100">{stats.notificationsSentToday}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">Match Hits Hoje</p>
+                  <p className="text-lg font-semibold text-emerald-600 dark:text-emerald-500">{stats.notificationsSentToday}</p>
                 </div>
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <Zap className="w-3 h-3 text-slate-100" />
+                <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-slate-950 dark:text-slate-100" />
                 </div>
               </div>
             </CardContent>
@@ -304,20 +304,20 @@ export default function DashboardPage() {
           whileHover={{ y: -2 }}
           transition={{ duration: 0.2 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardContent className="p-3">
+          <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-slate-400 mb-1">Bot Conectado</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">Bot Conectado</p>
                   <div className="flex items-center gap-1">
-                    <p className="text-sm font-semibold text-slate-100">
+                    <p className={`text-lg font-semibold ${stats.botConnected ? 'text-emerald-600 dark:text-emerald-500' : 'text-rose-600 dark:text-rose-500'}`}>
                       {stats.botConnected ? 'Sim' : 'Não'}
                     </p>
-                    {stats.botConnected && <CheckCircle className="w-3 h-3 text-slate-100" />}
+                    {stats.botConnected && <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-500" />}
                   </div>
                 </div>
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <Bot className="w-3 h-3 text-slate-100" />
+                <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Bot className="w-4 h-4 text-slate-950 dark:text-slate-100" />
                 </div>
               </div>
             </CardContent>
@@ -328,15 +328,15 @@ export default function DashboardPage() {
           whileHover={{ y: -2 }}
           transition={{ duration: 0.2 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardContent className="p-3">
+          <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-slate-400 mb-1">Jogos Monitorados</p>
-                  <p className="text-sm font-semibold text-slate-100">{stats.gamesMonitored}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">Jogos Monitorados</p>
+                  <p className="text-lg font-semibold text-slate-950 dark:text-slate-100">{stats.gamesMonitored}</p>
                 </div>
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <Activity className="w-3 h-3 text-slate-100" />
+                <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Activity className="w-4 h-4 text-slate-950 dark:text-slate-100" />
                 </div>
               </div>
             </CardContent>
@@ -350,39 +350,39 @@ export default function DashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <Card className="border border-slate-700 bg-slate-800">
-          <CardHeader className="border-b border-slate-700 bg-slate-800">
+        <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <CardHeader className="border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Atividade ao Vivo</h3>
-                <p className="text-xs text-slate-400 mt-1">Match hits em tempo real do Rule Engine</p>
+                <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Atividade ao Vivo</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Match hits em tempo real do Rule Engine</p>
               </div>
-              <div className="flex items-center gap-1 text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded-sm border border-slate-700">
-                <Clock className="w-3 h-3" />
+              <div className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
+                <Clock className="w-4 h-4" />
                 <span className="font-medium">Auto-refresh: 15s</span>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="p-3">
+          <CardContent className="p-6">
             {matchHits.length === 0 ? (
               <div className="text-center py-8">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
+                  className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
                 >
-                  <Target className="w-5 h-5 text-slate-400" />
+                  <Target className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 </motion.div>
-                <h4 className="text-sm font-semibold text-slate-100 mb-2">Nenhuma atividade ainda</h4>
-                <p className="text-xs text-slate-400 mb-4 max-w-md mx-auto">
+                <h4 className="text-sm font-semibold text-slate-950 dark:text-slate-100 mb-2">Nenhuma atividade ainda</h4>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 max-w-md mx-auto">
                   Crie estratégias para começar a monitorar partidas e receber alertas em tempo real.
                 </p>
                 <Link href="/dashboard/create-strategy">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm text-xs font-medium transition-all duration-300"
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-sm text-sm font-medium transition-all duration-300"
                   >
                     <Plus className="w-3 h-3 mr-1 inline" />
                     Criar Primeira Estratégia
@@ -397,40 +397,40 @@ export default function DashboardPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={`relative pl-4 pb-2 ${index < matchHits.length - 1 ? 'border-l border-slate-700' : ''}`}
+                    className={`relative pl-4 pb-2 ${index < matchHits.length - 1 ? 'border-l border-slate-200 dark:border-slate-700' : ''}`}
                   >
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.3, delay: index * 0.1 + 0.2 }}
-                      className="absolute left-0 top-0 w-2 h-2 bg-slate-600 rounded-full border-2 border-slate-950"
+                      className="absolute left-0 top-0 w-2 h-2 bg-emerald-600 rounded-full border-2 border-white dark:border-slate-900"
                     />
-                    <div className="flex items-start justify-between p-2 bg-slate-900 border border-slate-700 rounded-sm hover:bg-slate-700 transition-all duration-300">
+                    <div className="flex items-start justify-between p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-300">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <Badge variant="success" className="text-xs font-bold px-1 py-0.5">MATCH</Badge>
-                          <p className="font-semibold text-slate-100 text-xs">{hit.strategy.name}</p>
+                          <Badge variant="success" className="text-xs font-bold px-2 py-0.5 bg-emerald-600 text-white">MATCH</Badge>
+                          <p className="font-semibold text-slate-950 dark:text-slate-100 text-sm">{hit.strategy.name}</p>
                         </div>
-                        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
-                          <div className="flex items-center gap-1 bg-slate-800 px-1.5 py-0.5 rounded-sm">
-                            <Clock className="w-3 h-3 text-slate-400" />
+                        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                          <div className="flex items-center gap-1 bg-white dark:bg-slate-900 px-2 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
+                            <Clock className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                             <span className="font-medium">Minuto {hit.minute}</span>
                           </div>
-                          <div className="flex items-center gap-1 bg-slate-800 px-1.5 py-0.5 rounded-sm">
-                            <Activity className="w-3 h-3 text-slate-400" />
+                          <div className="flex items-center gap-1 bg-white dark:bg-slate-900 px-2 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
+                            <Activity className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                             <span className="font-medium">Partida: {hit.snapshot?.homeTeam && hit.snapshot?.awayTeam 
                               ? `${hit.snapshot.homeTeam} X ${hit.snapshot.awayTeam}`
                               : hit.matchId.slice(-8)}</span>
                           </div>
-                          <div className="flex items-center gap-1 bg-slate-800 px-1.5 py-0.5 rounded-sm">
-                            <Clock className="w-3 h-3 text-slate-400" />
+                          <div className="flex items-center gap-1 bg-white dark:bg-slate-900 px-2 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
+                            <Clock className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                             <span className="font-medium">{new Date(hit.createdAt).toLocaleTimeString()}</span>
                           </div>
                         </div>
                       </div>
                       <div className="ml-2">
-                        <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                          <CheckCircle className="w-3 h-3 text-slate-100" />
+                        <div className="w-8 h-8 bg-emerald-600 rounded-sm flex items-center justify-center">
+                          <CheckCircle className="w-4 h-4 text-white" />
                         </div>
                       </div>
                     </div>
@@ -453,25 +453,25 @@ export default function DashboardPage() {
           whileHover={{ y: -2 }}
           transition={{ duration: 0.2 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardHeader className="border-b border-slate-700 bg-slate-800">
-              <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Alertas por Dia</h3>
+          <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <CardHeader className="border-b border-slate-200 dark:border-slate-800">
+              <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Alertas por Dia</h3>
             </CardHeader>
-            <CardContent className="p-3">
+            <CardContent className="p-6">
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={weeklyData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-slate-700" />
-                  <XAxis dataKey="day" className="text-slate-400 text-xs" />
-                  <YAxis className="text-slate-400 text-xs" />
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
+                  <XAxis dataKey="day" className="text-slate-600 dark:text-slate-400 text-xs" />
+                  <YAxis className="text-slate-600 dark:text-slate-400 text-xs" />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#1e293b',
-                      border: '1px solid #334155',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #e2e8f0',
                       borderRadius: '4px',
                     }}
-                    itemStyle={{ color: '#f1f5f9' }}
+                    itemStyle={{ color: '#0f172a' }}
                   />
-                  <Bar dataKey="alerts" fill="#475569" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="alerts" fill="#059669" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -482,31 +482,31 @@ export default function DashboardPage() {
           whileHover={{ y: -2 }}
           transition={{ duration: 0.2 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardHeader className="border-b border-slate-700 bg-slate-800">
-              <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Tendência Mensal</h3>
+          <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <CardHeader className="border-b border-slate-200 dark:border-slate-800">
+              <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Tendência Mensal</h3>
             </CardHeader>
-            <CardContent className="p-3">
+            <CardContent className="p-6">
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={monthlyData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-slate-700" />
-                  <XAxis dataKey="month" className="text-slate-400 text-xs" />
-                  <YAxis className="text-slate-400 text-xs" />
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
+                  <XAxis dataKey="month" className="text-slate-600 dark:text-slate-400 text-xs" />
+                  <YAxis className="text-slate-600 dark:text-slate-400 text-xs" />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#1e293b',
-                      border: '1px solid #334155',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #e2e8f0',
                       borderRadius: '4px',
                     }}
-                    itemStyle={{ color: '#f1f5f9' }}
+                    itemStyle={{ color: '#0f172a' }}
                   />
                   <Line
                     type="monotone"
                     dataKey="alerts"
-                    stroke="#475569"
+                    stroke="#059669"
                     strokeWidth={2}
-                    dot={{ fill: '#475569', strokeWidth: 2, r: 3 }}
-                    activeDot={{ r: 4, stroke: '#64748b', strokeWidth: 2 }}
+                    dot={{ fill: '#059669', strokeWidth: 2, r: 3 }}
+                    activeDot={{ r: 4, stroke: '#10b981', strokeWidth: 2 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -521,45 +521,45 @@ export default function DashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
-        <Card className="border border-slate-700 bg-slate-800">
-          <CardHeader className="border-b border-slate-700 bg-slate-800">
+        <Card className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <CardHeader className="border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Suas Estratégias</h3>
-                <p className="text-xs text-slate-400 mt-1">Gerencie suas estratégias de monitoramento</p>
+                <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Suas Estratégias</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Gerencie suas estratégias de monitoramento</p>
               </div>
               <Link href="/dashboard/create-strategy">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-2 py-1 bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm text-xs font-medium transition-all duration-300 flex items-center gap-1"
+                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-sm text-sm font-medium transition-all duration-300 flex items-center gap-1"
                 >
-                  <Plus className="w-3 h-3" />
+                  <Plus className="w-4 h-4" />
                   Nova Estratégia
                 </motion.button>
               </Link>
             </div>
           </CardHeader>
-          <CardContent className="p-3">
+          <CardContent className="p-6">
             {strategies.length === 0 ? (
               <div className="text-center py-8">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="w-12 h-12 bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
+                  className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center mx-auto mb-3"
                 >
-                  <AlertCircle className="w-5 h-5 text-slate-400" />
+                  <AlertCircle className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 </motion.div>
-                <h4 className="text-sm font-semibold text-slate-100 mb-2">Nenhuma estratégia criada</h4>
-                <p className="text-xs text-slate-400 mb-4 max-w-md mx-auto">
+                <h4 className="text-sm font-semibold text-slate-950 dark:text-slate-100 mb-2">Nenhuma estratégia criada</h4>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 max-w-md mx-auto">
                   Comece criando sua primeira estratégia personalizada para monitorar partidas em tempo real.
                 </p>
                 <Link href="/dashboard/create-strategy">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm text-xs font-medium transition-all duration-300"
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-sm text-sm font-medium transition-all duration-300"
                   >
                     <Plus className="w-3 h-3 mr-1 inline" />
                     Criar Primeira Estratégia
@@ -577,21 +577,21 @@ export default function DashboardPage() {
                     whileHover={{ y: -1 }}
                     className="group relative overflow-hidden"
                   >
-                    <div className="relative flex items-center justify-between p-3 bg-slate-900 border border-slate-700 rounded-sm hover:border-slate-600 transition-all duration-300">
+                    <div className="relative flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-sm hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                            <Target className="w-3 h-3 text-slate-100" />
+                          <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                            <Target className="w-4 h-4 text-slate-950 dark:text-slate-100" />
                           </div>
-                          <p className="font-semibold text-slate-100 text-xs">{strategy.name}</p>
+                          <p className="font-semibold text-slate-950 dark:text-slate-100 text-sm">{strategy.name}</p>
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-slate-400">
-                          <div className="flex items-center gap-1 bg-slate-800 px-1.5 py-0.5 rounded-sm">
-                            <Zap className="w-3 h-3 text-slate-400" />
+                        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                          <div className="flex items-center gap-1 bg-white dark:bg-slate-900 px-2 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
+                            <Zap className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                             <span className="font-medium">{strategy.conditions.length} condições</span>
                           </div>
-                          <div className="flex items-center gap-1 bg-slate-800 px-1.5 py-0.5 rounded-sm">
-                            <Activity className="w-3 h-3 text-slate-400" />
+                          <div className="flex items-center gap-1 bg-white dark:bg-slate-900 px-2 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
+                            <Activity className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                             <span className="font-medium capitalize">{strategy.status === 'ACTIVE' ? 'Ativo' : 'Inativo'}</span>
                           </div>
                         </div>
@@ -599,10 +599,10 @@ export default function DashboardPage() {
                       <div className="ml-2">
                         <Badge
                           variant={strategy.status === 'ACTIVE' ? 'success' : 'default'}
-                          className={`px-2 py-0.5 text-xs font-bold ${
+                          className={`px-3 py-1 text-xs font-bold ${
                             strategy.status === 'ACTIVE' 
-                              ? 'bg-slate-700 text-slate-100 border-slate-600' 
-                              : 'bg-slate-700 text-slate-400 border-slate-600'
+                              ? 'bg-emerald-600 text-white border-emerald-600' 
+                              : 'bg-slate-600 text-white border-slate-600'
                           }`}
                         >
                           {strategy.status === 'ACTIVE' ? 'Ativo' : 'Inativo'}
@@ -636,22 +636,22 @@ export default function DashboardPage() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-full max-w-md bg-slate-800 border-l border-slate-700 z-50 overflow-y-auto"
+              className="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 z-50 overflow-y-auto"
             >
-              <div className="p-3 border-b border-slate-700 flex items-center justify-between sticky top-0 bg-slate-800 z-10">
+              <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-900 z-10">
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-100">Jogos Monitorados</h3>
-                  <p className="text-xs text-slate-400">{liveMatches.length} jogos ao vivo</p>
+                  <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-100">Jogos Monitorados</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{liveMatches.length} jogos ao vivo</p>
                 </div>
                 <button
                   onClick={() => setShowLiveMatches(false)}
-                  className="p-2 rounded-sm hover:bg-slate-700 transition-colors"
+                  className="p-2 rounded-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                 >
-                  <X className="w-4 h-4 text-slate-400" />
+                  <X className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 </button>
               </div>
               
-              <div className="p-3 space-y-2">
+              <div className="p-4 space-y-3">
                 {liveMatches.map((match) => {
                   const isLive = match.status === 'in_progress';
                   const isHalftime = match.status === 'halftime';
@@ -664,37 +664,37 @@ export default function DashboardPage() {
                   });
                   
                   return (
-                    <div key={match.eventId} className="p-3 bg-slate-900 border border-slate-700 rounded-sm">
+                    <div key={match.eventId} className="p-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-sm">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold text-slate-100 text-xs">
+                        <span className="font-semibold text-slate-950 dark:text-slate-100 text-sm">
                           {match.homeTeam.name} {match.homeTeam.score} - {match.awayTeam.score} {match.awayTeam.name}
                         </span>
                         {isLive ? (
-                          <span className="flex items-center gap-1 text-slate-400 font-medium text-xs">
-                            <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-pulse" />
+                          <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-500 font-medium text-sm">
+                            <span className="w-1.5 h-1.5 bg-emerald-600 dark:bg-emerald-500 rounded-full animate-pulse" />
                             {match.clock}
                           </span>
                         ) : isHalftime ? (
-                          <span className="flex items-center gap-1 text-slate-400 font-medium text-xs">
-                            <Clock className="w-3 h-3" />
+                          <span className="flex items-center gap-1 text-amber-600 dark:text-amber-500 font-medium text-sm">
+                            <Clock className="w-4 h-4" />
                             Intervalo
                           </span>
                         ) : isFinal ? (
-                          <span className="text-slate-400 font-medium text-xs">Finalizado</span>
+                          <span className="text-slate-600 dark:text-slate-400 font-medium text-sm">Finalizado</span>
                         ) : (
-                          <span className="text-gray-600 dark:text-gray-400 text-sm">{formattedTime}</span>
+                          <span className="text-slate-600 dark:text-slate-400 text-sm">{formattedTime}</span>
                         )}
                       </div>
-                      <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
                         <span className="font-medium">{match.leagueName}</span>
                         {isLive ? (
-                          <span className="text-red-500 font-medium text-xs bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded">AO VIVO</span>
+                          <span className="text-emerald-600 dark:text-emerald-500 font-medium text-xs bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">AO VIVO</span>
                         ) : isHalftime ? (
-                          <span className="text-orange-500 font-medium text-xs bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded">Intervalo</span>
+                          <span className="text-amber-600 dark:text-amber-500 font-medium text-xs bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Intervalo</span>
                         ) : isFinal ? (
-                          <span className="text-green-500 font-medium text-xs bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">Finalizado</span>
+                          <span className="text-slate-600 dark:text-slate-400 font-medium text-xs bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">Finalizado</span>
                         ) : (
-                          <span className="text-gray-500 dark:text-gray-400 text-xs bg-gray-100 dark:bg-gray-600 px-2 py-0.5 rounded">Vai começar</span>
+                          <span className="text-slate-600 dark:text-slate-400 text-xs bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">Vai começar</span>
                         )}
                       </div>
                     </div>

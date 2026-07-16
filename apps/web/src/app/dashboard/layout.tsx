@@ -12,7 +12,7 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex h-screen bg-slate-950 overflow-hidden">
+      <div className="flex h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden">
         {/* Sidebar - handles both desktop and mobile positioning internally */}
         <Sidebar />
 

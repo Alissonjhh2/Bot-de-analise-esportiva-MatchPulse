@@ -25,12 +25,12 @@ export default function SettingsPage() {
         transition={{ duration: 0.6 }}
         className="flex items-center gap-3"
       >
-        <div className="w-8 h-8 bg-slate-700 rounded-sm flex items-center justify-center">
-          <Sparkles className="w-4 h-4 text-slate-100" />
+        <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+          <Sparkles className="w-4 h-4 text-slate-950 dark:text-slate-100" />
         </div>
         <div>
-          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-100 tracking-tight">Configurações</h1>
-          <p className="text-xs md:text-sm text-slate-400 mt-1">Personalize sua experiência</p>
+          <h1 className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Configurações</h1>
+          <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1">Personalize sua experiência</p>
         </div>
       </motion.div>
 
@@ -41,24 +41,24 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardHeader className="border-b border-slate-700 bg-slate-800">
+          <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+            <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <Bell className="w-3 h-3 text-slate-100" />
+                <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Bell className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                 </div>
-                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Notificações</h3>
+                <h3 className="text-sm font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Notificações</h3>
               </div>
             </CardHeader>
             <CardContent className="p-3 space-y-3">
               <motion.div
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-between p-2 bg-slate-900 rounded-sm"
+                className="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-900 rounded-sm"
               >
                 <div>
-                  <p className="font-semibold text-slate-100 mb-1 text-xs">Notificações por Email</p>
-                  <p className="text-xs text-slate-400">Receba alertas por email</p>
+                  <p className="font-semibold text-slate-950 dark:text-slate-100 mb-1 text-xs">Notificações por Email</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Receba alertas por email</p>
                 </div>
                 <Toggle
                   checked={emailNotifications}
@@ -70,11 +70,11 @@ export default function SettingsPage() {
               <motion.div
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-between p-2 bg-slate-900 rounded-sm"
+                className="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-900 rounded-sm"
               >
                 <div>
-                  <p className="font-semibold text-slate-100 mb-1 text-xs">Notificações Push</p>
-                  <p className="text-xs text-slate-400">Receba notificações no navegador</p>
+                  <p className="font-semibold text-slate-950 dark:text-slate-100 mb-1 text-xs">Notificações Push</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Receba notificações no navegador</p>
                 </div>
                 <Toggle
                   checked={pushNotifications}
@@ -93,24 +93,24 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardHeader className="border-b border-slate-700 bg-slate-800">
+          <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+            <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <Moon className="w-3 h-3 text-slate-100" />
+                <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Moon className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                 </div>
-                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Aparência</h3>
+                <h3 className="text-sm font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Aparência</h3>
               </div>
             </CardHeader>
             <CardContent className="p-3 space-y-3">
               <motion.div
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
-                className="flex items-center justify-between p-2 bg-slate-900 rounded-sm"
+                className="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-900 rounded-sm"
               >
                 <div>
-                  <p className="font-semibold text-slate-100 mb-1 text-xs">Modo Escuro</p>
-                  <p className="text-xs text-slate-400">Use o tema escuro</p>
+                  <p className="font-semibold text-slate-950 dark:text-slate-100 mb-1 text-xs">Modo Escuro</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Use o tema escuro</p>
                 </div>
                 <Toggle
                   checked={actualTheme === 'dark'}
@@ -129,26 +129,26 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardHeader className="border-b border-slate-700 bg-slate-800">
+          <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+            <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <Shield className="w-3 h-3 text-slate-100" />
+                <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <Shield className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                 </div>
-                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Segurança</h3>
+                <h3 className="text-sm font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Segurança</h3>
               </div>
             </CardHeader>
             <CardContent className="p-3 space-y-3">
               <div>
-                <p className="font-semibold text-slate-100 mb-2 text-xs">Alterar Senha</p>
+                <p className="font-semibold text-slate-950 dark:text-slate-100 mb-2 text-xs">Alterar Senha</p>
                 <Input 
                   type="password" 
                   placeholder="Nova senha" 
-                  className="border-slate-700 focus:ring-slate-600 focus:border-slate-600 rounded-sm py-2 text-xs"
+                  className="border-slate-200 dark:border-slate-800 focus:ring-slate-600 focus:border-slate-600 rounded-sm py-2 text-xs"
                 />
               </div>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button className="bg-slate-700 hover:bg-slate-600 text-slate-100 rounded-sm px-3 py-2 text-xs">
+                <Button className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-600 text-slate-950 dark:text-slate-100 rounded-sm px-3 py-2 text-xs">
                   Atualizar Senha
                 </Button>
               </motion.div>
@@ -162,24 +162,24 @@ export default function SettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <Card className="border border-slate-700 bg-slate-800">
-            <CardHeader className="border-b border-slate-700 bg-slate-800">
+          <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+            <CardHeader className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-slate-700 rounded-sm flex items-center justify-center">
-                  <HelpCircle className="w-3 h-3 text-slate-100" />
+                <div className="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-sm flex items-center justify-center">
+                  <HelpCircle className="w-3 h-3 text-slate-950 dark:text-slate-100" />
                 </div>
-                <h3 className="text-sm font-semibold text-slate-100 tracking-tight">Tutorial</h3>
+                <h3 className="text-sm font-semibold text-slate-950 dark:text-slate-100 tracking-tight">Tutorial</h3>
               </div>
             </CardHeader>
             <CardContent className="p-3">
-              <p className="text-slate-400 mb-3 font-medium text-xs">
+              <p className="text-slate-600 dark:text-slate-400 mb-3 font-medium text-xs">
                 Reabra o tutorial inicial para aprender novamente como usar o MatchPulse
               </p>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button 
                   variant="outline" 
                   onClick={resetTutorial}
-                  className="border-slate-600 text-slate-300 hover:bg-slate-700 rounded-sm text-xs px-3 py-2"
+                  className="border-slate-600 text-slate-300 hover:bg-slate-200 dark:bg-slate-700 rounded-sm text-xs px-3 py-2"
                 >
                   Reiniciar Tutorial
                 </Button>
